@@ -47,16 +47,23 @@ export default function GoFundMe() {
       <img
         src="/go-fund-me.png"
         alt="Go Fund Me"
+        onPointerDown={() => {
+          playGoFundMeAudio().catch(() => {
+            /* touch must stay in user-gesture stack for mobile audio */
+          });
+        }}
         style={{
           maxWidth: "100%",
           maxHeight: "100%",
           objectFit: "contain",
           borderRadius: "var(--radius-md)",
+          touchAction: "manipulation",
         }}
       />
       {needsManualStart && (
         <button
           type="button"
+          onPointerDown={tryPlay}
           onClick={tryPlay}
           style={{
             position: "absolute",
@@ -66,8 +73,11 @@ export default function GoFundMe() {
             borderRadius: "var(--radius-md)",
             background: "var(--bg-surface)",
             color: "var(--text-primary)",
-            padding: "8px 12px",
+            padding: "12px 16px",
+            minHeight: 44,
+            minWidth: 44,
             cursor: "pointer",
+            touchAction: "manipulation",
           }}
         >
           Play audio

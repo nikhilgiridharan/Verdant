@@ -82,6 +82,13 @@ export default function Sidebar({ pipelineOk }) {
             key={n.to}
             to={n.to}
             end={n.to === "/"}
+            onPointerDown={() => {
+              if (n.to === "/go-fund-me") {
+                playGoFundMeAudio().catch(() => {
+                  /* keep in same gesture stack as touch (mobile Safari) */
+                });
+              }
+            }}
             onClick={() => {
               if (n.to === "/go-fund-me") {
                 playGoFundMeAudio().catch(() => {
