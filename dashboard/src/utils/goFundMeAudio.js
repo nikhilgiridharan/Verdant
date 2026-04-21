@@ -7,19 +7,42 @@ let playerInstance = null;
 let playerReady = false;
 let pendingPlay = false;
 
+/** WebKit on phones often blocks audible play unless playback starts muted in the same gesture. */
+function useMobileYouTubeWorkaround() {
+  if (typeof window === "undefined") return false;
+  if (window.matchMedia?.("(pointer: coarse)")?.matches) return true;
+  const ua = navigator.userAgent || "";
+  if (/iPhone|iPod|iPad|Android/i.test(ua)) return true;
+  // iPadOS 13+ Safari often reports as Mac with touch.
+  if (typeof navigator !== "undefined" && navigator.platform === "MacIntel" && navigator.maxTouchPoints > 1) {
+    return true;
+  }
+  return false;
+}
+
+function applyIframeCapabilities() {
+  const iframe = playerInstance?.getIframe?.();
+  if (!iframe) return;
+  iframe.setAttribute(
+    "allow",
+    "accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share",
+  );
+  iframe.setAttribute("playsinline", "1");
+}
+
 function ensurePlayerContainer() {
   let el = document.getElementById(PLAYER_DIV_ID);
   if (!el) {
     el = document.createElement("div");
     el.id = PLAYER_DIV_ID;
-    // Fixed in-viewport but invisible: some mobile browsers skip audio for
-    // off-screen (-9999px) iframes; still no visible UI for the user.
+    const mobile = useMobileYouTubeWorkaround();
     el.style.position = "fixed";
     el.style.left = "0";
     el.style.top = "0";
-    el.style.width = "1px";
-    el.style.height = "1px";
-    el.style.opacity = "0";
+    // iOS often refuses audio in a 1×1 off-tree iframe; keep visually empty but layout-real.
+    el.style.width = mobile ? "240px" : "1px";
+    el.style.height = mobile ? "135px" : "1px";
+    el.style.opacity = "0.02";
     el.style.pointerEvents = "none";
     el.style.zIndex = "-1";
     el.style.overflow = "hidden";
@@ -57,9 +80,10 @@ export function ensureGoFundMeAudioPlayer() {
     ensurePlayerContainer();
     return new Promise((resolve) => {
       const origin = typeof window !== "undefined" ? window.location.origin : "";
+      const mobile = useMobileYouTubeWorkaround();
       playerInstance = new YT.Player(PLAYER_DIV_ID, {
-        width: "1",
-        height: "1",
+        width: mobile ? "240" : "1",
+        height: mobile ? "135" : "1",
         videoId: VIDEO_ID,
         playerVars: {
           autoplay: 0,
@@ -70,12 +94,12 @@ export function ensureGoFundMeAudioPlayer() {
         events: {
           onReady: () => {
             playerReady = true;
+            queueMicrotask(() => {
+              applyIframeCapabilities();
+            });
             if (pendingPlay) {
               pendingPlay = false;
-              playerInstance?.unMute?.();
-              playerInstance?.setVolume?.(100);
-              playerInstance?.seekTo?.(0, true);
-              playerInstance?.playVideo?.();
+              startPlaybackFromUserGesture();
             }
             resolve(playerInstance);
           },
@@ -88,16 +112,40 @@ export function ensureGoFundMeAudioPlayer() {
 }
 
 function startPlaybackFromUserGesture() {
-  playerInstance?.unMute?.();
-  playerInstance?.setVolume?.(100);
-  playerInstance?.seekTo?.(0, true);
-  playerInstance?.playVideo?.();
+  const p = playerInstance;
+  if (!p) return;
+  applyIframeCapabilities();
+  p.seekTo?.(0, true);
+
+  if (useMobileYouTubeWorkaround()) {
+    // Same synchronous stack: start muted (allowed), then unmute right after.
+    try {
+      p.mute?.();
+      p.playVideo?.();
+    } catch {
+      /* ignore */
+    }
+    window.setTimeout(() => {
+      try {
+        p.unMute?.();
+        p.setVolume?.(100);
+      } catch {
+        /* ignore */
+      }
+    }, 250);
+    return;
+  }
+
+  try {
+    p.unMute?.();
+    p.setVolume?.(100);
+    p.playVideo?.();
+  } catch {
+    /* ignore */
+  }
 }
 
 export function playGoFundMeAudio() {
-  // Mobile Safari only unlocks media if play starts in the same synchronous
-  // turn as the user gesture. A fulfilled Promise still runs in a microtask,
-  // which is too late — so call playVideo() immediately when already ready.
   if (playerInstance && playerReady) {
     pendingPlay = false;
     try {
@@ -126,5 +174,27 @@ export function pauseGoFundMeAudio() {
   if (playerInstance) {
     playerInstance.pauseVideo?.();
     playerInstance.seekTo?.(0, true);
+  }
+}
+
+/** True on phones / coarse pointers — show an explicit tap target if embed audio is blocked. */
+export function shouldShowConclusionAudioHint() {
+  if (typeof window === "undefined") return false;
+  if (window.matchMedia?.("(pointer: coarse)")?.matches) return true;
+  const ua = navigator.userAgent || "";
+  if (/iPhone|iPod|iPad|Android/i.test(ua)) return true;
+  if (typeof navigator !== "undefined" && navigator.platform === "MacIntel" && navigator.maxTouchPoints > 1) {
+    return true;
+  }
+  return false;
+}
+
+/** Used by the Conclusion view to decide whether to show a mobile fallback control. */
+export function isGoFundMeAudioPlaying() {
+  if (!playerInstance || !playerReady || !window.YT?.PlayerState) return false;
+  try {
+    return playerInstance.getPlayerState() === window.YT.PlayerState.PLAYING;
+  } catch {
+    return false;
   }
 }
