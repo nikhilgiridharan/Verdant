@@ -20,7 +20,7 @@ function titles(pathname) {
   if (pathname.startsWith("/forecast")) return "Forecast";
   if (pathname.startsWith("/quality")) return "Data quality";
   if (pathname.startsWith("/api")) return "API console";
-  if (pathname.startsWith("/go-fund-me")) return "LITTLE SAUSAGE";
+  if (pathname.startsWith("/go-fund-me")) return "Conclusion";
   return "Overview";
 }
 

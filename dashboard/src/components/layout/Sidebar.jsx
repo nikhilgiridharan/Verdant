@@ -8,7 +8,7 @@ const nav = [
   { to: "/forecast", label: "Forecast" },
   { to: "/quality", label: "Data quality" },
   { to: "/api", label: "API console" },
-  { to: "/go-fund-me", label: "LITTLE SAUSAGE" },
+  { to: "/go-fund-me", label: "Conclusion" },
 ];
 
 const navLabel = {
