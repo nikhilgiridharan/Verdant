@@ -1,0 +1,27 @@
+{
+  "type": "record",
+  "name": "ShipmentEvent",
+  "namespace": "com.carbonpulse.ingestion",
+  "fields": [
+    {"name": "shipment_id", "type": "string"},
+    {"name": "event_timestamp", "type": {"type": "long", "logicalType": "timestamp-millis"}},
+    {"name": "supplier_id", "type": "string"},
+    {"name": "supplier_name", "type": "string"},
+    {"name": "supplier_country", "type": "string"},
+    {"name": "supplier_lat", "type": "double"},
+    {"name": "supplier_lng", "type": "double"},
+    {"name": "destination_country", "type": "string"},
+    {"name": "destination_lat", "type": "double"},
+    {"name": "destination_lng", "type": "double"},
+    {"name": "sku_id", "type": "string"},
+    {"name": "sku_name", "type": "string"},
+    {"name": "product_category", "type": "string"},
+    {"name": "transport_mode", "type": {"type": "enum", "name": "TransportMode", "symbols": ["AIR", "OCEAN", "TRUCK", "RAIL"]}},
+    {"name": "weight_kg", "type": "double"},
+    {"name": "distance_km", "type": "double"},
+    {"name": "cost_usd", "type": "double"},
+    {"name": "hs_code", "type": "string"},
+    {"name": "supplier_tier", "type": "int"},
+    {"name": "is_anomaly", "type": "boolean", "default": false}
+  ]
+}

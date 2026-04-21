@@ -1,0 +1,38 @@
+version: 2
+
+models:
+  - name: fact_emissions
+    description: Shipment-level emissions facts.
+    columns:
+      - name: emission_id
+        tests:
+          - not_null
+          - unique
+      - name: shipment_id
+        tests:
+          - not_null
+      - name: supplier_id
+        tests:
+          - not_null
+          - relationships:
+              to: ref('dim_supplier')
+              field: supplier_id
+      - name: sku_id
+        tests:
+          - not_null
+          - relationships:
+              to: ref('dim_product')
+              field: sku_id
+      - name: emissions_kg_co2e
+        tests:
+          - not_null
+      - name: transport_mode
+        tests:
+          - not_null
+          - accepted_values:
+              values: ["AIR", "OCEAN", "TRUCK", "RAIL"]
+      - name: emissions_factor_version
+        tests:
+          - not_null
+          - accepted_values:
+              values: ["v1.4.0"]

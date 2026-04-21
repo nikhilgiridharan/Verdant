@@ -1,0 +1,15 @@
+.venv/
+__pycache__/
+*.pyc
+.pytest_cache/
+.ruff_cache/
+dist/
+node_modules/
+target/
+*.duckdb
+*.duckdb.wal
+.env
+.DS_Store
+warehouse/dbt_project/dbt_packages/
+warehouse/dbt_project/logs/
+warehouse/dbt_project/package-lock.yml

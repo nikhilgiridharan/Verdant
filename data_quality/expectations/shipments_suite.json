@@ -1,0 +1,50 @@
+{
+  "data_asset_type": "table",
+  "expectation_suite_name": "shipments_suite",
+  "ge_version": "0.18.0",
+  "expectations": [
+    {
+      "expectation_type": "expect_column_values_to_not_be_null",
+      "kwargs": { "column": "shipment_id" }
+    },
+    {
+      "expectation_type": "expect_column_values_to_be_between",
+      "kwargs": { "column": "weight_kg", "min_value": 0.1, "max_value": 50000 }
+    },
+    {
+      "expectation_type": "expect_column_values_to_be_between",
+      "kwargs": {
+        "column": "emissions_kg_co2e",
+        "min_value": 0.001,
+        "max_value": 500000
+      }
+    },
+    {
+      "expectation_type": "expect_column_values_to_be_between",
+      "kwargs": {
+        "column": "carbon_intensity",
+        "min_value": 0.0001,
+        "max_value": 600
+      }
+    },
+    {
+      "expectation_type": "expect_column_values_to_be_between",
+      "kwargs": {
+        "column": "emissions_factor_per_tonne_km",
+        "min_value": 0.005,
+        "max_value": 0.6
+      }
+    },
+    {
+      "expectation_type": "expect_column_values_to_be_in_set",
+      "kwargs": {
+        "column": "emissions_factor_version",
+        "value_set": ["v1.4.0"]
+      }
+    },
+    {
+      "expectation_type": "expect_column_values_to_be_in_set",
+      "kwargs": { "column": "transport_mode", "value_set": ["AIR", "OCEAN", "TRUCK", "RAIL"] }
+    }
+  ]
+}

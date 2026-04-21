@@ -1,0 +1,501 @@
+supplier_id,name,country,country_name,lat,lng,tier,industry
+SUP-00001,Supplier SUP-00001 (Canada),CA,Canada,43.873083,-80.139983,2,Food & Beverage
+SUP-00002,Supplier SUP-00002 (Canada),CA,Canada,43.073261,-80.016008,3,Textiles
+SUP-00003,Supplier SUP-00003 (Canada),CA,Canada,42.989102,-79.504925,1,Food & Beverage
+SUP-00004,Supplier SUP-00004 (Canada),CA,Canada,43.222257,-79.21677,2,Textiles
+SUP-00005,Supplier SUP-00005 (Canada),CA,Canada,43.521232,-79.461266,2,Electronics
+SUP-00006,Supplier SUP-00006 (Canada),CA,Canada,44.064092,-79.924545,2,Chemicals
+SUP-00007,Supplier SUP-00007 (Canada),CA,Canada,43.098767,-78.648459,2,Apparel
+SUP-00008,Supplier SUP-00008 (Canada),CA,Canada,43.457884,-79.605633,2,Chemicals
+SUP-00009,Supplier SUP-00009 (Canada),CA,Canada,44.141405,-79.012429,2,Consumer Goods
+SUP-00010,Supplier SUP-00010 (Canada),CA,Canada,42.97608,-79.710915,2,Industrial Machinery
+SUP-00011,Supplier SUP-00011 (Canada),CA,Canada,43.773763,-79.052685,1,Food & Beverage
+SUP-00012,Supplier SUP-00012 (Canada),CA,Canada,44.086909,-78.603646,3,Apparel
+SUP-00013,Supplier SUP-00013 (Canada),CA,Canada,43.458202,-79.454544,3,Auto Parts
+SUP-00014,Supplier SUP-00014 (Canada),CA,Canada,43.44229,-79.844789,2,Apparel
+SUP-00015,Supplier SUP-00015 (Canada),CA,Canada,43.82461,-79.906178,3,Auto Parts
+SUP-00016,Supplier SUP-00016 (Canada),CA,Canada,43.589616,-79.748083,3,Textiles
+SUP-00017,Supplier SUP-00017 (Canada),CA,Canada,43.201384,-79.661148,3,Electronics
+SUP-00018,Supplier SUP-00018 (Canada),CA,Canada,43.216477,-80.12864,2,Chemicals
+SUP-00019,Supplier SUP-00019 (Canada),CA,Canada,42.955902,-78.718982,2,Industrial Machinery
+SUP-00020,Supplier SUP-00020 (Canada),CA,Canada,43.190202,-79.38123,3,Pharmaceuticals
+SUP-00021,Supplier SUP-00021 (Canada),CA,Canada,43.078595,-79.956591,3,Textiles
+SUP-00022,Supplier SUP-00022 (Canada),CA,Canada,43.270387,-79.244662,3,Consumer Goods
+SUP-00023,Supplier SUP-00023 (Canada),CA,Canada,43.429194,-78.584279,1,Pharmaceuticals
+SUP-00024,Supplier SUP-00024 (Canada),CA,Canada,42.995455,-80.104614,1,Auto Parts
+SUP-00025,Supplier SUP-00025 (Canada),CA,Canada,44.117327,-79.504544,1,Consumer Goods
+SUP-00026,Supplier SUP-00026 (Canada),CA,Canada,43.803421,-79.43112,2,Textiles
+SUP-00027,Supplier SUP-00027 (Canada),CA,Canada,44.227248,-80.16163,3,Textiles
+SUP-00028,Supplier SUP-00028 (Canada),CA,Canada,44.051404,-78.950242,2,Chemicals
+SUP-00029,Supplier SUP-00029 (Canada),CA,Canada,43.545624,-79.454042,3,Chemicals
+SUP-00030,Supplier SUP-00030 (Canada),CA,Canada,44.405021,-78.96086,2,Apparel
+SUP-00031,Supplier SUP-00031 (Canada),CA,Canada,44.24283,-79.702488,2,Packaging
+SUP-00032,Supplier SUP-00032 (Canada),CA,Canada,43.168258,-79.581738,1,Textiles
+SUP-00033,Supplier SUP-00033 (Canada),CA,Canada,44.31959,-79.221689,2,Apparel
+SUP-00034,Supplier SUP-00034 (Canada),CA,Canada,44.336558,-78.774045,3,Chemicals
+SUP-00035,Supplier SUP-00035 (Canada),CA,Canada,43.233124,-79.794605,2,Apparel
+SUP-00036,Supplier SUP-00036 (Canada),CA,Canada,42.987046,-79.402415,1,Textiles
+SUP-00037,Supplier SUP-00037 (Canada),CA,Canada,44.075335,-79.974574,2,Textiles
+SUP-00038,Supplier SUP-00038 (Canada),CA,Canada,43.114203,-79.335722,2,Food & Beverage
+SUP-00039,Supplier SUP-00039 (Canada),CA,Canada,44.336262,-78.971576,2,Chemicals
+SUP-00040,Supplier SUP-00040 (Canada),CA,Canada,43.488388,-79.105301,2,Textiles
+SUP-00041,Supplier SUP-00041 (Canada),CA,Canada,43.572378,-79.783351,1,Electronics
+SUP-00042,Supplier SUP-00042 (Canada),CA,Canada,43.791294,-79.811816,2,Apparel
+SUP-00043,Supplier SUP-00043 (Canada),CA,Canada,43.982546,-80.085802,1,Electronics
+SUP-00044,Supplier SUP-00044 (Canada),CA,Canada,44.225417,-80.066628,2,Pharmaceuticals
+SUP-00045,Supplier SUP-00045 (Canada),CA,Canada,43.192779,-79.968301,3,Packaging
+SUP-00046,Supplier SUP-00046 (Canada),CA,Canada,43.771939,-79.791204,2,Consumer Goods
+SUP-00047,Supplier SUP-00047 (Canada),CA,Canada,43.154656,-80.024911,2,Consumer Goods
+SUP-00048,Supplier SUP-00048 (Canada),CA,Canada,43.507764,-78.797861,1,Apparel
+SUP-00049,Supplier SUP-00049 (Canada),CA,Canada,42.94698,-79.014858,3,Apparel
+SUP-00050,Supplier SUP-00050 (Canada),CA,Canada,43.24785,-79.875666,2,Consumer Goods
+SUP-00051,Supplier SUP-00051 (China),CN,China,30.723581,121.410205,3,Apparel
+SUP-00052,Supplier SUP-00052 (China),CN,China,31.139009,122.048159,2,Electronics
+SUP-00053,Supplier SUP-00053 (China),CN,China,31.473432,121.534941,1,Apparel
+SUP-00054,Supplier SUP-00054 (China),CN,China,31.912187,122.027913,1,Pharmaceuticals
+SUP-00055,Supplier SUP-00055 (China),CN,China,31.200173,122.053441,3,Auto Parts
+SUP-00056,Supplier SUP-00056 (China),CN,China,31.036357,122.246494,2,Pharmaceuticals
+SUP-00057,Supplier SUP-00057 (China),CN,China,30.886399,121.784546,3,Textiles
+SUP-00058,Supplier SUP-00058 (China),CN,China,31.488994,121.448674,1,Food & Beverage
+SUP-00059,Supplier SUP-00059 (China),CN,China,31.979935,121.596688,2,Industrial Machinery
+SUP-00060,Supplier SUP-00060 (China),CN,China,30.521464,121.604684,2,Textiles
+SUP-00061,Supplier SUP-00061 (China),CN,China,30.681892,122.207246,1,Auto Parts
+SUP-00062,Supplier SUP-00062 (China),CN,China,30.539634,120.778737,3,Consumer Goods
+SUP-00063,Supplier SUP-00063 (China),CN,China,30.621819,122.09446,2,Packaging
+SUP-00064,Supplier SUP-00064 (China),CN,China,30.493587,120.801173,2,Packaging
+SUP-00065,Supplier SUP-00065 (China),CN,China,31.266452,122.16553,2,Industrial Machinery
+SUP-00066,Supplier SUP-00066 (China),CN,China,30.811898,121.303257,2,Chemicals
+SUP-00067,Supplier SUP-00067 (China),CN,China,31.161559,122.156429,3,Electronics
+SUP-00068,Supplier SUP-00068 (China),CN,China,31.163257,122.267527,3,Apparel
+SUP-00069,Supplier SUP-00069 (China),CN,China,31.290215,121.479416,1,Industrial Machinery
+SUP-00070,Supplier SUP-00070 (China),CN,China,31.839383,122.076832,2,Auto Parts
+SUP-00071,Supplier SUP-00071 (China),CN,China,31.131095,121.539149,2,Textiles
+SUP-00072,Supplier SUP-00072 (China),CN,China,30.442517,121.977367,2,Apparel
+SUP-00073,Supplier SUP-00073 (China),CN,China,31.932288,120.884866,1,Apparel
+SUP-00074,Supplier SUP-00074 (China),CN,China,31.617867,120.918717,2,Food & Beverage
+SUP-00075,Supplier SUP-00075 (China),CN,China,31.578179,120.995756,2,Chemicals
+SUP-00076,Supplier SUP-00076 (China),CN,China,31.238654,121.071794,3,Electronics
+SUP-00077,Supplier SUP-00077 (China),CN,China,30.577678,121.347721,2,Electronics
+SUP-00078,Supplier SUP-00078 (China),CN,China,30.96369,120.879311,3,Auto Parts
+SUP-00079,Supplier SUP-00079 (China),CN,China,31.615969,121.552689,2,Electronics
+SUP-00080,Supplier SUP-00080 (China),CN,China,30.608998,122.182082,2,Auto Parts
+SUP-00081,Supplier SUP-00081 (China),CN,China,31.302944,122.005352,2,Auto Parts
+SUP-00082,Supplier SUP-00082 (China),CN,China,31.117659,120.736926,2,Electronics
+SUP-00083,Supplier SUP-00083 (China),CN,China,31.868279,121.006122,2,Apparel
+SUP-00084,Supplier SUP-00084 (China),CN,China,30.995886,121.565814,3,Packaging
+SUP-00085,Supplier SUP-00085 (China),CN,China,31.629164,122.151222,2,Auto Parts
+SUP-00086,Supplier SUP-00086 (China),CN,China,31.99193,121.967235,3,Electronics
+SUP-00087,Supplier SUP-00087 (China),CN,China,30.716977,122.14918,3,Consumer Goods
+SUP-00088,Supplier SUP-00088 (China),CN,China,31.713576,122.052502,3,Chemicals
+SUP-00089,Supplier SUP-00089 (China),CN,China,30.684717,121.792045,2,Electronics
+SUP-00090,Supplier SUP-00090 (China),CN,China,31.803749,121.025894,3,Pharmaceuticals
+SUP-00091,Supplier SUP-00091 (China),CN,China,30.989453,121.982858,3,Food & Beverage
+SUP-00092,Supplier SUP-00092 (China),CN,China,30.467863,120.979008,2,Apparel
+SUP-00093,Supplier SUP-00093 (China),CN,China,31.977023,121.1166,2,Consumer Goods
+SUP-00094,Supplier SUP-00094 (China),CN,China,31.517229,122.019858,2,Electronics
+SUP-00095,Supplier SUP-00095 (China),CN,China,30.614547,122.222641,1,Chemicals
+SUP-00096,Supplier SUP-00096 (China),CN,China,30.491212,121.624514,2,Industrial Machinery
+SUP-00097,Supplier SUP-00097 (China),CN,China,31.12823,122.244777,1,Packaging
+SUP-00098,Supplier SUP-00098 (China),CN,China,30.734126,120.741018,2,Textiles
+SUP-00099,Supplier SUP-00099 (China),CN,China,31.91092,121.531523,3,Food & Beverage
+SUP-00100,Supplier SUP-00100 (China),CN,China,31.012754,120.781958,2,Industrial Machinery
+SUP-00101,Supplier SUP-00101 (China),CN,China,31.427049,121.73142,1,Chemicals
+SUP-00102,Supplier SUP-00102 (China),CN,China,31.241396,121.737029,2,Chemicals
+SUP-00103,Supplier SUP-00103 (China),CN,China,31.31706,120.976944,2,Consumer Goods
+SUP-00104,Supplier SUP-00104 (China),CN,China,31.513709,122.114489,2,Chemicals
+SUP-00105,Supplier SUP-00105 (China),CN,China,31.07972,122.00396,2,Food & Beverage
+SUP-00106,Supplier SUP-00106 (China),CN,China,31.117821,121.597976,2,Pharmaceuticals
+SUP-00107,Supplier SUP-00107 (China),CN,China,31.136858,121.751004,2,Auto Parts
+SUP-00108,Supplier SUP-00108 (China),CN,China,31.484161,121.124058,2,Packaging
+SUP-00109,Supplier SUP-00109 (China),CN,China,30.966301,121.979478,3,Chemicals
+SUP-00110,Supplier SUP-00110 (China),CN,China,30.789425,120.988608,1,Food & Beverage
+SUP-00111,Supplier SUP-00111 (China),CN,China,32.004298,121.648038,3,Pharmaceuticals
+SUP-00112,Supplier SUP-00112 (China),CN,China,31.093106,121.677625,1,Consumer Goods
+SUP-00113,Supplier SUP-00113 (China),CN,China,31.221003,121.060375,2,Electronics
+SUP-00114,Supplier SUP-00114 (China),CN,China,31.858256,122.046705,3,Consumer Goods
+SUP-00115,Supplier SUP-00115 (China),CN,China,30.780146,121.956576,2,Pharmaceuticals
+SUP-00116,Supplier SUP-00116 (China),CN,China,30.510349,121.068717,3,Pharmaceuticals
+SUP-00117,Supplier SUP-00117 (China),CN,China,30.643343,121.413429,2,Textiles
+SUP-00118,Supplier SUP-00118 (China),CN,China,31.382724,122.190063,3,Packaging
+SUP-00119,Supplier SUP-00119 (China),CN,China,31.73401,122.097232,2,Textiles
+SUP-00120,Supplier SUP-00120 (China),CN,China,31.143462,120.924653,3,Pharmaceuticals
+SUP-00121,Supplier SUP-00121 (China),CN,China,30.844706,121.065584,2,Textiles
+SUP-00122,Supplier SUP-00122 (China),CN,China,31.205355,121.052793,2,Chemicals
+SUP-00123,Supplier SUP-00123 (China),CN,China,30.80519,121.207356,3,Apparel
+SUP-00124,Supplier SUP-00124 (China),CN,China,30.651398,121.040018,2,Food & Beverage
+SUP-00125,Supplier SUP-00125 (China),CN,China,30.532766,121.322159,2,Consumer Goods
+SUP-00126,Supplier SUP-00126 (China),CN,China,30.529625,122.002626,2,Packaging
+SUP-00127,Supplier SUP-00127 (China),CN,China,31.943699,120.701251,3,Packaging
+SUP-00128,Supplier SUP-00128 (China),CN,China,31.03861,120.679434,2,Consumer Goods
+SUP-00129,Supplier SUP-00129 (China),CN,China,31.795517,122.195489,2,Textiles
+SUP-00130,Supplier SUP-00130 (China),CN,China,31.709789,122.106498,2,Chemicals
+SUP-00131,Supplier SUP-00131 (China),CN,China,31.127338,120.71644,2,Consumer Goods
+SUP-00132,Supplier SUP-00132 (China),CN,China,31.58869,122.014809,3,Packaging
+SUP-00133,Supplier SUP-00133 (China),CN,China,31.284598,122.121086,2,Electronics
+SUP-00134,Supplier SUP-00134 (China),CN,China,30.564316,121.35578,3,Auto Parts
+SUP-00135,Supplier SUP-00135 (China),CN,China,30.510455,121.276566,2,Industrial Machinery
+SUP-00136,Supplier SUP-00136 (China),CN,China,30.970001,122.077424,2,Consumer Goods
+SUP-00137,Supplier SUP-00137 (China),CN,China,30.833634,120.80105,1,Textiles
+SUP-00138,Supplier SUP-00138 (China),CN,China,30.513337,122.193072,2,Apparel
+SUP-00139,Supplier SUP-00139 (China),CN,China,31.679973,121.712807,3,Food & Beverage
+SUP-00140,Supplier SUP-00140 (China),CN,China,30.748977,120.702608,1,Auto Parts
+SUP-00141,Supplier SUP-00141 (China),CN,China,31.187698,120.853023,3,Pharmaceuticals
+SUP-00142,Supplier SUP-00142 (China),CN,China,31.549144,121.897037,1,Packaging
+SUP-00143,Supplier SUP-00143 (China),CN,China,31.971976,121.819372,3,Auto Parts
+SUP-00144,Supplier SUP-00144 (China),CN,China,31.973553,120.842958,1,Chemicals
+SUP-00145,Supplier SUP-00145 (China),CN,China,31.351275,122.122842,2,Food & Beverage
+SUP-00146,Supplier SUP-00146 (China),CN,China,30.551594,121.774983,2,Apparel
+SUP-00147,Supplier SUP-00147 (China),CN,China,31.545509,121.152532,2,Apparel
+SUP-00148,Supplier SUP-00148 (China),CN,China,31.703964,121.575492,1,Textiles
+SUP-00149,Supplier SUP-00149 (China),CN,China,31.115405,121.262913,2,Industrial Machinery
+SUP-00150,Supplier SUP-00150 (China),CN,China,30.450243,121.342094,2,Consumer Goods
+SUP-00151,Supplier SUP-00151 (China),CN,China,31.96726,121.686936,3,Auto Parts
+SUP-00152,Supplier SUP-00152 (China),CN,China,31.126779,121.844072,3,Chemicals
+SUP-00153,Supplier SUP-00153 (China),CN,China,31.41546,122.141388,3,Pharmaceuticals
+SUP-00154,Supplier SUP-00154 (China),CN,China,31.126919,121.839642,2,Food & Beverage
+SUP-00155,Supplier SUP-00155 (China),CN,China,31.75917,120.808661,3,Food & Beverage
+SUP-00156,Supplier SUP-00156 (China),CN,China,31.630762,121.581759,2,Industrial Machinery
+SUP-00157,Supplier SUP-00157 (China),CN,China,30.47592,122.031525,1,Food & Beverage
+SUP-00158,Supplier SUP-00158 (China),CN,China,30.99772,121.083364,2,Packaging
+SUP-00159,Supplier SUP-00159 (China),CN,China,31.551894,121.11203,1,Food & Beverage
+SUP-00160,Supplier SUP-00160 (China),CN,China,30.566981,121.822119,2,Food & Beverage
+SUP-00161,Supplier SUP-00161 (China),CN,China,31.534975,121.703445,2,Electronics
+SUP-00162,Supplier SUP-00162 (China),CN,China,30.578885,121.024554,2,Chemicals
+SUP-00163,Supplier SUP-00163 (China),CN,China,31.492336,121.260433,2,Industrial Machinery
+SUP-00164,Supplier SUP-00164 (China),CN,China,31.110806,121.863497,2,Pharmaceuticals
+SUP-00165,Supplier SUP-00165 (China),CN,China,30.863466,121.072246,1,Food & Beverage
+SUP-00166,Supplier SUP-00166 (China),CN,China,30.934877,121.85861,3,Auto Parts
+SUP-00167,Supplier SUP-00167 (China),CN,China,30.736466,121.851767,2,Packaging
+SUP-00168,Supplier SUP-00168 (China),CN,China,31.992571,121.509419,2,Apparel
+SUP-00169,Supplier SUP-00169 (China),CN,China,31.762205,121.143994,2,Chemicals
+SUP-00170,Supplier SUP-00170 (China),CN,China,30.452637,121.524616,2,Electronics
+SUP-00171,Supplier SUP-00171 (China),CN,China,31.315374,121.785868,1,Pharmaceuticals
+SUP-00172,Supplier SUP-00172 (China),CN,China,30.59414,120.689625,2,Pharmaceuticals
+SUP-00173,Supplier SUP-00173 (China),CN,China,31.13475,120.964982,1,Pharmaceuticals
+SUP-00174,Supplier SUP-00174 (China),CN,China,30.612539,120.774549,2,Packaging
+SUP-00175,Supplier SUP-00175 (China),CN,China,31.437113,120.755775,1,Packaging
+SUP-00176,Supplier SUP-00176 (China),CN,China,31.948601,120.806289,2,Textiles
+SUP-00177,Supplier SUP-00177 (China),CN,China,31.65311,121.640108,3,Food & Beverage
+SUP-00178,Supplier SUP-00178 (China),CN,China,31.67111,121.278605,3,Chemicals
+SUP-00179,Supplier SUP-00179 (China),CN,China,31.806267,122.25405,2,Packaging
+SUP-00180,Supplier SUP-00180 (China),CN,China,30.526368,122.206174,1,Food & Beverage
+SUP-00181,Supplier SUP-00181 (Germany),DE,Germany,53.750824,9.613434,1,Food & Beverage
+SUP-00182,Supplier SUP-00182 (Germany),DE,Germany,53.028102,9.310104,1,Pharmaceuticals
+SUP-00183,Supplier SUP-00183 (Germany),DE,Germany,53.852994,9.94186,1,Chemicals
+SUP-00184,Supplier SUP-00184 (Germany),DE,Germany,53.881129,10.31478,2,Food & Beverage
+SUP-00185,Supplier SUP-00185 (Germany),DE,Germany,54.228258,10.450525,2,Food & Beverage
+SUP-00186,Supplier SUP-00186 (Germany),DE,Germany,53.430222,10.0613,2,Chemicals
+SUP-00187,Supplier SUP-00187 (Germany),DE,Germany,54.07261,9.304256,1,Chemicals
+SUP-00188,Supplier SUP-00188 (Germany),DE,Germany,53.70207,10.508784,3,Pharmaceuticals
+SUP-00189,Supplier SUP-00189 (Germany),DE,Germany,52.948966,10.291885,2,Chemicals
+SUP-00190,Supplier SUP-00190 (Germany),DE,Germany,53.550755,9.980072,1,Electronics
+SUP-00191,Supplier SUP-00191 (Germany),DE,Germany,54.173077,10.365254,2,Electronics
+SUP-00192,Supplier SUP-00192 (Germany),DE,Germany,52.896123,10.729058,3,Packaging
+SUP-00193,Supplier SUP-00193 (Germany),DE,Germany,53.689397,9.223193,3,Chemicals
+SUP-00194,Supplier SUP-00194 (Germany),DE,Germany,53.671995,10.410974,1,Textiles
+SUP-00195,Supplier SUP-00195 (Germany),DE,Germany,53.792415,10.655716,1,Packaging
+SUP-00196,Supplier SUP-00196 (Germany),DE,Germany,53.447416,10.492792,3,Pharmaceuticals
+SUP-00197,Supplier SUP-00197 (Germany),DE,Germany,53.306738,9.723293,2,Auto Parts
+SUP-00198,Supplier SUP-00198 (Germany),DE,Germany,53.277686,10.299878,2,Consumer Goods
+SUP-00199,Supplier SUP-00199 (Germany),DE,Germany,54.051706,10.070155,2,Industrial Machinery
+SUP-00200,Supplier SUP-00200 (Germany),DE,Germany,53.153838,9.375475,3,Textiles
+SUP-00201,Supplier SUP-00201 (Germany),DE,Germany,54.069884,9.191842,3,Pharmaceuticals
+SUP-00202,Supplier SUP-00202 (Germany),DE,Germany,53.411196,9.490132,2,Pharmaceuticals
+SUP-00203,Supplier SUP-00203 (Germany),DE,Germany,53.750654,10.405985,2,Textiles
+SUP-00204,Supplier SUP-00204 (Germany),DE,Germany,52.959621,9.650847,3,Pharmaceuticals
+SUP-00205,Supplier SUP-00205 (Germany),DE,Germany,52.944282,10.747035,2,Food & Beverage
+SUP-00206,Supplier SUP-00206 (India),IN,India,19.415653,72.5772,1,Consumer Goods
+SUP-00207,Supplier SUP-00207 (India),IN,India,18.429135,73.667611,3,Pharmaceuticals
+SUP-00208,Supplier SUP-00208 (India),IN,India,19.795297,73.116336,1,Chemicals
+SUP-00209,Supplier SUP-00209 (India),IN,India,19.094195,72.51748,3,Pharmaceuticals
+SUP-00210,Supplier SUP-00210 (India),IN,India,18.669969,72.962024,2,Packaging
+SUP-00211,Supplier SUP-00211 (India),IN,India,19.093185,73.486922,3,Chemicals
+SUP-00212,Supplier SUP-00212 (India),IN,India,19.51628,73.44706,2,Textiles
+SUP-00213,Supplier SUP-00213 (India),IN,India,18.707476,72.084104,3,Packaging
+SUP-00214,Supplier SUP-00214 (India),IN,India,19.207877,73.135905,3,Pharmaceuticals
+SUP-00215,Supplier SUP-00215 (India),IN,India,19.141729,72.632198,2,Textiles
+SUP-00216,Supplier SUP-00216 (India),IN,India,18.883536,73.572564,3,Food & Beverage
+SUP-00217,Supplier SUP-00217 (India),IN,India,19.194876,72.4537,3,Electronics
+SUP-00218,Supplier SUP-00218 (India),IN,India,18.789082,72.836762,3,Consumer Goods
+SUP-00219,Supplier SUP-00219 (India),IN,India,18.897726,73.141902,3,Auto Parts
+SUP-00220,Supplier SUP-00220 (India),IN,India,19.072526,72.139231,2,Packaging
+SUP-00221,Supplier SUP-00221 (India),IN,India,18.811192,72.240583,3,Apparel
+SUP-00222,Supplier SUP-00222 (India),IN,India,19.121522,72.811085,3,Consumer Goods
+SUP-00223,Supplier SUP-00223 (India),IN,India,19.673493,73.631931,1,Chemicals
+SUP-00224,Supplier SUP-00224 (India),IN,India,18.821698,73.188327,2,Industrial Machinery
+SUP-00225,Supplier SUP-00225 (India),IN,India,19.643746,73.454947,2,Industrial Machinery
+SUP-00226,Supplier SUP-00226 (Japan),JP,Japan,35.882879,140.269902,2,Textiles
+SUP-00227,Supplier SUP-00227 (Japan),JP,Japan,34.937439,138.959473,2,Chemicals
+SUP-00228,Supplier SUP-00228 (Japan),JP,Japan,36.475881,140.044826,2,Apparel
+SUP-00229,Supplier SUP-00229 (Japan),JP,Japan,36.096592,139.976225,1,Auto Parts
+SUP-00230,Supplier SUP-00230 (Japan),JP,Japan,35.990402,140.295478,1,Electronics
+SUP-00231,Supplier SUP-00231 (Japan),JP,Japan,35.349388,139.449746,1,Textiles
+SUP-00232,Supplier SUP-00232 (Japan),JP,Japan,35.539283,139.940881,1,Auto Parts
+SUP-00233,Supplier SUP-00233 (Japan),JP,Japan,35.006349,140.243343,2,Food & Beverage
+SUP-00234,Supplier SUP-00234 (Japan),JP,Japan,35.676268,139.783051,2,Chemicals
+SUP-00235,Supplier SUP-00235 (Japan),JP,Japan,35.615313,139.916945,3,Pharmaceuticals
+SUP-00236,Supplier SUP-00236 (Japan),JP,Japan,36.321935,139.934177,1,Pharmaceuticals
+SUP-00237,Supplier SUP-00237 (Japan),JP,Japan,36.392377,140.430243,2,Consumer Goods
+SUP-00238,Supplier SUP-00238 (Japan),JP,Japan,35.984502,139.580937,2,Consumer Goods
+SUP-00239,Supplier SUP-00239 (Japan),JP,Japan,36.245337,139.020645,2,Industrial Machinery
+SUP-00240,Supplier SUP-00240 (Japan),JP,Japan,35.799699,140.438307,2,Consumer Goods
+SUP-00241,Supplier SUP-00241 (Japan),JP,Japan,35.319169,139.755486,2,Electronics
+SUP-00242,Supplier SUP-00242 (Japan),JP,Japan,36.336987,140.042275,3,Chemicals
+SUP-00243,Supplier SUP-00243 (Japan),JP,Japan,36.121186,139.218189,3,Food & Beverage
+SUP-00244,Supplier SUP-00244 (Japan),JP,Japan,35.898589,139.843426,2,Auto Parts
+SUP-00245,Supplier SUP-00245 (Japan),JP,Japan,35.885197,140.295446,2,Chemicals
+SUP-00246,Supplier SUP-00246 (South Korea),KR,South Korea,38.031777,126.233383,2,Auto Parts
+SUP-00247,Supplier SUP-00247 (South Korea),KR,South Korea,36.914213,126.652177,3,Auto Parts
+SUP-00248,Supplier SUP-00248 (South Korea),KR,South Korea,37.091272,127.43842,3,Industrial Machinery
+SUP-00249,Supplier SUP-00249 (South Korea),KR,South Korea,37.619364,127.641579,3,Chemicals
+SUP-00250,Supplier SUP-00250 (South Korea),KR,South Korea,38.232478,127.690701,3,Chemicals
+SUP-00251,Supplier SUP-00251 (South Korea),KR,South Korea,37.964495,126.721944,1,Apparel
+SUP-00252,Supplier SUP-00252 (South Korea),KR,South Korea,36.995211,127.7264,3,Consumer Goods
+SUP-00253,Supplier SUP-00253 (South Korea),KR,South Korea,38.317632,127.46734,2,Consumer Goods
+SUP-00254,Supplier SUP-00254 (South Korea),KR,South Korea,36.79227,127.038516,2,Chemicals
+SUP-00255,Supplier SUP-00255 (South Korea),KR,South Korea,37.705296,127.495868,3,Apparel
+SUP-00256,Supplier SUP-00256 (South Korea),KR,South Korea,37.849738,126.934363,2,Textiles
+SUP-00257,Supplier SUP-00257 (South Korea),KR,South Korea,37.29481,127.156132,2,Pharmaceuticals
+SUP-00258,Supplier SUP-00258 (South Korea),KR,South Korea,38.22502,126.663504,2,Auto Parts
+SUP-00259,Supplier SUP-00259 (South Korea),KR,South Korea,36.842555,126.239539,3,Apparel
+SUP-00260,Supplier SUP-00260 (South Korea),KR,South Korea,36.925507,127.599615,1,Pharmaceuticals
+SUP-00261,Supplier SUP-00261 (South Korea),KR,South Korea,37.363618,127.699009,2,Textiles
+SUP-00262,Supplier SUP-00262 (South Korea),KR,South Korea,37.440603,127.36763,1,Consumer Goods
+SUP-00263,Supplier SUP-00263 (South Korea),KR,South Korea,37.817875,127.513909,2,Chemicals
+SUP-00264,Supplier SUP-00264 (South Korea),KR,South Korea,36.822346,126.772848,2,Food & Beverage
+SUP-00265,Supplier SUP-00265 (South Korea),KR,South Korea,38.13872,126.338967,2,Textiles
+SUP-00266,Supplier SUP-00266 (Mexico),MX,Mexico,20.072714,-98.898277,1,Chemicals
+SUP-00267,Supplier SUP-00267 (Mexico),MX,Mexico,18.933694,-99.734544,3,Pharmaceuticals
+SUP-00268,Supplier SUP-00268 (Mexico),MX,Mexico,18.776677,-99.590631,2,Electronics
+SUP-00269,Supplier SUP-00269 (Mexico),MX,Mexico,18.710926,-99.396385,3,Packaging
+SUP-00270,Supplier SUP-00270 (Mexico),MX,Mexico,18.958329,-98.602291,2,Packaging
+SUP-00271,Supplier SUP-00271 (Mexico),MX,Mexico,18.975522,-98.538487,2,Auto Parts
+SUP-00272,Supplier SUP-00272 (Mexico),MX,Mexico,19.89183,-98.976429,2,Auto Parts
+SUP-00273,Supplier SUP-00273 (Mexico),MX,Mexico,20.210044,-99.065655,3,Apparel
+SUP-00274,Supplier SUP-00274 (Mexico),MX,Mexico,19.687692,-99.888752,1,Food & Beverage
+SUP-00275,Supplier SUP-00275 (Mexico),MX,Mexico,19.572165,-99.90475,2,Auto Parts
+SUP-00276,Supplier SUP-00276 (Mexico),MX,Mexico,19.816749,-99.088263,3,Pharmaceuticals
+SUP-00277,Supplier SUP-00277 (Mexico),MX,Mexico,19.34724,-99.350738,2,Pharmaceuticals
+SUP-00278,Supplier SUP-00278 (Mexico),MX,Mexico,19.436142,-98.417335,1,Textiles
+SUP-00279,Supplier SUP-00279 (Mexico),MX,Mexico,19.112609,-98.900655,1,Pharmaceuticals
+SUP-00280,Supplier SUP-00280 (Mexico),MX,Mexico,19.985678,-99.247962,1,Pharmaceuticals
+SUP-00281,Supplier SUP-00281 (Mexico),MX,Mexico,18.747585,-99.800735,2,Apparel
+SUP-00282,Supplier SUP-00282 (Mexico),MX,Mexico,18.831907,-98.931092,2,Industrial Machinery
+SUP-00283,Supplier SUP-00283 (Mexico),MX,Mexico,19.239447,-98.974173,2,Textiles
+SUP-00284,Supplier SUP-00284 (Mexico),MX,Mexico,19.598683,-99.771314,3,Textiles
+SUP-00285,Supplier SUP-00285 (Mexico),MX,Mexico,19.783344,-99.585963,2,Food & Beverage
+SUP-00286,Supplier SUP-00286 (Mexico),MX,Mexico,19.292102,-98.606129,2,Apparel
+SUP-00287,Supplier SUP-00287 (Mexico),MX,Mexico,19.130077,-99.429962,2,Auto Parts
+SUP-00288,Supplier SUP-00288 (Mexico),MX,Mexico,19.728914,-99.171171,1,Apparel
+SUP-00289,Supplier SUP-00289 (Mexico),MX,Mexico,18.779168,-99.775497,3,Auto Parts
+SUP-00290,Supplier SUP-00290 (Mexico),MX,Mexico,19.520193,-98.991656,2,Industrial Machinery
+SUP-00291,Supplier SUP-00291 (Mexico),MX,Mexico,19.702021,-99.272706,3,Consumer Goods
+SUP-00292,Supplier SUP-00292 (Mexico),MX,Mexico,20.018947,-98.776303,3,Packaging
+SUP-00293,Supplier SUP-00293 (Mexico),MX,Mexico,19.129918,-99.764239,2,Auto Parts
+SUP-00294,Supplier SUP-00294 (Mexico),MX,Mexico,19.680778,-99.571208,1,Textiles
+SUP-00295,Supplier SUP-00295 (Mexico),MX,Mexico,19.218098,-98.709831,2,Consumer Goods
+SUP-00296,Supplier SUP-00296 (Mexico),MX,Mexico,19.982248,-98.370725,3,Packaging
+SUP-00297,Supplier SUP-00297 (Mexico),MX,Mexico,19.709963,-99.039216,2,Chemicals
+SUP-00298,Supplier SUP-00298 (Mexico),MX,Mexico,18.676325,-99.492767,3,Industrial Machinery
+SUP-00299,Supplier SUP-00299 (Mexico),MX,Mexico,19.191637,-99.639751,1,Consumer Goods
+SUP-00300,Supplier SUP-00300 (Mexico),MX,Mexico,18.741337,-98.74445,3,Apparel
+SUP-00301,Supplier SUP-00301 (Mexico),MX,Mexico,19.823779,-99.585787,2,Industrial Machinery
+SUP-00302,Supplier SUP-00302 (Mexico),MX,Mexico,18.881855,-99.43138,2,Packaging
+SUP-00303,Supplier SUP-00303 (Mexico),MX,Mexico,19.583958,-98.516653,1,Packaging
+SUP-00304,Supplier SUP-00304 (Mexico),MX,Mexico,18.70962,-99.79947,2,Consumer Goods
+SUP-00305,Supplier SUP-00305 (Mexico),MX,Mexico,19.407059,-99.222729,2,Textiles
+SUP-00306,Supplier SUP-00306 (Mexico),MX,Mexico,18.812108,-99.242138,2,Packaging
+SUP-00307,Supplier SUP-00307 (Mexico),MX,Mexico,19.408612,-98.862588,1,Consumer Goods
+SUP-00308,Supplier SUP-00308 (Mexico),MX,Mexico,20.205113,-99.842349,2,Food & Beverage
+SUP-00309,Supplier SUP-00309 (Mexico),MX,Mexico,19.857759,-98.707343,2,Apparel
+SUP-00310,Supplier SUP-00310 (Mexico),MX,Mexico,18.642368,-98.734777,1,Consumer Goods
+SUP-00311,Supplier SUP-00311 (Mexico),MX,Mexico,19.482132,-99.561823,2,Industrial Machinery
+SUP-00312,Supplier SUP-00312 (Mexico),MX,Mexico,18.745321,-98.551177,1,Electronics
+SUP-00313,Supplier SUP-00313 (Mexico),MX,Mexico,19.365607,-99.80542,2,Consumer Goods
+SUP-00314,Supplier SUP-00314 (Mexico),MX,Mexico,19.547439,-98.794802,2,Apparel
+SUP-00315,Supplier SUP-00315 (Mexico),MX,Mexico,19.278052,-98.38408,1,Packaging
+SUP-00316,Supplier SUP-00316 (Mexico),MX,Mexico,19.366155,-98.826624,2,Consumer Goods
+SUP-00317,Supplier SUP-00317 (Mexico),MX,Mexico,19.981175,-99.540694,2,Textiles
+SUP-00318,Supplier SUP-00318 (Mexico),MX,Mexico,18.755835,-98.537161,3,Food & Beverage
+SUP-00319,Supplier SUP-00319 (Mexico),MX,Mexico,19.16291,-99.660988,2,Apparel
+SUP-00320,Supplier SUP-00320 (Mexico),MX,Mexico,19.478968,-99.619754,3,Industrial Machinery
+SUP-00321,Supplier SUP-00321 (Mexico),MX,Mexico,19.793807,-98.619682,3,Food & Beverage
+SUP-00322,Supplier SUP-00322 (Mexico),MX,Mexico,18.794487,-99.520451,1,Auto Parts
+SUP-00323,Supplier SUP-00323 (Mexico),MX,Mexico,19.846344,-98.881186,1,Pharmaceuticals
+SUP-00324,Supplier SUP-00324 (Mexico),MX,Mexico,19.372325,-99.028023,2,Packaging
+SUP-00325,Supplier SUP-00325 (Mexico),MX,Mexico,19.658787,-98.351549,2,Industrial Machinery
+SUP-00326,Supplier SUP-00326 (Mexico),MX,Mexico,18.871532,-99.820742,2,Chemicals
+SUP-00327,Supplier SUP-00327 (Mexico),MX,Mexico,19.904127,-98.983728,2,Apparel
+SUP-00328,Supplier SUP-00328 (Mexico),MX,Mexico,19.126653,-99.206938,1,Chemicals
+SUP-00329,Supplier SUP-00329 (Mexico),MX,Mexico,18.75277,-98.5472,3,Packaging
+SUP-00330,Supplier SUP-00330 (Mexico),MX,Mexico,19.580528,-99.314828,2,Electronics
+SUP-00331,Supplier SUP-00331 (Mexico),MX,Mexico,19.349574,-98.634295,2,Industrial Machinery
+SUP-00332,Supplier SUP-00332 (Mexico),MX,Mexico,19.598009,-99.127812,3,Pharmaceuticals
+SUP-00333,Supplier SUP-00333 (Mexico),MX,Mexico,18.795603,-98.491397,2,Apparel
+SUP-00334,Supplier SUP-00334 (Mexico),MX,Mexico,19.437278,-99.653906,2,Pharmaceuticals
+SUP-00335,Supplier SUP-00335 (Mexico),MX,Mexico,20.215578,-99.09149,2,Industrial Machinery
+SUP-00336,Supplier SUP-00336 (Mexico),MX,Mexico,19.226563,-99.47737,2,Industrial Machinery
+SUP-00337,Supplier SUP-00337 (Mexico),MX,Mexico,19.716236,-99.846215,2,Industrial Machinery
+SUP-00338,Supplier SUP-00338 (Mexico),MX,Mexico,18.735459,-99.77879,2,Chemicals
+SUP-00339,Supplier SUP-00339 (Mexico),MX,Mexico,19.033193,-98.567494,3,Packaging
+SUP-00340,Supplier SUP-00340 (Mexico),MX,Mexico,20.027247,-99.396621,2,Auto Parts
+SUP-00341,Supplier SUP-00341 (Mexico),MX,Mexico,20.096794,-99.433629,2,Consumer Goods
+SUP-00342,Supplier SUP-00342 (Mexico),MX,Mexico,18.836323,-98.795866,1,Textiles
+SUP-00343,Supplier SUP-00343 (Mexico),MX,Mexico,19.232687,-98.663341,3,Textiles
+SUP-00344,Supplier SUP-00344 (Mexico),MX,Mexico,18.779525,-98.85727,2,Electronics
+SUP-00345,Supplier SUP-00345 (Mexico),MX,Mexico,19.210156,-99.641579,2,Pharmaceuticals
+SUP-00346,Supplier SUP-00346 (Taiwan),TW,Taiwan,24.537208,122.359963,1,Chemicals
+SUP-00347,Supplier SUP-00347 (Taiwan),TW,Taiwan,25.581085,120.921825,3,Textiles
+SUP-00348,Supplier SUP-00348 (Taiwan),TW,Taiwan,24.290396,121.298823,3,Auto Parts
+SUP-00349,Supplier SUP-00349 (Taiwan),TW,Taiwan,25.185594,121.006804,1,Packaging
+SUP-00350,Supplier SUP-00350 (Taiwan),TW,Taiwan,25.52447,121.024863,2,Consumer Goods
+SUP-00351,Supplier SUP-00351 (Taiwan),TW,Taiwan,24.812879,121.911337,3,Packaging
+SUP-00352,Supplier SUP-00352 (Taiwan),TW,Taiwan,24.685885,121.957658,2,Textiles
+SUP-00353,Supplier SUP-00353 (Taiwan),TW,Taiwan,24.61267,122.304955,3,Food & Beverage
+SUP-00354,Supplier SUP-00354 (Taiwan),TW,Taiwan,24.818546,122.275408,3,Pharmaceuticals
+SUP-00355,Supplier SUP-00355 (Taiwan),TW,Taiwan,25.461102,122.004998,2,Consumer Goods
+SUP-00356,Supplier SUP-00356 (Taiwan),TW,Taiwan,25.776029,122.067026,3,Auto Parts
+SUP-00357,Supplier SUP-00357 (Taiwan),TW,Taiwan,25.626803,120.843488,2,Industrial Machinery
+SUP-00358,Supplier SUP-00358 (Taiwan),TW,Taiwan,25.117265,120.924144,3,Apparel
+SUP-00359,Supplier SUP-00359 (Taiwan),TW,Taiwan,24.686101,121.980987,2,Textiles
+SUP-00360,Supplier SUP-00360 (Taiwan),TW,Taiwan,24.465758,121.459956,3,Food & Beverage
+SUP-00361,Supplier SUP-00361 (United States),US,United States,40.336725,-97.964592,3,Consumer Goods
+SUP-00362,Supplier SUP-00362 (United States),US,United States,39.115211,-98.576789,2,Apparel
+SUP-00363,Supplier SUP-00363 (United States),US,United States,39.62986,-99.3349,3,Industrial Machinery
+SUP-00364,Supplier SUP-00364 (United States),US,United States,40.296209,-99.159841,2,Pharmaceuticals
+SUP-00365,Supplier SUP-00365 (United States),US,United States,40.143715,-99.157932,3,Pharmaceuticals
+SUP-00366,Supplier SUP-00366 (United States),US,United States,40.014557,-97.930628,1,Food & Beverage
+SUP-00367,Supplier SUP-00367 (United States),US,United States,40.365941,-98.501913,3,Textiles
+SUP-00368,Supplier SUP-00368 (United States),US,United States,39.707208,-98.138124,2,Apparel
+SUP-00369,Supplier SUP-00369 (United States),US,United States,39.106399,-98.708279,3,Pharmaceuticals
+SUP-00370,Supplier SUP-00370 (United States),US,United States,39.130491,-98.0413,2,Textiles
+SUP-00371,Supplier SUP-00371 (United States),US,United States,39.056297,-98.555399,2,Auto Parts
+SUP-00372,Supplier SUP-00372 (United States),US,United States,39.496035,-99.377497,2,Packaging
+SUP-00373,Supplier SUP-00373 (United States),US,United States,39.696508,-98.317006,1,Industrial Machinery
+SUP-00374,Supplier SUP-00374 (United States),US,United States,39.138287,-98.538305,2,Textiles
+SUP-00375,Supplier SUP-00375 (United States),US,United States,39.916643,-98.755274,2,Consumer Goods
+SUP-00376,Supplier SUP-00376 (United States),US,United States,40.599663,-98.97416,1,Apparel
+SUP-00377,Supplier SUP-00377 (United States),US,United States,39.581684,-98.207294,2,Packaging
+SUP-00378,Supplier SUP-00378 (United States),US,United States,40.206299,-98.84797,1,Textiles
+SUP-00379,Supplier SUP-00379 (United States),US,United States,39.571676,-98.351527,3,Pharmaceuticals
+SUP-00380,Supplier SUP-00380 (United States),US,United States,40.599311,-98.61435,1,Auto Parts
+SUP-00381,Supplier SUP-00381 (United States),US,United States,39.130961,-98.138095,2,Chemicals
+SUP-00382,Supplier SUP-00382 (United States),US,United States,39.352546,-98.114225,3,Industrial Machinery
+SUP-00383,Supplier SUP-00383 (United States),US,United States,40.523394,-98.555386,3,Textiles
+SUP-00384,Supplier SUP-00384 (United States),US,United States,39.78744,-99.321407,2,Chemicals
+SUP-00385,Supplier SUP-00385 (United States),US,United States,39.601159,-98.130653,3,Industrial Machinery
+SUP-00386,Supplier SUP-00386 (United States),US,United States,39.467147,-98.101052,2,Consumer Goods
+SUP-00387,Supplier SUP-00387 (United States),US,United States,40.219292,-97.94858,2,Auto Parts
+SUP-00388,Supplier SUP-00388 (United States),US,United States,39.823925,-98.583963,3,Textiles
+SUP-00389,Supplier SUP-00389 (United States),US,United States,39.456753,-99.247822,2,Consumer Goods
+SUP-00390,Supplier SUP-00390 (United States),US,United States,39.993925,-98.064254,2,Industrial Machinery
+SUP-00391,Supplier SUP-00391 (United States),US,United States,39.194157,-98.855328,2,Pharmaceuticals
+SUP-00392,Supplier SUP-00392 (United States),US,United States,39.994195,-98.698214,2,Industrial Machinery
+SUP-00393,Supplier SUP-00393 (United States),US,United States,39.745407,-98.217097,3,Packaging
+SUP-00394,Supplier SUP-00394 (United States),US,United States,40.627041,-98.940711,3,Electronics
+SUP-00395,Supplier SUP-00395 (United States),US,United States,39.150066,-98.35998,2,Auto Parts
+SUP-00396,Supplier SUP-00396 (United States),US,United States,40.554463,-99.151553,2,Pharmaceuticals
+SUP-00397,Supplier SUP-00397 (United States),US,United States,39.085678,-99.272427,3,Industrial Machinery
+SUP-00398,Supplier SUP-00398 (United States),US,United States,39.609441,-97.860853,1,Auto Parts
+SUP-00399,Supplier SUP-00399 (United States),US,United States,40.116499,-97.861882,2,Apparel
+SUP-00400,Supplier SUP-00400 (United States),US,United States,39.948275,-98.532864,2,Chemicals
+SUP-00401,Supplier SUP-00401 (United States),US,United States,39.429379,-99.198482,3,Pharmaceuticals
+SUP-00402,Supplier SUP-00402 (United States),US,United States,39.858392,-97.918332,1,Chemicals
+SUP-00403,Supplier SUP-00403 (United States),US,United States,40.15646,-99.036687,2,Pharmaceuticals
+SUP-00404,Supplier SUP-00404 (United States),US,United States,39.350285,-99.162835,1,Auto Parts
+SUP-00405,Supplier SUP-00405 (United States),US,United States,40.467886,-98.667822,1,Industrial Machinery
+SUP-00406,Supplier SUP-00406 (United States),US,United States,40.098544,-98.244735,2,Chemicals
+SUP-00407,Supplier SUP-00407 (United States),US,United States,40.456131,-98.017821,3,Auto Parts
+SUP-00408,Supplier SUP-00408 (United States),US,United States,40.299914,-98.565991,1,Food & Beverage
+SUP-00409,Supplier SUP-00409 (United States),US,United States,40.297305,-99.001222,2,Industrial Machinery
+SUP-00410,Supplier SUP-00410 (United States),US,United States,39.916434,-98.789742,3,Textiles
+SUP-00411,Supplier SUP-00411 (United States),US,United States,39.237634,-97.965206,1,Consumer Goods
+SUP-00412,Supplier SUP-00412 (United States),US,United States,40.629352,-98.229809,2,Consumer Goods
+SUP-00413,Supplier SUP-00413 (United States),US,United States,40.347343,-99.261999,3,Apparel
+SUP-00414,Supplier SUP-00414 (United States),US,United States,39.749959,-98.291826,2,Textiles
+SUP-00415,Supplier SUP-00415 (United States),US,United States,40.05367,-99.088859,3,Consumer Goods
+SUP-00416,Supplier SUP-00416 (United States),US,United States,39.834582,-97.990861,3,Textiles
+SUP-00417,Supplier SUP-00417 (United States),US,United States,39.274825,-99.116549,2,Food & Beverage
+SUP-00418,Supplier SUP-00418 (United States),US,United States,39.583637,-97.874554,3,Apparel
+SUP-00419,Supplier SUP-00419 (United States),US,United States,39.430968,-98.363909,2,Auto Parts
+SUP-00420,Supplier SUP-00420 (United States),US,United States,40.030036,-98.396915,1,Auto Parts
+SUP-00421,Supplier SUP-00421 (United States),US,United States,39.976894,-98.450966,1,Packaging
+SUP-00422,Supplier SUP-00422 (United States),US,United States,40.183012,-98.411778,3,Packaging
+SUP-00423,Supplier SUP-00423 (United States),US,United States,39.095911,-97.99795,1,Packaging
+SUP-00424,Supplier SUP-00424 (United States),US,United States,39.453449,-99.042707,2,Packaging
+SUP-00425,Supplier SUP-00425 (United States),US,United States,40.052386,-98.583139,2,Chemicals
+SUP-00426,Supplier SUP-00426 (United States),US,United States,40.057052,-98.896649,2,Consumer Goods
+SUP-00427,Supplier SUP-00427 (United States),US,United States,39.505894,-99.263243,1,Pharmaceuticals
+SUP-00428,Supplier SUP-00428 (United States),US,United States,39.694995,-98.636893,2,Auto Parts
+SUP-00429,Supplier SUP-00429 (United States),US,United States,39.530132,-98.230619,3,Industrial Machinery
+SUP-00430,Supplier SUP-00430 (United States),US,United States,40.590599,-99.170774,2,Textiles
+SUP-00431,Supplier SUP-00431 (United States),US,United States,39.199894,-98.993219,1,Pharmaceuticals
+SUP-00432,Supplier SUP-00432 (United States),US,United States,39.42667,-99.225101,2,Consumer Goods
+SUP-00433,Supplier SUP-00433 (United States),US,United States,40.412662,-98.710984,3,Auto Parts
+SUP-00434,Supplier SUP-00434 (United States),US,United States,40.331565,-97.885998,3,Food & Beverage
+SUP-00435,Supplier SUP-00435 (United States),US,United States,40.250994,-98.582775,2,Pharmaceuticals
+SUP-00436,Supplier SUP-00436 (United States),US,United States,40.436521,-98.584208,1,Consumer Goods
+SUP-00437,Supplier SUP-00437 (United States),US,United States,39.838711,-97.833301,2,Industrial Machinery
+SUP-00438,Supplier SUP-00438 (United States),US,United States,39.107853,-98.92983,2,Pharmaceuticals
+SUP-00439,Supplier SUP-00439 (United States),US,United States,39.487197,-99.366916,1,Auto Parts
+SUP-00440,Supplier SUP-00440 (United States),US,United States,40.441929,-98.215987,3,Industrial Machinery
+SUP-00441,Supplier SUP-00441 (United States),US,United States,39.102388,-99.298148,2,Industrial Machinery
+SUP-00442,Supplier SUP-00442 (United States),US,United States,39.915157,-99.262349,2,Textiles
+SUP-00443,Supplier SUP-00443 (United States),US,United States,39.477553,-97.797455,2,Apparel
+SUP-00444,Supplier SUP-00444 (United States),US,United States,39.235861,-99.22531,2,Industrial Machinery
+SUP-00445,Supplier SUP-00445 (United States),US,United States,39.922531,-98.79503,1,Packaging
+SUP-00446,Supplier SUP-00446 (United States),US,United States,39.844596,-98.579875,1,Auto Parts
+SUP-00447,Supplier SUP-00447 (United States),US,United States,40.171747,-98.093655,2,Auto Parts
+SUP-00448,Supplier SUP-00448 (United States),US,United States,40.000017,-98.555191,2,Packaging
+SUP-00449,Supplier SUP-00449 (United States),US,United States,39.539648,-98.751273,2,Chemicals
+SUP-00450,Supplier SUP-00450 (United States),US,United States,39.979959,-98.568296,2,Pharmaceuticals
+SUP-00451,Supplier SUP-00451 (United States),US,United States,40.163984,-98.900335,3,Industrial Machinery
+SUP-00452,Supplier SUP-00452 (United States),US,United States,39.559983,-99.204633,2,Chemicals
+SUP-00453,Supplier SUP-00453 (United States),US,United States,40.304808,-98.219481,2,Electronics
+SUP-00454,Supplier SUP-00454 (United States),US,United States,39.985055,-98.955151,2,Packaging
+SUP-00455,Supplier SUP-00455 (United States),US,United States,39.954215,-98.22576,2,Auto Parts
+SUP-00456,Supplier SUP-00456 (United States),US,United States,39.868772,-98.226107,3,Consumer Goods
+SUP-00457,Supplier SUP-00457 (United States),US,United States,39.266441,-98.290837,1,Apparel
+SUP-00458,Supplier SUP-00458 (United States),US,United States,39.335255,-98.674338,2,Consumer Goods
+SUP-00459,Supplier SUP-00459 (United States),US,United States,40.1348,-98.723396,3,Pharmaceuticals
+SUP-00460,Supplier SUP-00460 (United States),US,United States,40.426508,-98.20266,1,Auto Parts
+SUP-00461,Supplier SUP-00461 (United States),US,United States,39.859893,-98.482581,3,Pharmaceuticals
+SUP-00462,Supplier SUP-00462 (United States),US,United States,39.870763,-98.877996,1,Textiles
+SUP-00463,Supplier SUP-00463 (United States),US,United States,39.577723,-98.813141,3,Chemicals
+SUP-00464,Supplier SUP-00464 (United States),US,United States,40.006123,-99.072377,2,Textiles
+SUP-00465,Supplier SUP-00465 (United States),US,United States,39.507599,-97.873623,3,Chemicals
+SUP-00466,Supplier SUP-00466 (United States),US,United States,40.157841,-98.275616,2,Pharmaceuticals
+SUP-00467,Supplier SUP-00467 (United States),US,United States,39.588085,-97.886079,3,Chemicals
+SUP-00468,Supplier SUP-00468 (United States),US,United States,39.490463,-98.462437,2,Consumer Goods
+SUP-00469,Supplier SUP-00469 (United States),US,United States,40.339404,-97.852626,3,Chemicals
+SUP-00470,Supplier SUP-00470 (United States),US,United States,39.097306,-97.851498,1,Pharmaceuticals
+SUP-00471,Supplier SUP-00471 (United States),US,United States,40.079555,-98.184258,2,Textiles
+SUP-00472,Supplier SUP-00472 (United States),US,United States,39.463812,-98.480771,2,Apparel
+SUP-00473,Supplier SUP-00473 (United States),US,United States,40.015083,-98.441071,2,Textiles
+SUP-00474,Supplier SUP-00474 (United States),US,United States,39.391075,-99.007462,1,Industrial Machinery
+SUP-00475,Supplier SUP-00475 (United States),US,United States,40.177773,-99.219128,3,Electronics
+SUP-00476,Supplier SUP-00476 (United States),US,United States,40.57323,-97.815343,1,Pharmaceuticals
+SUP-00477,Supplier SUP-00477 (United States),US,United States,39.793918,-99.06087,3,Industrial Machinery
+SUP-00478,Supplier SUP-00478 (United States),US,United States,39.486665,-99.28534,3,Packaging
+SUP-00479,Supplier SUP-00479 (United States),US,United States,39.401552,-98.198102,3,Electronics
+SUP-00480,Supplier SUP-00480 (United States),US,United States,40.491168,-99.099896,3,Auto Parts
+SUP-00481,Supplier SUP-00481 (Vietnam),VN,Vietnam,11.514276,105.888144,3,Pharmaceuticals
+SUP-00482,Supplier SUP-00482 (Vietnam),VN,Vietnam,10.318099,107.028405,3,Chemicals
+SUP-00483,Supplier SUP-00483 (Vietnam),VN,Vietnam,11.422789,105.844827,2,Apparel
+SUP-00484,Supplier SUP-00484 (Vietnam),VN,Vietnam,11.505528,106.366067,2,Textiles
+SUP-00485,Supplier SUP-00485 (Vietnam),VN,Vietnam,10.85891,107.252816,1,Textiles
+SUP-00486,Supplier SUP-00486 (Vietnam),VN,Vietnam,10.768833,106.138498,1,Auto Parts
+SUP-00487,Supplier SUP-00487 (Vietnam),VN,Vietnam,11.189791,106.867257,3,Electronics
+SUP-00488,Supplier SUP-00488 (Vietnam),VN,Vietnam,11.198589,107.095228,2,Food & Beverage
+SUP-00489,Supplier SUP-00489 (Vietnam),VN,Vietnam,10.300792,107.199834,3,Consumer Goods
+SUP-00490,Supplier SUP-00490 (Vietnam),VN,Vietnam,10.844449,105.96878,2,Auto Parts
+SUP-00491,Supplier SUP-00491 (Vietnam),VN,Vietnam,11.590696,106.593927,3,Electronics
+SUP-00492,Supplier SUP-00492 (Vietnam),VN,Vietnam,10.437256,106.206834,3,Industrial Machinery
+SUP-00493,Supplier SUP-00493 (Vietnam),VN,Vietnam,10.503113,106.986612,1,Industrial Machinery
+SUP-00494,Supplier SUP-00494 (Vietnam),VN,Vietnam,11.12843,105.929399,1,Chemicals
+SUP-00495,Supplier SUP-00495 (Vietnam),VN,Vietnam,10.275547,106.927718,3,Chemicals
+SUP-00496,Supplier SUP-00496 (Vietnam),VN,Vietnam,11.124465,106.851938,3,Industrial Machinery
+SUP-00497,Supplier SUP-00497 (Vietnam),VN,Vietnam,11.003401,106.180606,1,Auto Parts
+SUP-00498,Supplier SUP-00498 (Vietnam),VN,Vietnam,10.747966,107.412141,2,Textiles
+SUP-00499,Supplier SUP-00499 (Vietnam),VN,Vietnam,11.480475,107.041761,3,Food & Beverage
+SUP-00500,Supplier SUP-00500 (Vietnam),VN,Vietnam,11.238975,106.918547,2,Apparel

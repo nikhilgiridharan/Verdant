@@ -1,0 +1,90 @@
+import { useMemo } from "react";
+import DataFreshBadge from "../shared/DataFreshBadge.jsx";
+import { formatKg } from "../../utils/formatters.js";
+
+export default function Topbar({ title, summary, pipelineMessage }) {
+  const ticker = useMemo(() => {
+    const ytd = summary?.total_co2_ytd_kg ?? 0;
+    const sup = summary?.active_suppliers ?? 0;
+    const ship = summary?.total_shipments ?? 0;
+    return [
+      { k: "Total CO₂ YTD", v: formatKg(ytd) },
+      { k: "Suppliers", v: String(sup) },
+      { k: "Shipments", v: String(ship) },
+      { k: "Anomalies", v: "—" },
+    ];
+  }, [summary]);
+
+  return (
+    <header
+      style={{
+        height: 52,
+        display: "flex",
+        alignItems: "center",
+        padding: "0 24px",
+        gap: 24,
+        background: "var(--bg-surface)",
+        borderBottom: "1px solid var(--border-default)",
+        boxShadow: "var(--shadow-xs)",
+      }}
+    >
+      <div
+        style={{
+          flex: "0 0 auto",
+          fontFamily: "var(--font-display)",
+          fontSize: 16,
+          fontWeight: 600,
+          color: "var(--text-primary)",
+        }}
+      >
+        {title}
+      </div>
+      <div style={{ flex: 1, display: "flex", justifyContent: "center", alignItems: "center" }}>
+        {ticker.map((t, i) => (
+          <div key={t.k} style={{ display: "flex", alignItems: "center" }}>
+            {i > 0 ? (
+              <div
+                style={{
+                  width: 1,
+                  height: 16,
+                  background: "var(--border-subtle)",
+                  margin: "0 16px",
+                }}
+              />
+            ) : null}
+            <div style={{ textAlign: "center" }}>
+              <div
+                style={{
+                  fontSize: 11,
+                  color: "var(--text-tertiary)",
+                  fontWeight: 500,
+                  textTransform: "uppercase",
+                  letterSpacing: "0.04em",
+                }}
+              >
+                {t.k}
+              </div>
+              <div
+                style={{
+                  fontFamily: "var(--font-display)",
+                  fontSize: 13,
+                  fontWeight: 600,
+                  color: "var(--text-primary)",
+                  marginTop: 2,
+                }}
+              >
+                {t.v}
+              </div>
+            </div>
+          </div>
+        ))}
+      </div>
+      <div style={{ display: "flex", alignItems: "center", flexShrink: 0 }}>
+        <DataFreshBadge pipelineMessage={pipelineMessage} />
+        <span style={{ fontSize: 12, color: "var(--text-tertiary)", marginLeft: 12 }}>
+          {new Date().toLocaleTimeString()}
+        </span>
+      </div>
+    </header>
+  );
+}

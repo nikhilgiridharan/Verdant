@@ -1,0 +1,13 @@
+version: 2
+
+sources:
+  - name: silver
+    description: Silver shipments enriched (Spark → warehouse). Local dev uses seed-backed models.
+    tables:
+      - name: shipments_enriched
+
+  - name: postgres
+    description: Operational Postgres tables (suppliers, skus) when running warehouse on Snowflake/Postgres.
+    tables:
+      - name: suppliers
+      - name: skus

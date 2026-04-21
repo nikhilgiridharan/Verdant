@@ -1,0 +1,11 @@
+transport_mode,naics_code,naics_title,epa_version,ghg_data_year,dollar_year,gwp_standard,sef_without_margins,margins_sef,sef_with_margins,cost_usd_per_tonne_km,kg_co2e_per_tonne_km,source
+AIR,481112,Scheduled Freight Air Transportation,v1.4.0,2023,2024,IPCC AR6,0.644,0.000,0.644,0.85,0.5474,EPA Supply Chain GHG Emission Factors v1.4.0
+AIR,481211,Nonscheduled Chartered Freight Air Transportation,v1.4.0,2023,2024,IPCC AR6,0.644,0.000,0.644,0.85,0.5474,EPA Supply Chain GHG Emission Factors v1.4.0
+OCEAN,483111,Deep Sea Freight Transportation,v1.4.0,2023,2024,IPCC AR6,0.583,0.000,0.583,0.04,0.0233,EPA Supply Chain GHG Emission Factors v1.4.0
+OCEAN,483113,Coastal and Great Lakes Freight Transportation,v1.4.0,2023,2024,IPCC AR6,0.583,0.000,0.583,0.04,0.0233,EPA Supply Chain GHG Emission Factors v1.4.0
+OCEAN,483211,Inland Water Freight Transportation,v1.4.0,2023,2024,IPCC AR6,0.583,0.000,0.583,0.04,0.0233,EPA Supply Chain GHG Emission Factors v1.4.0
+TRUCK,484110,General Freight Trucking Local,v1.4.0,2023,2024,IPCC AR6,0.767,0.000,0.767,0.12,0.0920,EPA Supply Chain GHG Emission Factors v1.4.0
+TRUCK,484121,General Freight Trucking Long-Distance Truckload,v1.4.0,2023,2024,IPCC AR6,0.767,0.000,0.767,0.12,0.0920,EPA Supply Chain GHG Emission Factors v1.4.0
+TRUCK,484122,General Freight Trucking Long-Distance Less Than Truckload,v1.4.0,2023,2024,IPCC AR6,0.767,0.000,0.767,0.12,0.0920,EPA Supply Chain GHG Emission Factors v1.4.0
+RAIL,482111,Line-Haul Railroads,v1.4.0,2023,2024,IPCC AR6,0.154,0.000,0.154,0.05,0.0077,EPA Supply Chain GHG Emission Factors v1.4.0
+RAIL,482112,Short Line Railroads,v1.4.0,2023,2024,IPCC AR6,0.154,0.000,0.154,0.05,0.0077,EPA Supply Chain GHG Emission Factors v1.4.0

@@ -1,0 +1,11 @@
+[tool.ruff]
+line-length = 120
+target-version = "py311"
+src = ["api", "ingestion", "processing", "ml", "data_quality", "tests"]
+
+[tool.ruff.lint]
+select = ["E", "F", "I", "W"]
+
+[tool.pytest.ini_options]
+testpaths = ["api/tests", "tests"]
+pythonpath = ["api"]

@@ -1,0 +1,15 @@
+{
+  "data_asset_type": "table",
+  "expectation_suite_name": "emissions_suite",
+  "ge_version": "0.18.0",
+  "expectations": [
+    {
+      "expectation_type": "expect_column_mean_to_be_between",
+      "kwargs": { "column": "carbon_intensity", "min_value": 0.01, "max_value": 10.0 }
+    },
+    {
+      "expectation_type": "expect_table_row_count_to_be_between",
+      "kwargs": { "min_value": 1, "max_value": 50000000 }
+    }
+  ]
+}

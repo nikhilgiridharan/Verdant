@@ -1,0 +1,26 @@
+version: 2
+
+models:
+  - name: stg_emission_factors
+    description: >
+      EPA Supply Chain GHG Emission Factors v1.4.0 staged for CarbonPulse use.
+      One row per transport mode (AIR/OCEAN/TRUCK/RAIL). Factors based on 2023
+      U.S. GHG inventory data, denominated in 2024 USD, using IPCC AR6 GWPs.
+      The kg_co2e_per_tonne_km column is derived from the cost-based EPA factor
+      using industry-average cost rates per transport mode. See ADR-003.
+    columns:
+      - name: transport_mode
+        description: CarbonPulse transport mode (AIR/OCEAN/TRUCK/RAIL)
+        tests:
+          - not_null
+          - unique
+          - accepted_values:
+              values: ["AIR", "OCEAN", "TRUCK", "RAIL"]
+      - name: epa_factor_per_usd
+        description: SEF+MEF in kg CO2e per 2024 USD spent on transport service
+        tests:
+          - not_null
+      - name: kg_co2e_per_tonne_km
+        description: Derived factor in kg CO2e per tonne-km for physical calculations
+        tests:
+          - not_null

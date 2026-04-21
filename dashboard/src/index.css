@@ -1,0 +1,243 @@
+/* ============================================================
+   CARBONPULSE — PERSEFONI-INSPIRED DESIGN SYSTEM
+   Pure light theme, professional ESG aesthetic
+   ============================================================ */
+
+@import url("https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&family=Inter+Tight:wght@500;600;700&display=swap");
+
+:root {
+  /* ── Backgrounds ──────────────────────────────────────── */
+  --bg-base: #f7f8f6; /* very light sage-tinted gray — page bg */
+  --bg-surface: #ffffff; /* pure white — sidebar, cards */
+  --bg-elevated: #ffffff; /* white with shadow for floating elements */
+  --bg-subtle: #f0f2ee; /* slightly darker for input backgrounds */
+  --bg-hover: #eef1eb; /* hover state on rows and nav items */
+  --bg-selected: #e6ede1; /* selected/active state */
+
+  /* ── Brand Green (Persefoni-style sage/forest green) ──── */
+  --green-50: #f0f7ec;
+  --green-100: #dcf0d1;
+  --green-200: #b8e0a3;
+  --green-300: #88c96e;
+  --green-400: #5faf40;
+  --green-500: #3d8c21; /* primary brand green */
+  --green-600: #2d6e17; /* darker for text on light */
+  --green-700: #1f5210;
+  --green-800: #143808;
+  --green-900: #0a1f04;
+
+  /* ── Teal Accent (secondary interactive color) ────────── */
+  --teal-50: #edf7f5;
+  --teal-100: #c8ebe5;
+  --teal-200: #92d5cb;
+  --teal-300: #55bab0;
+  --teal-400: #2a9e94; /* primary teal accent */
+  --teal-500: #1a7d74;
+  --teal-600: #0f5e57;
+
+  /* ── Neutral Grays ────────────────────────────────────── */
+  --gray-50: #f9fafb;
+  --gray-100: #f3f4f2;
+  --gray-200: #e5e7e2;
+  --gray-300: #d1d5cc;
+  --gray-400: #9ca897;
+  --gray-500: #6b7566;
+  --gray-600: #4b5446;
+  --gray-700: #374034;
+  --gray-800: #1f2a1c;
+  --gray-900: #111a0e;
+
+  /* ── Semantic Colors ──────────────────────────────────── */
+  --color-success: #3d8c21;
+  --color-success-bg: #f0f7ec;
+  --color-success-border: #b8e0a3;
+
+  --color-warning: #92650a;
+  --color-warning-bg: #fef9ec;
+  --color-warning-border: #f5d87a;
+
+  --color-danger: #b91c1c;
+  --color-danger-bg: #fef2f2;
+  --color-danger-border: #fecaca;
+
+  --color-info: #1a7d74;
+  --color-info-bg: #edf7f5;
+  --color-info-border: #92d5cb;
+
+  /* ── Risk Tier Colors (replaces severity system) ─────── */
+  --risk-low: #3d8c21;
+  --risk-low-bg: #f0f7ec;
+  --risk-low-border: #b8e0a3;
+  --risk-low-text: #2d6e17;
+
+  --risk-medium: #92650a;
+  --risk-medium-bg: #fef9ec;
+  --risk-medium-border: #f5d87a;
+  --risk-medium-text: #7a5208;
+
+  --risk-high: #c2410c;
+  --risk-high-bg: #fff7ed;
+  --risk-high-border: #fed7aa;
+  --risk-high-text: #9a3412;
+
+  --risk-critical: #b91c1c;
+  --risk-critical-bg: #fef2f2;
+  --risk-critical-border: #fecaca;
+  --risk-critical-text: #991b1b;
+
+  /* ── Text ─────────────────────────────────────────────── */
+  --text-primary: #1f2a1c; /* near-black with green tint */
+  --text-secondary: #4b5446; /* medium gray-green */
+  --text-tertiary: #6b7566; /* muted for labels */
+  --text-placeholder: #9ca897; /* input placeholders */
+  --text-inverse: #ffffff; /* white text on dark backgrounds */
+  --text-link: #2a9e94; /* teal for links */
+  --text-brand: #3d8c21; /* green for brand moments */
+
+  /* ── Borders ──────────────────────────────────────────── */
+  --border-subtle: #eef0eb; /* barely visible dividers */
+  --border-default: #e0e3dc; /* standard card/panel borders */
+  --border-strong: #c8ccbf; /* emphasized borders */
+  --border-focus: #2a9e94; /* focus ring color */
+
+  /* ── Shadows ──────────────────────────────────────────── */
+  --shadow-xs: 0 1px 2px rgba(31, 42, 28, 0.05);
+  --shadow-sm: 0 1px 3px rgba(31, 42, 28, 0.08), 0 1px 2px rgba(31, 42, 28, 0.04);
+  --shadow-md: 0 4px 6px rgba(31, 42, 28, 0.06), 0 2px 4px rgba(31, 42, 28, 0.04);
+  --shadow-lg: 0 10px 15px rgba(31, 42, 28, 0.08), 0 4px 6px rgba(31, 42, 28, 0.04);
+  --shadow-card: 0 1px 3px rgba(31, 42, 28, 0.08), 0 0 0 1px rgba(31, 42, 28, 0.04);
+
+  /* ── Typography ───────────────────────────────────────── */
+  --font-sans: "Inter", -apple-system, BlinkMacSystemFont, sans-serif;
+  --font-display: "Inter Tight", "Inter", sans-serif;
+  --font-mono: "SF Mono", "Fira Code", "Fira Mono", monospace;
+
+  /* ── Radius ───────────────────────────────────────────── */
+  --radius-sm: 4px;
+  --radius-md: 8px;
+  --radius-lg: 12px;
+  --radius-xl: 16px;
+  --radius-full: 9999px;
+
+  /* ── Spacing scale ────────────────────────────────────── */
+  --space-1: 4px;
+  --space-2: 8px;
+  --space-3: 12px;
+  --space-4: 16px;
+  --space-5: 20px;
+  --space-6: 24px;
+  --space-8: 32px;
+  --space-10: 40px;
+  --space-12: 48px;
+}
+
+/* ── Global Reset & Base ──────────────────────────────────── */
+*,
+*::before,
+*::after {
+  box-sizing: border-box;
+  margin: 0;
+  padding: 0;
+}
+
+html {
+  font-size: 14px;
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+}
+
+html,
+body,
+#root {
+  height: 100%;
+}
+
+body {
+  font-family: var(--font-sans);
+  font-size: 14px;
+  font-weight: 400;
+  line-height: 1.5;
+  color: var(--text-primary);
+  background-color: var(--bg-base);
+}
+
+/* ── Scrollbars ───────────────────────────────────────────── */
+::-webkit-scrollbar {
+  width: 6px;
+  height: 6px;
+}
+::-webkit-scrollbar-track {
+  background: var(--bg-subtle);
+}
+::-webkit-scrollbar-thumb {
+  background: var(--gray-300);
+  border-radius: var(--radius-full);
+}
+::-webkit-scrollbar-thumb:hover {
+  background: var(--gray-400);
+}
+
+/* ── Focus Ring ───────────────────────────────────────────── */
+:focus-visible {
+  outline: 2px solid var(--border-focus);
+  outline-offset: 2px;
+}
+
+/* ── Links ────────────────────────────────────────────────── */
+a {
+  color: var(--text-link);
+  text-decoration: none;
+}
+a:hover {
+  text-decoration: underline;
+}
+
+@keyframes spin {
+  to {
+    transform: rotate(360deg);
+  }
+}
+
+.metric {
+  font-family: var(--font-display);
+  font-weight: 600;
+}
+
+.reading {
+  font-family: var(--font-sans);
+}
+
+.panel {
+  background: var(--bg-surface);
+  border: 1px solid var(--border-default);
+  border-radius: var(--radius-lg);
+  box-shadow: var(--shadow-card);
+}
+
+.cp-nav-link {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  padding: 8px 12px;
+  margin: 1px 8px;
+  border-radius: var(--radius-md);
+  font-size: 13px;
+  font-weight: 400;
+  color: var(--text-secondary);
+  background: transparent;
+  text-decoration: none;
+}
+.cp-nav-link:hover {
+  background: var(--bg-hover);
+  color: var(--text-primary);
+}
+.cp-nav-link.cp-nav-link--active {
+  background: var(--bg-selected);
+  color: var(--green-600);
+  font-weight: 500;
+}
+
+.cp-supplier-card:hover:not(.cp-supplier-card--active) {
+  background: var(--bg-hover) !important;
+  border-color: var(--border-subtle) !important;
+}
