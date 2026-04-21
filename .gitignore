@@ -9,6 +9,7 @@ target/
 *.duckdb
 *.duckdb.wal
 .env
+dashboard/.env.local
 .DS_Store
 warehouse/dbt_project/dbt_packages/
 warehouse/dbt_project/logs/
