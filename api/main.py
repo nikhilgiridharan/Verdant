@@ -31,18 +31,21 @@ async def lifespan(app: FastAPI):
         yield
         return
     try:
-        bootstrap.apply_schema()
+        try:
+            bootstrap.apply_schema()
+        except Exception as e:
+            print(f"Warning: schema apply failed: {e}")
+        bootstrap.seed_epa_emission_factors()
+        bootstrap.seed_pipeline_defaults()
+        with get_conn() as conn, conn.cursor() as cur:
+            cur.execute("SELECT COUNT(*) FROM shipment_silver_summary")
+            n = cur.fetchone()[0]
+        if n == 0:
+            bootstrap.seed_demo_shipments()
+            bootstrap.seed_risk_scores()
+            bootstrap.seed_alerts()
     except Exception as e:
-        print(f"Warning: schema apply failed: {e}")
-    bootstrap.seed_epa_emission_factors()
-    bootstrap.seed_pipeline_defaults()
-    with get_conn() as conn, conn.cursor() as cur:
-        cur.execute("SELECT COUNT(*) FROM shipment_silver_summary")
-        n = cur.fetchone()[0]
-    if n == 0:
-        bootstrap.seed_demo_shipments()
-        bootstrap.seed_risk_scores()
-        bootstrap.seed_alerts()
+        print(f"Warning: startup DB bootstrap skipped: {e}")
     yield
 
 

@@ -43,16 +43,22 @@ export default function Sidebar({ pipelineOk }) {
         <div style={{ display: "flex", alignItems: "center", gap: 12 }}>
           <div
             style={{
-              width: 36,
+              minWidth: 40,
               height: 36,
+              padding: "0 4px",
               borderRadius: "var(--radius-md)",
               background: "var(--green-500)",
-              display: "grid",
-              placeItems: "center",
+              display: "flex",
+              alignItems: "center",
+              justifyContent: "center",
+              gap: 3,
               flexShrink: 0,
             }}
           >
-            <svg width="18" height="18" viewBox="0 0 24 24" fill="none" aria-hidden>
+            <span aria-hidden style={{ fontSize: 13, lineHeight: 1 }}>
+              🕊️
+            </span>
+            <svg width="14" height="14" viewBox="0 0 24 24" fill="none" aria-hidden>
               <path
                 d="M12 3C8 7 5 10 5 14a7 7 0 0 0 14 0c0-4-3-7-7-11z"
                 stroke="var(--text-inverse)"
@@ -119,6 +125,23 @@ export default function Sidebar({ pipelineOk }) {
             />
           </svg>
           <span>GitHub</span>
+        </a>
+        <a
+          href="https://medium.com/@nikhilgiridharan/building-verdant-019e8e44b7b3"
+          target="_blank"
+          rel="noopener noreferrer"
+          className="cp-nav-link"
+        >
+          <svg width={15} height={15} viewBox="0 0 24 24" fill="currentColor" aria-hidden style={{ flexShrink: 0 }}>
+            <path d="M2 6.5A1.5 1.5 0 0 1 3.5 5h17A1.5 1.5 0 0 1 22 6.5v11a1.5 1.5 0 0 1-1.5 1.5h-17A1.5 1.5 0 0 1 2 17.5v-11Zm5.2 9.1c1.85 0 3-1.6 3-3.62 0-2.03-1.15-3.64-3-3.64s-3 1.61-3 3.64c0 2.02 1.15 3.62 3 3.62Zm5.38-.06h.6v-6.96h-.6v6.96Zm3.72.03c1.2 0 2-.9 2-2.09 0-1.3-.89-1.77-1.8-2.13-.73-.29-1.39-.47-1.39-1.01 0-.45.33-.73.86-.73.48 0 .92.22 1.32.56l.68-.89a2.98 2.98 0 0 0-2-.72c-1.18 0-1.94.84-1.94 1.96 0 1.22.9 1.72 1.78 2.05.74.28 1.4.49 1.4 1.09 0 .49-.34.83-.93.83-.58 0-1.14-.28-1.62-.73l-.72.9c.62.58 1.45.91 2.36.91Z" />
+          </svg>
+          <span>Medium</span>
+        </a>
+        <a href="https://www.youtube.com" target="_blank" rel="noopener noreferrer" className="cp-nav-link">
+          <svg width={15} height={15} viewBox="0 0 24 24" fill="currentColor" aria-hidden style={{ flexShrink: 0 }}>
+            <path d="M23.5 7.2a2.98 2.98 0 0 0-2.1-2.1C19.5 4.5 12 4.5 12 4.5s-7.5 0-9.4.6a2.98 2.98 0 0 0-2.1 2.1C0 9.1 0 12 0 12s0 2.9.5 4.8a2.98 2.98 0 0 0 2.1 2.1c1.9.6 9.4.6 9.4.6s7.5 0 9.4-.6a2.98 2.98 0 0 0 2.1-2.1c.5-1.9.5-4.8.5-4.8s0-2.9-.5-4.8ZM9.6 15.2V8.8L15.8 12l-6.2 3.2Z" />
+          </svg>
+          <span>Demo</span>
         </a>
       </nav>
       <div
