@@ -3,7 +3,8 @@ import Map, { Layer, Source } from "react-map-gl";
 import mapboxgl from "mapbox-gl";
 import "mapbox-gl/dist/mapbox-gl.css";
 import RiskBadge from "../shared/RiskBadge.jsx";
-import { MAPBOX_TOKEN } from "../../utils/constants.js";
+
+const MAPBOX_TOKEN = import.meta.env.VITE_MAPBOX_TOKEN;
 
 function riskColor(tier) {
   const t = (tier || "LOW").toUpperCase();
@@ -57,15 +58,19 @@ export default function GlobalEmissionsMap({ suppliers, selectedId, onSelect }) 
 
   if (!MAPBOX_TOKEN) {
     return (
-      <div className="panel" style={{ height: "100%", display: "grid", placeItems: "center", padding: 24, boxShadow: "none" }}>
-        <div style={{ textAlign: "center", maxWidth: 360 }}>
-          <div style={{ fontFamily: "var(--font-display)", fontSize: 15, fontWeight: 600, color: "var(--text-primary)" }}>
-            Mapbox token missing
-          </div>
-          <div style={{ marginTop: 10, fontSize: 13, color: "var(--text-secondary)", lineHeight: 1.5 }}>
-            Set <code style={{ fontFamily: "var(--font-mono)", fontSize: 12, background: "var(--bg-subtle)", padding: "2px 6px", borderRadius: "var(--radius-sm)" }}>VITE_MAPBOX_TOKEN</code> to enable the live emissions map.
-          </div>
-        </div>
+      <div
+        style={{
+          display: "flex",
+          flexDirection: "column",
+          alignItems: "center",
+          justifyContent: "center",
+          height: "100%",
+          gap: "8px",
+          color: "#6B7566",
+          fontSize: "13px",
+        }}
+      >
+        <span>Map unavailable — VITE_MAPBOX_TOKEN not set</span>
       </div>
     );
   }
@@ -75,6 +80,7 @@ export default function GlobalEmissionsMap({ suppliers, selectedId, onSelect }) 
   return (
     <div style={{ height: "100%", position: "relative" }}>
       <Map
+        mapboxAccessToken={MAPBOX_TOKEN}
         {...viewState}
         onMove={(evt) => setViewState(evt.viewState)}
         style={{ width: "100%", height: "100%" }}
