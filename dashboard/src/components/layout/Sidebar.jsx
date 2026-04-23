@@ -1,7 +1,6 @@
-import { NavLink } from "react-router-dom";
+import { NavLink, useNavigate } from "react-router-dom";
 
 const nav = [
-  { to: "/introduction", label: "Introduction" },
   { to: "/dashboard", label: "Overview" },
   { to: "/dashboard/suppliers", label: "Suppliers" },
   { to: "/dashboard/skus", label: "SKU Trace" },
@@ -18,6 +17,8 @@ const navLabel = {
 };
 
 export default function Sidebar({ pipelineOk }) {
+  const navigate = useNavigate();
+
   return (
     <aside
       style={{
@@ -40,11 +41,21 @@ export default function Sidebar({ pipelineOk }) {
         <div style={{ display: "flex", alignItems: "center", gap: 12 }}>
           <div>
             <div
+              role="button"
+              tabIndex={0}
+              onClick={() => navigate("/introduction")}
+              onKeyDown={(e) => {
+                if (e.key === "Enter" || e.key === " ") {
+                  e.preventDefault();
+                  navigate("/introduction");
+                }
+              }}
               style={{
                 fontFamily: "var(--font-display)",
                 fontWeight: 600,
                 fontSize: 15,
                 color: "var(--text-primary)",
+                cursor: "pointer",
               }}
             >
               Verdant
