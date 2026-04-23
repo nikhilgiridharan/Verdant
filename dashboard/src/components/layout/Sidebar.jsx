@@ -2,6 +2,7 @@ import { NavLink } from "react-router-dom";
 import { playGoFundMeAudio } from "../../utils/goFundMeAudio.js";
 
 const nav = [
+  { to: "/introduction", label: "Introduction" },
   { to: "/dashboard", label: "Overview" },
   { to: "/dashboard/suppliers", label: "Suppliers" },
   { to: "/dashboard/skus", label: "SKU trace" },

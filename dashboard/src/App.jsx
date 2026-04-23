@@ -11,6 +11,7 @@ import DataQuality from "./views/DataQuality.jsx";
 import APIExplorer from "./views/APIExplorer.jsx";
 import GoFundMe from "./views/GoFundMe.jsx";
 import Landing from "./pages/Landing.jsx";
+import Introduction from "./views/Introduction.jsx";
 import { useEmissionsSummary } from "./hooks/useEmissionsData.js";
 import { wsAlertsUrl, wsPipelineUrl } from "./utils/constants.js";
 import { ensureGoFundMeAudioPlayer } from "./utils/goFundMeAudio.js";
@@ -78,6 +79,7 @@ function Shell() {
         <div style={{ flex: 1, minHeight: 0 }}>
           <Routes>
             <Route index element={<Dashboard liveAlerts={liveAlert} />} />
+            <Route path="/introduction" element={<Introduction />} />
             <Route path="suppliers" element={<Suppliers />} />
             <Route path="skus" element={<SKUAttribution />} />
             <Route path="forecast" element={<Forecast />} />
@@ -98,6 +100,7 @@ export default function App() {
     <BrowserRouter>
       <Routes>
         <Route path="/" element={<Landing />} />
+        <Route path="/introduction" element={<Shell />} />
         <Route path="/dashboard/*" element={<Shell />} />
         <Route path="*" element={<Navigate to="/" replace />} />
       </Routes>
