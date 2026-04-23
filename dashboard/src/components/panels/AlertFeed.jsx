@@ -89,7 +89,30 @@ export default function AlertFeed({ liveAlerts }) {
           gap: 12,
         }}
       >
-        <div style={{ fontSize: 13, fontWeight: 600, color: "var(--text-primary)" }}>Live anomalies</div>
+        <div
+          style={{
+            display: "flex",
+            alignItems: "center",
+            gap: 8,
+            fontSize: 11,
+            fontWeight: 700,
+            letterSpacing: "0.1em",
+            textTransform: "uppercase",
+            color: "var(--text-primary)",
+            fontFamily: "var(--font-display)",
+          }}
+        >
+          <span
+            style={{
+              width: 8,
+              height: 8,
+              background: "var(--green-500)",
+              display: "inline-block",
+              flexShrink: 0,
+            }}
+          />
+          Live anomalies
+        </div>
         <span
           style={{
             fontSize: 11,

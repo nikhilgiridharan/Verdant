@@ -30,7 +30,19 @@ export default function Dashboard({ liveAlerts }) {
       <div style={{ gridColumn: "2 / 3", gridRow: "1 / 2" }}>
         <MetricCards summary={summary} />
       </div>
-      <div className="panel" style={{ gridColumn: "2 / 3", gridRow: "2 / 3", overflow: "hidden", padding: 0, minHeight: 0 }}>
+      <div
+        className="panel cp-dashboard-map-shell"
+        style={{
+          gridColumn: "2 / 3",
+          gridRow: "2 / 3",
+          overflow: "hidden",
+          padding: 0,
+          minHeight: 0,
+          backgroundColor: "var(--bg-surface)",
+          backgroundImage: "radial-gradient(circle, var(--gray-200) 1px, transparent 1px)",
+          backgroundSize: "20px 20px",
+        }}
+      >
         <GlobalEmissionsMap suppliers={suppliers} selectedId={selected} onSelect={setSelected} />
       </div>
       <div style={{ gridColumn: "3 / 4", gridRow: "1 / 3", minHeight: 0 }}>

@@ -3,7 +3,9 @@
    Pure light theme, professional ESG aesthetic
    ============================================================ */
 
-@import url("https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&family=Inter+Tight:wght@500;600;700&display=swap");
+@import url(
+  "https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&family=Inter+Tight:wght@300;500;600;700;800&family=Source+Serif+4:ital,wght@0,400;0,600;1,400&display=swap"
+);
 
 :root {
   /* ── Backgrounds ──────────────────────────────────────── */
@@ -110,6 +112,7 @@
   /* ── Typography ───────────────────────────────────────── */
   --font-sans: "Inter", -apple-system, BlinkMacSystemFont, sans-serif;
   --font-display: "Inter Tight", "Inter", sans-serif;
+  --font-reading: "Source Serif 4", Georgia, "Times New Roman", serif;
   --font-mono: "SF Mono", "Fira Code", "Fira Mono", monospace;
 
   /* ── Radius ───────────────────────────────────────────── */
@@ -240,4 +243,19 @@ a:hover {
 .cp-supplier-card:hover:not(.cp-supplier-card--active) {
   background: var(--bg-hover) !important;
   border-color: var(--border-subtle) !important;
+}
+
+/* Suppliers view — terminal row hover (border only) */
+.cp-suppliers-table tbody tr {
+  border-left: 2px solid transparent;
+  transition: border-left-color 0.12s ease;
+}
+.cp-suppliers-table tbody tr:hover {
+  border-left-color: var(--green-400);
+}
+
+/* Overview — map stack fills dotted shell */
+.cp-dashboard-map-shell > div {
+  min-height: 0;
+  height: 100%;
 }

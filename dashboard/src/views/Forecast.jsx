@@ -29,27 +29,90 @@ export default function Forecast() {
   }));
 
   return (
-    <div style={{ padding: 24, background: "var(--bg-base)", minHeight: "100%" }}>
-      <div style={{ fontFamily: "var(--font-display)", fontSize: 18, fontWeight: 600, color: "var(--text-primary)", marginBottom: 16 }}>
-        Emissions forecast
-      </div>
-      <input
-        value={supplier}
-        onChange={(e) => setSupplier(e.target.value)}
-        style={{
-          width: "min(100%, 360px)",
-          padding: "7px 12px",
-          marginBottom: 16,
-          borderRadius: "var(--radius-md)",
-          border: "1px solid var(--border-default)",
-          background: "var(--bg-subtle)",
-          color: "var(--text-primary)",
-          fontFamily: "var(--font-sans)",
-          fontSize: 13,
-        }}
-      />
-      <div className="panel" style={{ padding: 20, boxShadow: "var(--shadow-card)" }}>
-        <ForecastChart history={hist} forecast={fut} />
+    <div
+      style={{
+        minHeight: "100%",
+        padding: "32px 28px 40px",
+        backgroundColor: "var(--bg-surface)",
+        backgroundImage: `
+          linear-gradient(90deg, color-mix(in srgb, var(--color-warning) 12%, transparent) 1px, transparent 1px),
+          linear-gradient(color-mix(in srgb, var(--gray-300) 35%, transparent) 1px, transparent 1px)
+        `,
+        backgroundSize: "28px 100%, 100% 28px",
+        backgroundPosition: "0 0, 0 0",
+      }}
+    >
+      <div style={{ maxWidth: 920, margin: "0 auto" }}>
+        <p
+          style={{
+            fontFamily: "var(--font-reading)",
+            fontSize: 14,
+            fontStyle: "italic",
+            color: "var(--text-tertiary)",
+            margin: "0 0 8px",
+            borderBottom: "1px solid var(--border-subtle)",
+            paddingBottom: 8,
+            display: "inline-block",
+          }}
+        >
+          Analyst notebook · 30-day horizon
+        </p>
+        <h1
+          style={{
+            fontFamily: "var(--font-reading)",
+            fontSize: 32,
+            fontWeight: 600,
+            color: "var(--text-primary)",
+            margin: "0 0 20px",
+            lineHeight: 1.15,
+          }}
+        >
+          Emissions forecast
+        </h1>
+        <label
+          htmlFor="forecast-supplier"
+          style={{
+            display: "block",
+            fontFamily: "var(--font-mono)",
+            fontSize: 10,
+            letterSpacing: "0.14em",
+            textTransform: "uppercase",
+            color: "var(--text-tertiary)",
+            marginBottom: 6,
+          }}
+        >
+          Supplier ID
+        </label>
+        <input
+          id="forecast-supplier"
+          value={supplier}
+          onChange={(e) => setSupplier(e.target.value)}
+          style={{
+            width: "min(100%, 360px)",
+            padding: "10px 14px",
+            marginBottom: 24,
+            borderRadius: "var(--radius-sm)",
+            border: "1px solid var(--border-strong)",
+            borderLeft: "4px solid var(--color-warning)",
+            background: "rgba(255,255,255,0.92)",
+            color: "var(--text-primary)",
+            fontFamily: "var(--font-mono)",
+            fontSize: 13,
+            boxShadow: "inset 0 1px 0 rgba(255,255,255,0.8)",
+          }}
+        />
+        <div
+          className="panel"
+          style={{
+            padding: "24px 20px 20px",
+            border: "1px solid var(--border-default)",
+            borderTop: "3px double color-mix(in srgb, var(--color-warning) 55%, var(--border-default))",
+            background: "rgba(255,255,255,0.88)",
+            boxShadow: "var(--shadow-md)",
+          }}
+        >
+          <ForecastChart history={hist} forecast={fut} />
+        </div>
       </div>
     </div>
   );

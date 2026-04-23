@@ -64,31 +64,119 @@ export default function SKUAttribution() {
   const { nodes, links } = useMemo(() => sankeyTopSuppliers(data, 10), [data]);
 
   return (
-    <div style={{ padding: 24, background: "var(--bg-base)", minHeight: "100%" }}>
-      <div style={{ fontFamily: "var(--font-display)", fontSize: 18, fontWeight: 600, color: "var(--text-primary)", marginBottom: 16 }}>
-        SKU attribution
-      </div>
-      <div style={{ display: "flex", gap: 12, marginBottom: 16, flexWrap: "wrap" }}>
-        <input
-          value={sku}
-          onChange={(e) => setSku(e.target.value)}
+    <div
+      style={{
+        minHeight: "100%",
+        padding: "20px 24px 32px",
+        background: "linear-gradient(165deg, color-mix(in srgb, var(--teal-50) 55%, var(--bg-base)) 0%, var(--bg-base) 42%, var(--bg-subtle) 100%)",
+      }}
+    >
+      <div
+        style={{
+          display: "grid",
+          gridTemplateColumns: "minmax(0, 1fr)",
+          gap: 0,
+          maxWidth: 1100,
+          margin: "0 auto",
+        }}
+      >
+        <div style={{ display: "flex", flexWrap: "wrap", alignItems: "flex-end", justifyContent: "space-between", gap: 16, marginBottom: 20 }}>
+          <div>
+            <div
+              style={{
+                fontFamily: "var(--font-mono)",
+                fontSize: 10,
+                letterSpacing: "0.18em",
+                textTransform: "uppercase",
+                color: "var(--teal-600)",
+                marginBottom: 6,
+              }}
+            >
+              SKU trace · flow attribution
+            </div>
+            <h1 style={{ fontFamily: "var(--font-display)", fontSize: 26, fontWeight: 700, color: "var(--text-primary)", margin: 0, letterSpacing: "-0.02em" }}>
+              Emissions Sankey
+            </h1>
+          </div>
+          <input
+            value={sku}
+            onChange={(e) => setSku(e.target.value)}
+            aria-label="SKU identifier"
+            style={{
+              minWidth: 220,
+              maxWidth: 420,
+              flex: "1 1 280px",
+              padding: "10px 14px",
+              borderRadius: "var(--radius-md)",
+              border: "1px solid color-mix(in srgb, var(--teal-400) 45%, var(--border-default))",
+              background: "var(--bg-surface)",
+              color: "var(--text-primary)",
+              fontFamily: "var(--font-mono)",
+              fontSize: 13,
+              letterSpacing: "0.04em",
+            }}
+          />
+        </div>
+
+        <div
           style={{
-            flex: "1 1 280px",
-            maxWidth: 480,
-            padding: "7px 12px",
-            borderRadius: "var(--radius-md)",
-            border: "1px solid var(--border-default)",
-            background: "var(--bg-subtle)",
-            color: "var(--text-primary)",
-            fontFamily: "var(--font-sans)",
-            fontSize: 13,
+            display: "flex",
+            flexDirection: "row",
+            gap: 0,
+            alignItems: "stretch",
+            borderRadius: "var(--radius-lg)",
+            overflow: "hidden",
+            border: "1px solid color-mix(in srgb, var(--teal-400) 35%, var(--border-default))",
+            background: "var(--bg-surface)",
+            boxShadow: "var(--shadow-card)",
           }}
-        />
+        >
+          <div
+            className="cp-sku-trace-rail"
+            aria-hidden
+            style={{
+              width: 36,
+              flexShrink: 0,
+              background: "color-mix(in srgb, var(--teal-100) 70%, var(--bg-subtle))",
+              borderRight: "1px solid color-mix(in srgb, var(--teal-400) 25%, var(--border-default))",
+              display: "none",
+            }}
+          >
+            ATTRIBUTION
+          </div>
+          <style>{`
+            @media (min-width: 760px) {
+              .cp-sku-trace-rail {
+                display: flex !important;
+                align-items: center;
+                justify-content: center;
+                writing-mode: vertical-rl;
+                transform: rotate(180deg);
+                font-family: var(--font-mono);
+                font-size: 10px;
+                letter-spacing: 0.22em;
+                text-transform: uppercase;
+                color: var(--teal-600);
+              }
+            }
+          `}</style>
+          <div style={{ flex: 1, minWidth: 0, borderLeft: "3px solid var(--teal-400)", padding: "16px 18px 20px" }}>
+            <div
+              style={{
+                fontSize: 12,
+                color: "var(--text-tertiary)",
+                fontFamily: "var(--font-mono)",
+                marginBottom: 12,
+                paddingBottom: 10,
+                borderBottom: "1px dashed var(--border-default)",
+              }}
+            >
+              Showing top 10 suppliers by emissions for this SKU
+            </div>
+            <SankeyDiagram nodes={nodes} links={links} />
+          </div>
+        </div>
       </div>
-      <div style={{ fontSize: 12, color: "var(--text-tertiary)", marginBottom: 8 }}>
-        Showing top 10 suppliers by emissions for this SKU
-      </div>
-      <SankeyDiagram nodes={nodes} links={links} />
     </div>
   );
 }

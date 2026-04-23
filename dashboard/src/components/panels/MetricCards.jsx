@@ -22,10 +22,34 @@ export default function MetricCards({ summary }) {
   const yoy = summary?.yoy_change_pct;
   const cards = useMemo(
     () => [
-      { label: "Total CO₂ (YTD)", value: summary?.total_co2_ytd_kg ?? 0, unit: "kg", trend: yoy },
-      { label: "Suppliers at risk", value: summary?.active_suppliers ?? 0, unit: "", trend: null },
-      { label: "Avg intensity", value: summary?.avg_carbon_intensity ?? 0, unit: "kg/kg", trend: null },
-      { label: "Month to date", value: summary?.total_co2_mtd_kg ?? 0, unit: "kg", trend: null },
+      {
+        label: "Total CO₂ (YTD)",
+        value: summary?.total_co2_ytd_kg ?? 0,
+        unit: "kg",
+        trend: yoy,
+        accent: "var(--green-500)",
+      },
+      {
+        label: "Suppliers at risk",
+        value: summary?.active_suppliers ?? 0,
+        unit: "",
+        trend: null,
+        accent: "var(--risk-high)",
+      },
+      {
+        label: "Avg intensity",
+        value: summary?.avg_carbon_intensity ?? 0,
+        unit: "kg/kg",
+        trend: null,
+        accent: "var(--teal-400)",
+      },
+      {
+        label: "Month to date",
+        value: summary?.total_co2_mtd_kg ?? 0,
+        unit: "kg",
+        trend: null,
+        accent: "var(--color-warning)",
+      },
     ],
     [summary, yoy],
   );
@@ -38,6 +62,7 @@ export default function MetricCards({ summary }) {
           style={{
             background: "var(--bg-surface)",
             border: "1px solid var(--border-default)",
+            borderLeft: `3px solid ${c.accent}`,
             borderRadius: "var(--radius-lg)",
             padding: "20px 24px",
             boxShadow: "var(--shadow-card)",

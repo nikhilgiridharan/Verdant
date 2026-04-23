@@ -76,7 +76,31 @@ export default function SupplierIntelPanel({ suppliers, selectedId, onSelect }) 
       }}
     >
       <div style={{ padding: "16px 16px 12px", borderBottom: "1px solid var(--border-subtle)" }}>
-        <div style={{ fontSize: 13, fontWeight: 600, color: "var(--text-primary)", marginBottom: 12 }}>Supplier intelligence</div>
+        <div
+          style={{
+            display: "flex",
+            alignItems: "center",
+            gap: 8,
+            fontSize: 11,
+            fontWeight: 700,
+            letterSpacing: "0.1em",
+            textTransform: "uppercase",
+            color: "var(--text-primary)",
+            fontFamily: "var(--font-display)",
+            marginBottom: 12,
+          }}
+        >
+          <span
+            style={{
+              width: 8,
+              height: 8,
+              background: "var(--green-500)",
+              display: "inline-block",
+              flexShrink: 0,
+            }}
+          />
+          Supplier intelligence
+        </div>
         <div style={{ position: "relative" }}>
           <svg
             width="14"
