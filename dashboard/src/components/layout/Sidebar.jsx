@@ -84,6 +84,10 @@ export default function Sidebar({ pipelineOk }) {
           <span aria-hidden>⚙</span>
           <span>Settings</span>
         </NavLink>
+        <NavLink to="/wiki" className={({ isActive }) => `cp-nav-link${isActive ? " cp-nav-link--active" : ""}`}>
+          <span aria-hidden>📘</span>
+          <span>Wiki</span>
+        </NavLink>
         <a
           href="https://github.com/nikhilgiridharan"
           target="_blank"
