@@ -7,11 +7,8 @@ import Dashboard from "./views/Dashboard.jsx";
 import Suppliers from "./views/Suppliers.jsx";
 import SKUAttribution from "./views/SKUAttribution.jsx";
 import Forecast from "./views/Forecast.jsx";
-import DataQuality from "./views/DataQuality.jsx";
-import APIExplorer from "./views/APIExplorer.jsx";
 import GoFundMe from "./views/GoFundMe.jsx";
 import Landing from "./pages/Landing.jsx";
-import Introduction from "./views/Introduction.jsx";
 import { useEmissionsSummary } from "./hooks/useEmissionsData.js";
 import { wsAlertsUrl, wsPipelineUrl } from "./utils/constants.js";
 import { ensureGoFundMeAudioPlayer } from "./utils/goFundMeAudio.js";
@@ -21,8 +18,6 @@ function titles(pathname) {
   if (p.startsWith("/suppliers")) return "Suppliers";
   if (p.startsWith("/skus")) return "SKU attribution";
   if (p.startsWith("/forecast")) return "Forecast";
-  if (p.startsWith("/quality")) return "Data quality";
-  if (p.startsWith("/api")) return "API console";
   if (p.startsWith("/go-fund-me")) return "Conclusion";
   return "Overview";
 }
@@ -79,12 +74,9 @@ function Shell() {
         <div style={{ flex: 1, minHeight: 0 }}>
           <Routes>
             <Route index element={<Dashboard liveAlerts={liveAlert} />} />
-            <Route path="/introduction" element={<Introduction />} />
             <Route path="suppliers" element={<Suppliers />} />
             <Route path="skus" element={<SKUAttribution />} />
             <Route path="forecast" element={<Forecast />} />
-            <Route path="quality" element={<DataQuality />} />
-            <Route path="api" element={<APIExplorer />} />
             <Route path="go-fund-me" element={<GoFundMe />} />
             <Route path="*" element={<Navigate to="/dashboard" replace />} />
           </Routes>
@@ -100,7 +92,7 @@ export default function App() {
     <BrowserRouter>
       <Routes>
         <Route path="/" element={<Landing />} />
-        <Route path="/introduction" element={<Shell />} />
+        <Route path="/introduction" element={<Landing />} />
         <Route path="/dashboard/*" element={<Shell />} />
         <Route path="*" element={<Navigate to="/" replace />} />
       </Routes>
