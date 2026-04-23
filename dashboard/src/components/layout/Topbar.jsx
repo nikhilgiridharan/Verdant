@@ -1,8 +1,28 @@
-import { useMemo } from "react";
+import { useEffect, useMemo, useState } from "react";
 import DataFreshBadge from "../shared/DataFreshBadge.jsx";
 import { formatKg } from "../../utils/formatters.js";
+import { apiBaseUrl } from "../../utils/constants.js";
 
 export default function Topbar({ title, summary, pipelineMessage }) {
+  const [anomalyCount, setAnomalyCount] = useState(0);
+
+  useEffect(() => {
+    let cancelled = false;
+    (async () => {
+      try {
+        const res = await fetch(`${apiBaseUrl()}/pipeline/alerts?severity=HIGH&limit=100`);
+        const data = await res.json();
+        const count = Array.isArray(data) ? data.length : data?.alerts?.length ?? data?.total ?? 0;
+        if (!cancelled) setAnomalyCount(Number(count) || 0);
+      } catch {
+        if (!cancelled) setAnomalyCount(0);
+      }
+    })();
+    return () => {
+      cancelled = true;
+    };
+  }, []);
+
   const ticker = useMemo(() => {
     const ytd = summary?.total_co2_ytd_kg ?? 0;
     const sup = summary?.active_suppliers ?? 0;
@@ -11,9 +31,9 @@ export default function Topbar({ title, summary, pipelineMessage }) {
       { k: "Total CO₂ YTD", v: formatKg(ytd) },
       { k: "Suppliers", v: String(sup) },
       { k: "Shipments", v: String(ship) },
-      { k: "Anomalies", v: "—" },
+      { k: "Anomalies", v: String(anomalyCount), danger: anomalyCount > 0 },
     ];
-  }, [summary]);
+  }, [summary, anomalyCount]);
 
   return (
     <header
@@ -69,7 +89,7 @@ export default function Topbar({ title, summary, pipelineMessage }) {
                   fontFamily: "var(--font-display)",
                   fontSize: 13,
                   fontWeight: 600,
-                  color: "var(--text-primary)",
+                  color: t.danger ? "var(--color-danger)" : "var(--text-primary)",
                   marginTop: 2,
                 }}
               >

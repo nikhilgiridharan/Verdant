@@ -12,6 +12,7 @@ import csv
 import hashlib
 import os
 import random
+import re
 import uuid
 from datetime import datetime, timedelta, timezone
 from pathlib import Path
@@ -41,6 +42,30 @@ PIPELINE_COMPONENTS = [
     "ge-checks",
     "api",
 ]
+
+# suppliers.csv historically used placeholder display names in the `name` column.
+PLACEHOLDER_SUPPLIER_NAME = re.compile(r"^Supplier\s+SUP-\d+", re.IGNORECASE)
+
+
+def supplier_display_name(supplier_id: str, csv_name: str) -> str:
+    """
+    Prefer a real-looking `name` from suppliers.csv. If the CSV still has the
+    generic "Supplier SUP-xxxxx (...)" pattern, generate a stable synthetic
+    company name so Neon/UI show realistic labels.
+    """
+    raw = (csv_name or "").strip()
+    if raw and not PLACEHOLDER_SUPPLIER_NAME.match(raw):
+        return raw[:200]
+    seed = int(hashlib.md5(supplier_id.encode(), usedforsecurity=False).hexdigest()[:8], 16)
+    try:
+        from faker import Faker
+
+        fake = Faker()
+        fake.seed_instance(seed)
+        return fake.company()[:120]
+    except Exception:  # pragma: no cover
+        return raw[:200] if raw else supplier_id
+
 
 CATEGORIES = [
     "Electronics",
@@ -100,10 +125,12 @@ def seed_suppliers(conn) -> int:
     with SUPPLIERS_CSV.open(encoding="utf-8") as f:
         reader = csv.DictReader(f)
         for r in reader:
+            sid = r["supplier_id"].strip()
+            name = supplier_display_name(sid, r.get("name", "") or "")
             rows.append(
                 (
-                    r["supplier_id"].strip(),
-                    r["name"].strip(),
+                    sid,
+                    name,
                     r["country"].strip(),
                     float(r["lat"]),
                     float(r["lng"]),
