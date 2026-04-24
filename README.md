@@ -4,7 +4,7 @@ Track carbon emissions across your supply chain — down to the supplier, shipme
 
 **Live demo:** https://carbon-trace-8r4kifapt-nikhilgiridharans-projects.vercel.app
 
-**Stack:** Kafka · PySpark · dbt · Airflow · Snowflake · FastAPI · React · Mapbox
+**Stack:** Kafka · PySpark · PostgreSQL · FastAPI · React · Mapbox
 
 **Data sources:**
 
@@ -14,19 +14,7 @@ Track carbon emissions across your supply chain — down to the supplier, shipme
 
 ## Architecture
 
-```mermaid
-flowchart LR
-    A[Kafka<br/>MSK-compatible] --> B[PySpark<br/>Bronze Layer]
-    B --> C[PySpark<br/>Silver Layer]
-    C --> D[dbt<br/>Gold Marts]
-    D --> E[Snowflake<br/>/ DuckDB]
-    E --> F[Airflow<br/>Orchestration]
-    F --> G[FastAPI<br/>REST + WebSocket]
-    G --> H[React<br/>Mapbox Dashboard]
-
-    I[EPA v1.4.0<br/>Emission Factors] --> D
-    J[500 Suppliers<br/>City-anchored coords] --> A
-```
+Data is ingested via Kafka, processed by PySpark Bronze and Silver transformations, stored in PostgreSQL (Neon), and served via FastAPI.
 
 ## Key Features
 
@@ -39,15 +27,9 @@ flowchart LR
 
 ## Team
 
-- Data Engineer: pipeline, dbt models, API, infrastructure
+- Data Engineer: pipeline, PostgreSQL modeling, API, infrastructure
 - Data Scientist: LightGBM risk scoring, XGBoost forecasting, MLflow
 - Supply Chain Analyst: EPA factor validation, KPI framework, Power BI
-
-## Data Lineage
-
-![dbt lineage graph](docs/dbt_lineage.png)
-
-_Schematic generated after `dbt docs generate`. For the interactive DAG in your browser, run `cd warehouse/dbt_project && dbt docs generate && dbt docs serve`._
 
 ## Local Development
 
@@ -79,15 +61,13 @@ make ui                          # same port as DASHBOARD_PORT (default 3080); p
 Additional targets:
 
 ```bash
-make dbt-run     # requires local dbt + DuckDB profile in warehouse/dbt_project
-make dbt-test
 make quality
 make test
 ```
 
 ## Environment variables
 
-See [.env.example](.env.example) for the full list (Kafka, MinIO, Postgres, Snowflake, MLflow, Airflow, API, dashboard, AWS).
+See [.env.example](.env.example) for the full list (Kafka, MinIO, Postgres, MLflow, Airflow, API, dashboard, AWS).
 
 ## API
 
@@ -131,17 +111,17 @@ Shipment records are synthetically generated at configurable volume (default: 10
 ## Medium article outline (draft)
 
 1. **Problem** — Scope 3 boundaries, supplier fragmentation, latency needs.
-2. **Architecture** — Kafka → Spark → Delta → dbt → serve.
-3. **Data model** — Fact emissions + SCD2-ready supplier dimension.
-4. **dbt** — Tests, lineage, separation from Spark transforms.
+2. **Architecture** — Kafka → Spark → PostgreSQL (Neon) → FastAPI → dashboard.
+3. **Data model** — Fact emissions + supplier and SKU dimensions.
+4. **Data quality** — SQL checks and API validation over transformed tables.
 5. **Anomalies** — Streaming ingress + alerting surface.
 6. **Dashboard** — Map + terminal UI patterns.
-7. **Lessons** — Trade-offs (local DuckDB vs Snowflake, Airflow bootstrap).
+7. **Lessons** — Trade-offs (local portability, Airflow bootstrap, API-first serving).
 8. **Links** — GitHub + demo.
 
 ## Resume bullets (fill brackets after measuring prod)
 
-1. Architected a Scope 3 emissions platform ingesting **[X]M+** synthetic shipment events via Kafka → PySpark → S3-compatible storage → dbt, targeting sub-**[X] minute** refresh for demo stacks.
-2. Modeled emissions in dbt with fact/dim tests and SCD-oriented supplier dimensions across **500** demo suppliers and **2000** SKUs.
+1. Architected a Scope 3 emissions platform ingesting **[X]M+** synthetic shipment events via Kafka → PySpark → PostgreSQL (Neon), targeting sub-**[X] minute** refresh for demo stacks.
+2. Modeled emissions in PostgreSQL with validated fact/dimension tables across **500** demo suppliers and **2000** SKUs.
 3. Orchestrated health checks via Airflow-compatible DAG stubs, Great Expectations-style SQL gates, and pipeline status tables.
 4. Shipped FastAPI + WebSocket feeds powering a Mapbox React dashboard with **20+** REST endpoints in the v1 surface.

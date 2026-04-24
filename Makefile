@@ -1,6 +1,6 @@
 DASHBOARD_PORT ?= 3080
 
-.PHONY: up down logs seed kafka-topics dbt-run dbt-test quality test clean local ui
+.PHONY: up down logs seed kafka-topics quality test clean local ui
 
 up:
 	docker compose up -d
@@ -34,12 +34,6 @@ kafka-topics:
 	docker compose exec -T kafka kafka-topics --bootstrap-server kafka:9092 --create --if-not-exists --topic shipment-events --partitions 3 --replication-factor 1
 	docker compose exec -T kafka kafka-topics --bootstrap-server kafka:9092 --create --if-not-exists --topic emissions-processed --partitions 3 --replication-factor 1
 	docker compose exec -T kafka kafka-topics --bootstrap-server kafka:9092 --create --if-not-exists --topic anomaly-alerts --partitions 3 --replication-factor 1
-
-dbt-run:
-	cd warehouse/dbt_project && dbt run
-
-dbt-test:
-	cd warehouse/dbt_project && dbt test
 
 quality:
 	PYTHONPATH=. python data_quality/run_checks.py

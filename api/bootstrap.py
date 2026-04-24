@@ -15,7 +15,7 @@ import psycopg2.extras
 from db.connection import get_conn
 
 REPO_ROOT = Path(__file__).resolve().parents[1]
-EPA_SEED_CSV = REPO_ROOT / "warehouse" / "dbt_project" / "seeds" / "epa_emission_factors.csv"
+EPA_SEED_CSV = REPO_ROOT / "data" / "seeds" / "epa_emission_factors.csv"
 
 ADMIN_SECRET = os.environ.get("ADMIN_SECRET", "changeme_in_production")
 
@@ -44,7 +44,7 @@ def apply_schema() -> None:
 
 
 def seed_epa_emission_factors() -> int:
-    """Load EPA v1.4.0 NAICS seed rows from warehouse/dbt_project/seeds into Postgres."""
+    """Load EPA v1.4.0 NAICS seed rows from data/seeds into Postgres."""
     if not EPA_SEED_CSV.is_file():
         return 0
     rows = []
@@ -237,9 +237,8 @@ def seed_pipeline_defaults() -> None:
         "kafka-producer",
         "spark-bronze",
         "spark-silver",
-        "dbt-staging",
-        "dbt-marts",
-        "dbt-tests",
+        "postgres-sync",
+        "quality-checks",
         "ge-checks",
         "api",
     ]

@@ -22,8 +22,8 @@ import psycopg2.extras
 
 REPO_ROOT = Path(__file__).resolve().parents[1]
 SCHEMA_SQL = REPO_ROOT / "api" / "db" / "schema.sql"
-SUPPLIERS_CSV = REPO_ROOT / "warehouse" / "dbt_project" / "seeds" / "suppliers.csv"
-EPA_CSV = REPO_ROOT / "warehouse" / "dbt_project" / "seeds" / "epa_emission_factors.csv"
+SUPPLIERS_CSV = REPO_ROOT / "data" / "seeds" / "suppliers.csv"
+EPA_CSV = REPO_ROOT / "data" / "seeds" / "epa_emission_factors.csv"
 
 SHIPMENT_TARGET = 50_000
 SKU_COUNT = 2000
@@ -36,9 +36,8 @@ PIPELINE_COMPONENTS = [
     "kafka-producer",
     "spark-bronze",
     "spark-silver",
-    "dbt-staging",
-    "dbt-marts",
-    "dbt-tests",
+    "postgres-sync",
+    "quality-checks",
     "ge-checks",
     "api",
 ]

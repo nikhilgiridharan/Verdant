@@ -42,27 +42,41 @@ export default function Sidebar({ pipelineOk }) {
         }}
       >
         <div style={{ display: "flex", alignItems: "center", gap: 12 }}>
-          <div>
-            <div
-              role="button"
-              tabIndex={0}
-              onClick={() => navigate("/introduction")}
-              onKeyDown={(e) => {
-                if (e.key === "Enter" || e.key === " ") {
-                  e.preventDefault();
-                  navigate("/introduction");
-                }
-              }}
+          <div
+            role="button"
+            tabIndex={0}
+            aria-label="Verdant, go to introduction"
+            onClick={() => navigate("/introduction")}
+            onKeyDown={(e) => {
+              if (e.key === "Enter" || e.key === " ") {
+                e.preventDefault();
+                navigate("/introduction");
+              }
+            }}
+            style={{
+              display: "flex",
+              alignItems: "center",
+              gap: 10,
+              cursor: "pointer",
+            }}
+          >
+            <img
+              src="/verdant-dove.png"
+              alt=""
+              width={28}
+              height={28}
+              style={{ borderRadius: 6, flexShrink: 0, display: "block", objectFit: "cover" }}
+            />
+            <span
               style={{
                 fontFamily: "var(--font-display)",
                 fontWeight: 600,
                 fontSize: 15,
                 color: "var(--text-primary)",
-                cursor: "pointer",
               }}
             >
               Verdant
-            </div>
+            </span>
           </div>
         </div>
       </div>

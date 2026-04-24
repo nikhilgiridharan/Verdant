@@ -1,7 +1,0 @@
-carbonpulse:
-  target: dev
-  outputs:
-    dev:
-      type: duckdb
-      path: ./target/carbonpulse_dev.duckdb
-      threads: 4
