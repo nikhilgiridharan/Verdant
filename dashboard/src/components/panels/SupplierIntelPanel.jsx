@@ -21,7 +21,6 @@ function tierBarColor(tier) {
 }
 
 export default function SupplierIntelPanel({ suppliers, selectedId, onSelect }) {
-  const [supplierPanelOpen, setSupplierPanelOpen] = useState(true);
   const [q, setQ] = useState("");
   const [sortBy, setSortBy] = useState("risk");
 
@@ -80,13 +79,10 @@ export default function SupplierIntelPanel({ suppliers, selectedId, onSelect }) 
       }}
     >
       <div
-        onClick={() => setSupplierPanelOpen((prev) => !prev)}
         style={{
           display: "flex",
           alignItems: "center",
-          justifyContent: "space-between",
-          cursor: "pointer",
-          userSelect: "none",
+          justifyContent: "flex-start",
           padding: "12px 16px",
           borderBottom: "1px solid var(--border-subtle)",
         }}
@@ -114,22 +110,8 @@ export default function SupplierIntelPanel({ suppliers, selectedId, onSelect }) 
             Supplier Intelligence
           </span>
         </div>
-        <span
-          style={{
-            fontSize: "14px",
-            color: "var(--text-tertiary)",
-            lineHeight: 1,
-            transform: supplierPanelOpen ? "rotate(0deg)" : "rotate(-90deg)",
-            transition: "transform 0.2s ease",
-            display: "inline-block",
-          }}
-        >
-          ▾
-        </span>
       </div>
-      {supplierPanelOpen && (
-        <>
-          <div style={{ padding: "16px 16px 12px", borderBottom: "1px solid var(--border-subtle)" }}>
+      <div style={{ padding: "16px 16px 12px", borderBottom: "1px solid var(--border-subtle)" }}>
             <div style={{ position: "relative" }}>
               <svg
                 width="14"
@@ -180,8 +162,6 @@ export default function SupplierIntelPanel({ suppliers, selectedId, onSelect }) 
               );
             })}
           </div>
-        </>
-      )}
     </div>
   );
 }

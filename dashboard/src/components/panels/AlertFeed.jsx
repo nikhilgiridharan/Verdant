@@ -45,7 +45,6 @@ function severityPillStyle(sev) {
 }
 
 export default function AlertFeed({ liveAlerts }) {
-  const [anomalyPanelOpen, setAnomalyPanelOpen] = useState(true);
   const [acked, setAcked] = useState(() => new Set());
   const [items, setItems] = useState([]);
 
@@ -88,18 +87,15 @@ export default function AlertFeed({ liveAlerts }) {
       }}
     >
       <div
-        onClick={() => setAnomalyPanelOpen((prev) => !prev)}
         style={{
           display: "flex",
           alignItems: "center",
           justifyContent: "space-between",
-          cursor: "pointer",
-          userSelect: "none",
           padding: "12px 16px",
           borderBottom: "1px solid var(--border-subtle)",
         }}
       >
-        <div style={{ display: "flex", alignItems: "center", gap: "8px", flexWrap: "wrap" }}>
+        <div style={{ display: "flex", alignItems: "center", gap: "8px" }}>
           <div
             style={{
               width: "8px",
@@ -121,47 +117,34 @@ export default function AlertFeed({ liveAlerts }) {
           >
             Live Anomalies
           </span>
-          <span
-            style={{
-              fontSize: 11,
-              fontWeight: 600,
-              minWidth: 22,
-              height: 22,
-              padding: "0 8px",
-              borderRadius: "var(--radius-full)",
-              background: "var(--color-danger-bg)",
-              color: "var(--color-danger)",
-              display: "inline-flex",
-              alignItems: "center",
-              justifyContent: "center",
-            }}
-          >
-            {activeCount}
-          </span>
         </div>
         <span
           style={{
-            fontSize: "14px",
-            color: "var(--text-tertiary)",
-            lineHeight: 1,
-            transform: anomalyPanelOpen ? "rotate(0deg)" : "rotate(-90deg)",
-            transition: "transform 0.2s ease",
-            display: "inline-block",
+            fontSize: 11,
+            fontWeight: 600,
+            minWidth: 22,
+            height: 22,
+            padding: "0 8px",
+            borderRadius: "var(--radius-full)",
+            background: "var(--color-danger-bg)",
+            color: "var(--color-danger)",
+            display: "inline-flex",
+            alignItems: "center",
+            justifyContent: "center",
           }}
         >
-          ▾
+          {activeCount}
         </span>
       </div>
-      {anomalyPanelOpen &&
-        (items.length === 0 ? (
-          <div style={{ textAlign: "center", padding: "32px 20px", color: "var(--text-tertiary)" }}>
-            <div style={{ fontSize: 22, marginBottom: 8, color: "var(--green-200)" }} aria-hidden>
-              🌿
-            </div>
-            <div style={{ fontSize: 13 }}>No active anomalies</div>
+      {items.length === 0 ? (
+        <div style={{ textAlign: "center", padding: "32px 20px", color: "var(--text-tertiary)" }}>
+          <div style={{ fontSize: 22, marginBottom: 8, color: "var(--green-200)" }} aria-hidden>
+            🌿
           </div>
-        ) : (
-          items.map((a) => {
+          <div style={{ fontSize: 13 }}>No active anomalies</div>
+        </div>
+      ) : (
+        items.map((a) => {
             const done = acked.has(a.alert_id) || a.acknowledged;
             const sev = a.severity;
             const pill = severityPillStyle(sev);
@@ -220,7 +203,7 @@ export default function AlertFeed({ liveAlerts }) {
               </div>
             );
           })
-        ))}
+      )}
     </div>
   );
 }

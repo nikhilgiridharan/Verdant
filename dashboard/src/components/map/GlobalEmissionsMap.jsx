@@ -1,4 +1,4 @@
-import { useCallback, useEffect, useMemo, useState } from "react";
+import { useCallback, useEffect, useMemo, useRef, useState } from "react";
 import Map, { Layer, Source } from "react-map-gl";
 import mapboxgl from "mapbox-gl";
 import "mapbox-gl/dist/mapbox-gl.css";
@@ -20,10 +20,12 @@ function sizeForEmissions(kg) {
 }
 
 export default function GlobalEmissionsMap({ suppliers, selectedId, onSelect }) {
+  const mapRef = useRef(null);
+  const [zoom, setZoom] = useState(2);
   const [viewState, setViewState] = useState({
     longitude: 10,
     latitude: 25,
-    zoom: 1.6,
+    zoom: 2,
     pitch: 0,
   });
   const [mode, setMode] = useState("globe");
@@ -67,9 +69,9 @@ export default function GlobalEmissionsMap({ suppliers, selectedId, onSelect }) 
     },
     [onSelect, mode],
   );
-  const onMove = useCallback((evt) => setViewState(evt.viewState), []);
   const resetView = useCallback(() => {
-    setViewState((vs) => ({ ...vs, longitude: 10, latitude: 25, zoom: 1.6 }));
+    setZoom(2);
+    setViewState((vs) => ({ ...vs, longitude: 10, latitude: 25, zoom: 2 }));
   }, []);
   const countryLookup = useMemo(() => {
     const m = {};
@@ -92,6 +94,7 @@ export default function GlobalEmissionsMap({ suppliers, selectedId, onSelect }) 
   const onMapMove = useCallback(
     (evt) => {
       setViewState(evt.viewState);
+      setZoom(evt.viewState.zoom);
       if (mode !== "heatmap") return;
       const map = evt.target;
       if (!map.getLayer?.("countries-fill")) return;
@@ -134,12 +137,23 @@ export default function GlobalEmissionsMap({ suppliers, selectedId, onSelect }) 
 
   mapboxgl.accessToken = MAPBOX_TOKEN;
 
+  const getMapInstance = useCallback(() => {
+    const r = mapRef.current;
+    if (!r) return undefined;
+    return typeof r.getMap === "function" ? r.getMap() : r;
+  }, []);
+
   return (
     <div style={{ height: "100%", position: "relative" }}>
       <Map
+        ref={mapRef}
         mapboxAccessToken={MAPBOX_TOKEN}
         {...viewState}
         onMove={onMapMove}
+        onZoomEnd={(e) => {
+          const z = e.viewState?.zoom ?? e.target?.getZoom?.();
+          if (typeof z === "number" && !Number.isNaN(z)) setZoom(z);
+        }}
         style={{ width: "100%", height: "100%" }}
         mapStyle="mapbox://styles/mapbox/light-v11"
         interactiveLayerIds={mode === "heatmap" ? ["countries-fill"] : ["suppliers-circle"]}
@@ -188,6 +202,115 @@ export default function GlobalEmissionsMap({ suppliers, selectedId, onSelect }) 
           </Source>
         )}
       </Map>
+      <div
+        style={{
+          position: "absolute",
+          left: "14px",
+          top: "50%",
+          transform: "translateY(-50%)",
+          zIndex: 10,
+          display: "flex",
+          flexDirection: "column",
+          alignItems: "center",
+          gap: "8px",
+          background: "var(--bg-surface)",
+          border: "1px solid var(--border-default)",
+          borderRadius: "var(--radius-lg)",
+          padding: "10px 8px",
+          boxShadow: "var(--shadow-sm)",
+        }}
+      >
+        <button
+          type="button"
+          onClick={() => {
+            const newZoom = Math.min(zoom + 0.5, 18);
+            setZoom(newZoom);
+            setViewState((vs) => ({ ...vs, zoom: newZoom }));
+            const map = getMapInstance();
+            map?.zoomTo?.(newZoom, { duration: 300 });
+          }}
+          style={{
+            width: "24px",
+            height: "24px",
+            background: "none",
+            border: "none",
+            cursor: "pointer",
+            fontSize: "16px",
+            color: "var(--text-secondary)",
+            display: "flex",
+            alignItems: "center",
+            justifyContent: "center",
+            lineHeight: 1,
+            borderRadius: "var(--radius-sm)",
+            padding: 0,
+          }}
+          onMouseEnter={(e) => {
+            e.currentTarget.style.background = "var(--bg-hover)";
+          }}
+          onMouseLeave={(e) => {
+            e.currentTarget.style.background = "none";
+          }}
+        >
+          +
+        </button>
+        <input
+          type="range"
+          min="1"
+          max="18"
+          step="0.5"
+          value={zoom}
+          onChange={(e) => {
+            const newZoom = parseFloat(e.target.value);
+            setZoom(newZoom);
+            setViewState((vs) => ({ ...vs, zoom: newZoom }));
+            const map = getMapInstance();
+            map?.zoomTo?.(newZoom, { duration: 200 });
+          }}
+          style={{
+            appearance: "slider-vertical",
+            WebkitAppearance: "slider-vertical",
+            writingMode: "vertical-lr",
+            direction: "rtl",
+            width: "4px",
+            height: "100px",
+            cursor: "pointer",
+            accentColor: "var(--green-500)",
+          }}
+        />
+        <button
+          type="button"
+          onClick={() => {
+            const newZoom = Math.max(zoom - 0.5, 1);
+            setZoom(newZoom);
+            setViewState((vs) => ({ ...vs, zoom: newZoom }));
+            const map = getMapInstance();
+            map?.zoomTo?.(newZoom, { duration: 300 });
+          }}
+          style={{
+            width: "24px",
+            height: "24px",
+            background: "none",
+            border: "none",
+            cursor: "pointer",
+            fontSize: "18px",
+            color: "var(--text-secondary)",
+            display: "flex",
+            alignItems: "center",
+            justifyContent: "center",
+            lineHeight: 1,
+            borderRadius: "var(--radius-sm)",
+            padding: 0,
+          }}
+          onMouseEnter={(e) => {
+            e.currentTarget.style.background = "var(--bg-hover)";
+          }}
+          onMouseLeave={(e) => {
+            e.currentTarget.style.background = "none";
+          }}
+        >
+          −
+        </button>
+      </div>
       {mode === "globe" && selected ? (
         <div
           style={{
