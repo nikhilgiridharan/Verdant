@@ -108,20 +108,5 @@ Shipment records are synthetically generated at configurable volume (default: 10
 - Architecture: diagram above
 - Live demo: https://carbon-trace-8r4kifapt-nikhilgiridharans-projects.vercel.app
 
-## Medium article outline (draft)
-
-1. **Problem** — Scope 3 boundaries, supplier fragmentation, latency needs.
-2. **Architecture** — Kafka → Spark → PostgreSQL (Neon) → FastAPI → dashboard.
-3. **Data model** — Fact emissions + supplier and SKU dimensions.
-4. **Data quality** — SQL checks and API validation over transformed tables.
-5. **Anomalies** — Streaming ingress + alerting surface.
-6. **Dashboard** — Map + terminal UI patterns.
-7. **Lessons** — Trade-offs (local portability, Airflow bootstrap, API-first serving).
-8. **Links** — GitHub + demo.
-
-## Resume bullets (fill brackets after measuring prod)
-
-1. Architected a Scope 3 emissions platform ingesting **[X]M+** synthetic shipment events via Kafka → PySpark → PostgreSQL (Neon), targeting sub-**[X] minute** refresh for demo stacks.
-2. Modeled emissions in PostgreSQL with validated fact/dimension tables across **500** demo suppliers and **2000** SKUs.
-3. Orchestrated health checks via Airflow-compatible DAG stubs, Great Expectations-style SQL gates, and pipeline status tables.
+ipeline status tables.
 4. Shipped FastAPI + WebSocket feeds powering a Mapbox React dashboard with **20+** REST endpoints in the v1 surface.
