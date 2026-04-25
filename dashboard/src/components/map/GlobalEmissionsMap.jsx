@@ -142,6 +142,52 @@ export default function GlobalEmissionsMap({ suppliers, selectedId, onSelect }) 
     if (!r) return undefined;
     return typeof r.getMap === "function" ? r.getMap() : r;
   }, []);
+  const handleViewModeToggle = useCallback(
+    (nextMode) => {
+      try {
+        setMode(nextMode);
+
+        const map = getMapInstance();
+        if (!map) {
+          console.warn("Map ref not available");
+          return;
+        }
+
+        const layersToRemove = ["heatmap-layer", "heatmap-labels", "supplier-nodes", "supplier-clusters", "supplier-count"];
+        const sourcesToRemove = ["heatmap-source", "suppliers", "supplier-source"];
+
+        layersToRemove.forEach((id) => {
+          try {
+            if (map.getLayer?.(id)) map.removeLayer(id);
+          } catch {
+            /* ignore cleanup error */
+          }
+        });
+        sourcesToRemove.forEach((id) => {
+          try {
+            if (map.getSource?.(id)) map.removeSource(id);
+          } catch {
+            /* ignore cleanup error */
+          }
+        });
+
+        if (nextMode === "heatmap") {
+          setHoverCountry(null);
+          if (!map.isStyleLoaded?.()) {
+            map.once?.("style.load", () => setMode("heatmap"));
+            map.once?.("load", () => setMode("heatmap"));
+          }
+        } else {
+          setMode("globe");
+          setHoverCountry(null);
+        }
+      } catch (topLevelError) {
+        console.error("Heatmap toggle failed:", topLevelError);
+        setMode("globe");
+      }
+    },
+    [getMapInstance],
+  );
 
   return (
     <div style={{ height: "100%", position: "relative" }}>
@@ -368,7 +414,7 @@ export default function GlobalEmissionsMap({ suppliers, selectedId, onSelect }) 
       >
         <button
           type="button"
-          onClick={() => setMode("globe")}
+          onClick={() => handleViewModeToggle("globe")}
           style={{
             fontFamily: "var(--font-sans)",
             fontSize: 12,
@@ -386,7 +432,7 @@ export default function GlobalEmissionsMap({ suppliers, selectedId, onSelect }) 
         </button>
         <button
           type="button"
-          onClick={() => setMode("heatmap")}
+          onClick={() => handleViewModeToggle("heatmap")}
           style={{
             fontFamily: "var(--font-sans)",
             fontSize: 12,

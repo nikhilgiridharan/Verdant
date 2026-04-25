@@ -143,7 +143,31 @@ export default function Dashboard({ liveAlerts }) {
             backgroundSize: "20px 20px",
           }}
         >
-          <GlobalEmissionsMap suppliers={suppliers} selectedId={selected} onSelect={handleSelectSupplier} />
+          {(() => {
+            try {
+              return (
+                <div style={{ flex: 1, position: "relative", height: "100%" }}>
+                  <GlobalEmissionsMap suppliers={suppliers} selectedId={selected} onSelect={handleSelectSupplier} />
+                </div>
+              );
+            } catch {
+              return (
+                <div
+                  style={{
+                    flex: 1,
+                    display: "flex",
+                    alignItems: "center",
+                    justifyContent: "center",
+                    color: "var(--text-tertiary)",
+                    fontSize: "13px",
+                    height: "100%",
+                  }}
+                >
+                  Map failed to load. Refresh to retry.
+                </div>
+              );
+            }
+          })()}
         </div>
       </div>
 
