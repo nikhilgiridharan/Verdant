@@ -56,6 +56,19 @@ function sankeyTopSuppliers(raw, topN = 10) {
 export default function SKUAttribution() {
   const [sku, setSku] = useState("SKU-00001");
   const [data, setData] = useState(null);
+  const [skuList, setSkuList] = useState([]);
+  const [skuSearch, setSkuSearch] = useState("");
+  const [dropdownOpen, setDropdownOpen] = useState(false);
+
+  useEffect(() => {
+    fetch(`${apiBaseUrl()}/skus?limit=200`)
+      .then((r) => r.json())
+      .then((data) => {
+        const list = Array.isArray(data) ? data : data.items || data.skus || [];
+        setSkuList(list);
+      })
+      .catch(() => {});
+  }, []);
 
   useEffect(() => {
     const controller = new AbortController();
@@ -105,24 +118,141 @@ export default function SKUAttribution() {
               Emissions Sankey
             </h1>
           </div>
-          <input
-            value={sku}
-            onChange={(e) => setSku(e.target.value)}
-            aria-label="SKU identifier"
-            style={{
-              minWidth: 220,
-              maxWidth: 420,
-              flex: "1 1 280px",
-              padding: "10px 14px",
-              borderRadius: "var(--radius-md)",
-              border: "1px solid color-mix(in srgb, var(--teal-400) 45%, var(--border-default))",
-              background: "var(--bg-surface)",
-              color: "var(--text-primary)",
-              fontFamily: "var(--font-mono)",
-              fontSize: 13,
-              letterSpacing: "0.04em",
-            }}
-          />
+          <div style={{ position: "relative", width: "320px", flexShrink: 0 }}>
+            <input
+              value={skuSearch || sku}
+              onChange={(e) => {
+                setSkuSearch(e.target.value);
+                setDropdownOpen(true);
+              }}
+              onFocus={() => {
+                setSkuSearch("");
+                setDropdownOpen(true);
+              }}
+              onBlur={() => setTimeout(() => setDropdownOpen(false), 200)}
+              placeholder="Search SKUs..."
+              aria-label="SKU identifier"
+              style={{
+                width: "100%",
+                padding: "10px 36px 10px 14px",
+                fontSize: "14px",
+                border: "1.5px solid var(--teal-400)",
+                borderRadius: "var(--radius-md)",
+                background: "var(--bg-surface)",
+                color: "var(--text-primary)",
+                fontFamily: "var(--font-mono)",
+                outline: "none",
+                cursor: "pointer",
+                boxSizing: "border-box",
+              }}
+            />
+            <span
+              style={{
+                position: "absolute",
+                right: "12px",
+                top: "50%",
+                transform: `translateY(-50%) rotate(${dropdownOpen ? "180deg" : "0deg"})`,
+                transition: "transform 0.2s ease",
+                color: "var(--text-tertiary)",
+                fontSize: "12px",
+                pointerEvents: "none",
+              }}
+            >
+              ▾
+            </span>
+
+            {dropdownOpen && (
+              <div
+                style={{
+                  position: "absolute",
+                  top: "calc(100% + 4px)",
+                  left: 0,
+                  right: 0,
+                  background: "var(--bg-surface)",
+                  border: "1px solid var(--border-default)",
+                  borderRadius: "var(--radius-md)",
+                  boxShadow: "var(--shadow-md)",
+                  zIndex: 100,
+                  maxHeight: "280px",
+                  overflowY: "auto",
+                }}
+              >
+                {skuList
+                  .filter((row) => {
+                    const search = skuSearch.toLowerCase();
+                    return (
+                      row.sku_id?.toLowerCase().includes(search) ||
+                      row.sku_name?.toLowerCase().includes(search) ||
+                      row.product_category?.toLowerCase().includes(search)
+                    );
+                  })
+                  .slice(0, 100)
+                  .map((row) => (
+                    <div
+                      key={row.sku_id}
+                      onMouseDown={() => {
+                        setSku(row.sku_id);
+                        setSkuSearch("");
+                        setDropdownOpen(false);
+                      }}
+                      style={{
+                        padding: "9px 14px",
+                        cursor: "pointer",
+                        borderBottom: "1px solid var(--border-subtle)",
+                        display: "flex",
+                        flexDirection: "column",
+                        gap: "2px",
+                      }}
+                      onMouseEnter={(e) => {
+                        e.currentTarget.style.background = "var(--bg-hover)";
+                      }}
+                      onMouseLeave={(e) => {
+                        e.currentTarget.style.background = "transparent";
+                      }}
+                    >
+                      <span
+                        style={{
+                          fontSize: "12px",
+                          fontWeight: "500",
+                          color: "var(--text-primary)",
+                          fontFamily: "var(--font-mono)",
+                        }}
+                      >
+                        {row.sku_id}
+                      </span>
+                      <span
+                        style={{
+                          fontSize: "11px",
+                          color: "var(--text-tertiary)",
+                          fontFamily: "var(--font-sans)",
+                        }}
+                      >
+                        {row.sku_name} · {row.product_category}
+                      </span>
+                    </div>
+                  ))}
+                {skuList.filter((row) => {
+                  const search = skuSearch.toLowerCase();
+                  return (
+                    row.sku_id?.toLowerCase().includes(search) ||
+                    row.sku_name?.toLowerCase().includes(search) ||
+                    row.product_category?.toLowerCase().includes(search)
+                  );
+                }).length === 0 && (
+                  <div
+                    style={{
+                      padding: "16px",
+                      textAlign: "center",
+                      fontSize: "12px",
+                      color: "var(--text-tertiary)",
+                    }}
+                  >
+                    No SKUs found
+                  </div>
+                )}
+              </div>
+            )}
+          </div>
         </div>
 
         <div
