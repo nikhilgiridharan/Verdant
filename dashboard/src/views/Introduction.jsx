@@ -7,6 +7,8 @@ export default function Introduction() {
   const wingTopRef = useRef(null)
   const wingBottomRef = useRef(null)
   const animRef = useRef(null)
+  const audioRef = useRef(null)
+  const [muted, setMuted] = useState(false)
 
   const W = typeof window !== 'undefined' ? window.innerWidth : 1440
   const H = typeof window !== 'undefined' ? window.innerHeight : 900
@@ -338,11 +340,45 @@ export default function Introduction() {
     }
   }, [])
 
+  useEffect(() => {
+    const audio = audioRef.current
+    if (!audio) return
+
+    audio.volume = 0.18
+    audio.loop = true
+
+    const tryPlay = () => {
+      audio.play().catch(() => {
+        const unlock = () => {
+          audio.play().catch(() => {})
+          document.removeEventListener('click', unlock)
+          document.removeEventListener('touchstart', unlock)
+        }
+        document.addEventListener('click', unlock, { once: true })
+        document.addEventListener('touchstart', unlock, { once: true })
+      })
+    }
+
+    tryPlay()
+
+    return () => {
+      audio.pause()
+      audio.currentTime = 0
+    }
+  }, [])
+
   return (
     <div style={{
       position: 'relative', width: '100%', height: '100vh',
       overflow: 'hidden', background: '#0d1f0f',
     }}>
+      <audio
+        ref={audioRef}
+        src="https://cdn.pixabay.com/audio/2022/03/10/audio_1e6f3d5a4b.mp3"
+        loop
+        preload="auto"
+        muted={muted}
+      />
       <svg
         style={{ position: 'absolute', top: 0, left: 0, width: '100%', height: '100%', pointerEvents: 'none' }}
         viewBox={`0 0 ${W} ${H}`}
@@ -1019,6 +1055,45 @@ export default function Introduction() {
           {String(skyColors.hour).padStart(2, '0')}:00
         </span>
       </div>
+
+      <button
+        onClick={() => {
+          setMuted(prev => {
+            const newMuted = !prev
+            if (audioRef.current) {
+              audioRef.current.muted = newMuted
+            }
+            return newMuted
+          })
+        }}
+        style={{
+          position: 'absolute',
+          bottom: '20px',
+          left: '24px',
+          zIndex: 20,
+          background: 'rgba(0,0,0,0.35)',
+          backdropFilter: 'blur(8px)',
+          border: 'none',
+          borderRadius: '999px',
+          padding: '6px 14px',
+          color: 'rgba(255,255,255,0.75)',
+          fontSize: '13px',
+          cursor: 'pointer',
+          fontFamily: 'var(--font-sans)',
+          display: 'flex',
+          alignItems: 'center',
+          gap: '6px',
+        }}
+        onMouseEnter={e =>
+          e.currentTarget.style.background = 'rgba(0,0,0,0.5)'}
+        onMouseLeave={e =>
+          e.currentTarget.style.background = 'rgba(0,0,0,0.35)'}
+      >
+        {muted ? '🔇' : '🔊'}
+        <span style={{ fontSize: '11px' }}>
+          {muted ? 'Unmute' : 'Mute'}
+        </span>
+      </button>
 
       {/* Verdant title and Open button */}
       <div style={{
