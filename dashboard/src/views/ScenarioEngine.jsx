@@ -1,28 +1,71 @@
-import { useMemo, useState } from "react";
-import { useSuppliers } from "../hooks/useSuppliers.js";
+import { useEffect, useMemo, useState } from "react";
 
 const API = import.meta.env.VITE_API_BASE_URL || "";
 const TRANSPORT_FACTORS = { AIR: 0.5474, OCEAN: 0.0233, TRUCK: 0.092, RAIL: 0.0077 };
 const TRANSPORT_LABELS = { AIR: "Air freight", OCEAN: "Ocean freight", TRUCK: "Truck", RAIL: "Rail" };
 
 export default function ScenarioEngine() {
-  const { data, isLoading } = useSuppliers({ limit: 500, offset: 0, sort_by: "risk_score", order: "desc" });
-  const suppliers = data?.items || [];
+  const [suppliers, setSuppliers] = useState([]);
+  const [loading, setLoading] = useState(true);
   const [scenarios, setScenarios] = useState([]);
   const [targetReduction, setTargetReduction] = useState(30);
   const [pathway, setPathway] = useState(null);
+  const [totalBaseline, setTotalBaseline] = useState(0);
 
-  const totalBaseline = useMemo(
-    () => suppliers.reduce((s, x) => s + Number(x.emissions_30d_kg || 0), 0),
-    [suppliers]
-  );
+  const COUNTRY_DEFAULTS = {
+    CN: { weight_kg: 5000, distance_km: 12000 },
+    VN: { weight_kg: 3000, distance_km: 11000 },
+    MX: { weight_kg: 8000, distance_km: 2500 },
+    CA: { weight_kg: 6000, distance_km: 3000 },
+    DE: { weight_kg: 4000, distance_km: 9000 },
+    IN: { weight_kg: 4000, distance_km: 13000 },
+    JP: { weight_kg: 3000, distance_km: 11000 },
+    KR: { weight_kg: 3000, distance_km: 11500 },
+    TW: { weight_kg: 2000, distance_km: 12000 },
+    US: { weight_kg: 5000, distance_km: 1500 },
+  };
+
+  useEffect(() => {
+    fetch(`${API}/api/v1/suppliers?limit=500`)
+      .then((r) => r.json())
+      .then((data) => {
+        const list = Array.isArray(data) ? data : data.suppliers || [];
+        list.sort((a, b) =>
+          (a.name || a.supplier_id).localeCompare(b.name || b.supplier_id),
+        );
+        setSuppliers(list);
+        const total = list.reduce((s, x) => s + (x.emissions_30d_kg || 0), 0);
+        setTotalBaseline(total);
+        setLoading(false);
+      })
+      .catch(() => setLoading(false));
+  }, []);
 
   const addScenario = () =>
     setScenarios((prev) => [
       ...prev,
       { id: Date.now(), supplier_id: "", current_mode: "AIR", new_mode: "OCEAN", weight_kg: 1000, distance_km: 10000 },
     ]);
-  const updateScenario = (id, field, value) => setScenarios((prev) => prev.map((s) => (s.id === id ? { ...s, [field]: value } : s)));
+  const updateScenario = (id, field, value) => {
+    setScenarios((prev) =>
+      prev.map((s) => {
+        if (s.id !== id) return s;
+        const updated = { ...s, [field]: value };
+        if (field === "supplier_id") {
+          const sup = suppliers.find((x) => x.supplier_id === value);
+          if (sup) {
+            const defaults = COUNTRY_DEFAULTS[sup.country] || {
+              weight_kg: 5000,
+              distance_km: 8000,
+            };
+            updated.weight_kg = defaults.weight_kg;
+            updated.distance_km = defaults.distance_km;
+          }
+        }
+        return updated;
+      }),
+    );
+  };
   const removeScenario = (id) => setScenarios((prev) => prev.filter((s) => s.id !== id));
 
   const calcSavings = (s) => {
@@ -52,10 +95,15 @@ export default function ScenarioEngine() {
     setPathway(data);
   };
 
-  if (isLoading) return <div style={{ padding: "40px", color: "var(--text-tertiary)", fontSize: "13px" }}>Loading...</div>;
+  if (loading)
+    return (
+      <div style={{ padding: "40px", color: "var(--text-tertiary)", fontSize: "13px" }}>
+        Loading...
+      </div>
+    );
 
   return (
-    <div style={{ padding: "32px 40px", maxWidth: "900px" }}>
+    <div style={{ padding: "32px 40px", width: "100%" }}>
       <div style={{ marginBottom: "32px" }}>
         <h1 style={{ fontSize: "24px", fontWeight: "700", color: "var(--text-primary)", fontFamily: "var(--font-display)", margin: 0 }}>
           Scenario Engine
@@ -89,9 +137,22 @@ export default function ScenarioEngine() {
             <div style={{ display: "grid", gridTemplateColumns: "2fr 1fr 1fr 1fr 1fr auto", gap: "12px", alignItems: "end" }}>
               <div>
                 <label style={label}>Supplier</label>
-                <select value={s.supplier_id} onChange={(e) => updateScenario(s.id, "supplier_id", e.target.value)} style={inputStyle}>
-                  <option value="">Select supplier</option>
-                  {suppliers.slice(0, 100).map((sup) => (
+                <select
+                  value={s.supplier_id}
+                  onChange={(e) => updateScenario(s.id, "supplier_id", e.target.value)}
+                  style={{
+                    width: "100%",
+                    padding: "7px 10px",
+                    border: "1px solid var(--border-default)",
+                    borderRadius: "var(--radius-md)",
+                    background: "var(--bg-subtle)",
+                    color: "var(--text-primary)",
+                    fontSize: "12px",
+                    cursor: "pointer",
+                  }}
+                >
+                  <option value="">Select supplier...</option>
+                  {suppliers.map((sup) => (
                     <option key={sup.supplier_id} value={sup.supplier_id}>
                       {sup.name || sup.supplier_id} ({sup.country})
                     </option>

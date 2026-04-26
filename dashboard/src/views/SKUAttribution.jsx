@@ -1,4 +1,4 @@
-import { useEffect, useMemo, useState } from "react";
+import { useEffect, useMemo, useRef, useState } from "react";
 import axios from "axios";
 import SankeyDiagram from "../components/charts/SankeyDiagram.jsx";
 import { apiBaseUrl } from "../utils/constants.js";
@@ -59,6 +59,9 @@ export default function SKUAttribution() {
   const [skuList, setSkuList] = useState([]);
   const [skuSearch, setSkuSearch] = useState("");
   const [dropdownOpen, setDropdownOpen] = useState(false);
+  const [skuDisplayName, setSkuDisplayName] = useState("");
+  const containerRef = useRef(null);
+  const [containerWidth, setContainerWidth] = useState(900);
 
   useEffect(() => {
     fetch(`${apiBaseUrl()}/skus?limit=200`)
@@ -68,6 +71,36 @@ export default function SKUAttribution() {
         setSkuList(list);
       })
       .catch(() => {});
+  }, []);
+
+  const fetchSkuName = async (skuId) => {
+    const API = import.meta.env.VITE_API_BASE_URL || "";
+    try {
+      const res = await fetch(`${API}/api/v1/skus/${skuId}`);
+      if (!res.ok) return skuId;
+      const data = await res.json();
+      return data.sku_name || skuId;
+    } catch {
+      return skuId;
+    }
+  };
+
+  useEffect(() => {
+    if (!sku) return;
+    fetchSkuName(sku).then((name) => setSkuDisplayName(name));
+  }, [sku]);
+
+  useEffect(() => {
+    if (containerRef.current) {
+      setContainerWidth(containerRef.current.clientWidth - 32);
+    }
+    const handleResize = () => {
+      if (containerRef.current) {
+        setContainerWidth(containerRef.current.clientWidth - 32);
+      }
+    };
+    window.addEventListener("resize", handleResize);
+    return () => window.removeEventListener("resize", handleResize);
   }, []);
 
   useEffect(() => {
@@ -81,13 +114,24 @@ export default function SKUAttribution() {
     return () => controller.abort();
   }, [sku]);
 
-  const { nodes, links } = useMemo(() => sankeyTopSuppliers(data, 10), [data]);
+  const { nodes, links } = useMemo(() => {
+    const base = sankeyTopSuppliers(data, 10);
+    const resolvedSkuName = data?.sku_name || data?.sku_id || skuDisplayName || sku;
+    const mappedNodes = (base.nodes || []).map((node) => {
+      if (typeof node.id === "string" && node.id.startsWith("sku:")) {
+        return { ...node, name: resolvedSkuName };
+      }
+      return node;
+    });
+    return { nodes: mappedNodes, links: base.links || [] };
+  }, [data, sku, skuDisplayName]);
 
   return (
     <div
       style={{
         minHeight: "100%",
-        padding: "20px 24px 32px",
+        padding: "32px 40px",
+        width: "100%",
         background: "linear-gradient(165deg, color-mix(in srgb, var(--teal-50) 55%, var(--bg-base)) 0%, var(--bg-base) 42%, var(--bg-subtle) 100%)",
       }}
     >
@@ -96,8 +140,7 @@ export default function SKUAttribution() {
           display: "grid",
           gridTemplateColumns: "minmax(0, 1fr)",
           gap: 0,
-          maxWidth: 1100,
-          margin: "0 auto",
+          width: "100%",
         }}
       >
         <div style={{ display: "flex", flexWrap: "wrap", alignItems: "flex-end", justifyContent: "space-between", gap: 16, marginBottom: 20 }}>
@@ -256,48 +299,18 @@ export default function SKUAttribution() {
         </div>
 
         <div
+          ref={containerRef}
           style={{
-            display: "flex",
-            flexDirection: "row",
-            gap: 0,
-            alignItems: "stretch",
+            width: "100%",
+            height: "500px",
+            background: "var(--bg-surface)",
+            border: "1px solid var(--border-default)",
             borderRadius: "var(--radius-lg)",
             overflow: "hidden",
-            border: "1px solid color-mix(in srgb, var(--teal-400) 35%, var(--border-default))",
-            background: "var(--bg-surface)",
-            boxShadow: "var(--shadow-card)",
+            padding: "16px",
           }}
         >
-          <div
-            className="cp-sku-trace-rail"
-            aria-hidden
-            style={{
-              width: 36,
-              flexShrink: 0,
-              background: "color-mix(in srgb, var(--teal-100) 70%, var(--bg-subtle))",
-              borderRight: "1px solid color-mix(in srgb, var(--teal-400) 25%, var(--border-default))",
-              display: "none",
-            }}
-          >
-            ATTRIBUTION
-          </div>
-          <style>{`
-            @media (min-width: 760px) {
-              .cp-sku-trace-rail {
-                display: flex !important;
-                align-items: center;
-                justify-content: center;
-                writing-mode: vertical-rl;
-                transform: rotate(180deg);
-                font-family: var(--font-mono);
-                font-size: 10px;
-                letter-spacing: 0.22em;
-                text-transform: uppercase;
-                color: var(--teal-600);
-              }
-            }
-          `}</style>
-          <div style={{ flex: 1, minWidth: 0, borderLeft: "3px solid var(--teal-400)", padding: "16px 18px 20px" }}>
+          <div style={{ width: "100%", minWidth: 0 }}>
             <div
               style={{
                 fontSize: 12,
@@ -310,7 +323,7 @@ export default function SKUAttribution() {
             >
               Showing top 10 suppliers by emissions for this SKU
             </div>
-            <SankeyDiagram nodes={nodes} links={links} />
+            <SankeyDiagram nodes={nodes} links={links} width={containerWidth} />
           </div>
         </div>
       </div>

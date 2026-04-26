@@ -10,14 +10,21 @@ export default function SupplierNetwork() {
   const suppliers = data?.items || [];
   const [selected, setSelected] = useState(null);
   const [filter, setFilter] = useState("ALL");
+  const [svgHeight, setSvgHeight] = useState(Math.max(520, window.innerHeight - 220));
+
+  useEffect(() => {
+    const onResize = () => setSvgHeight(Math.max(520, window.innerHeight - 220));
+    window.addEventListener("resize", onResize);
+    return () => window.removeEventListener("resize", onResize);
+  }, []);
 
   useEffect(() => {
     if (!suppliers.length || !svgRef.current) return undefined;
     const width = svgRef.current.clientWidth || 800;
-    const height = 520;
+    const height = svgHeight;
     d3.select(svgRef.current).selectAll("*").remove();
     const filtered = filter === "ALL" ? suppliers : suppliers.filter((s) => s.risk_tier === filter);
-    const nodes = filtered.slice(0, 120).map((s) => ({
+    const nodes = filtered.slice(0, 200).map((s) => ({
       id: s.supplier_id,
       name: s.name || s.supplier_id,
       risk_tier: s.risk_tier || "LOW",
@@ -26,15 +33,21 @@ export default function SupplierNetwork() {
       industry: s.industry,
     }));
     const links = [];
-    const groups = {};
+    const industryGroups = {};
     nodes.forEach((n) => {
-      if (!groups[n.industry]) groups[n.industry] = [];
-      groups[n.industry].push(n.id);
+      if (!industryGroups[n.industry]) {
+        industryGroups[n.industry] = [];
+      }
+      industryGroups[n.industry].push(n.id);
     });
-    Object.values(groups).forEach((group) => {
-      for (let i = 0; i < Math.min(group.length, 4); i += 1) {
-        for (let j = i + 1; j < Math.min(group.length, 4); j += 1) {
-          links.push({ source: group[i], target: group[j] });
+    Object.values(industryGroups).forEach((group) => {
+      for (let i = 0; i < group.length; i += 1) {
+        for (let j = 1; j <= Math.min(2, group.length - 1); j += 1) {
+          const targetIdx = (i + j) % group.length;
+          links.push({
+            source: group[i],
+            target: group[targetIdx],
+          });
         }
       }
     });
@@ -93,10 +106,10 @@ export default function SupplierNetwork() {
       node.attr("cx", (d) => d.x).attr("cy", (d) => d.y);
     });
     return () => sim.stop();
-  }, [suppliers, filter]);
+  }, [suppliers, filter, svgHeight]);
 
   return (
-    <div style={{ padding: "32px 40px" }}>
+    <div style={{ padding: "32px 40px", width: "100%" }}>
       <div style={{ marginBottom: "24px" }}>
         <h1 style={{ fontSize: "24px", fontWeight: "700", color: "var(--text-primary)", fontFamily: "var(--font-display)", margin: 0 }}>
           Supplier Network
@@ -113,8 +126,19 @@ export default function SupplierNetwork() {
       {isLoading ? (
         <div style={{ color: "var(--text-tertiary)", fontSize: "13px" }}>Loading network...</div>
       ) : (
-        <div className="panel" style={{ overflow: "hidden", position: "relative" }}>
-          <svg ref={svgRef} style={{ width: "100%", height: "520px" }} />
+        <div
+          className="panel"
+          style={{
+            background: "var(--bg-surface)",
+            border: "1px solid var(--border-default)",
+            borderRadius: "var(--radius-lg)",
+            overflow: "hidden",
+            width: "100%",
+            height: `${svgHeight}px`,
+            position: "relative",
+          }}
+        >
+          <svg ref={svgRef} style={{ width: "100%", height: `${svgHeight}px` }} />
           {selected ? (
             <div style={{ position: "absolute", top: "16px", right: "16px", background: "var(--bg-surface)", border: "1px solid var(--border-default)", borderRadius: "var(--radius-md)", padding: "14px 16px", minWidth: "180px", boxShadow: "var(--shadow-md)" }}>
               <button onClick={() => setSelected(null)} style={{ position: "absolute", top: "8px", right: "8px", background: "none", border: "none", color: "var(--text-tertiary)", cursor: "pointer", fontSize: "14px" }}>✕</button>
