@@ -12,7 +12,7 @@ import csv
 import hashlib
 import os
 import random
-import re
+import sys
 import uuid
 from datetime import datetime, timedelta, timezone
 from pathlib import Path
@@ -42,28 +42,14 @@ PIPELINE_COMPONENTS = [
     "api",
 ]
 
-# suppliers.csv historically used placeholder display names in the `name` column.
-PLACEHOLDER_SUPPLIER_NAME = re.compile(r"^Supplier\s+SUP-\d+", re.IGNORECASE)
+def _import_get_supplier_name():
+    prod = REPO_ROOT / "ingestion" / "producer"
+    p = str(prod)
+    if p not in sys.path:
+        sys.path.insert(0, p)
+    from real_supplier_names import get_supplier_name
 
-
-def supplier_display_name(supplier_id: str, csv_name: str) -> str:
-    """
-    Prefer a real-looking `name` from suppliers.csv. If the CSV still has the
-    generic "Supplier SUP-xxxxx (...)" pattern, generate a stable synthetic
-    company name so Neon/UI show realistic labels.
-    """
-    raw = (csv_name or "").strip()
-    if raw and not PLACEHOLDER_SUPPLIER_NAME.match(raw):
-        return raw[:200]
-    seed = int(hashlib.md5(supplier_id.encode(), usedforsecurity=False).hexdigest()[:8], 16)
-    try:
-        from faker import Faker
-
-        fake = Faker()
-        fake.seed_instance(seed)
-        return fake.company()[:120]
-    except Exception:  # pragma: no cover
-        return raw[:200] if raw else supplier_id
+    return get_supplier_name
 
 
 CATEGORIES = [
@@ -120,12 +106,16 @@ def clear_demo_tables(conn) -> None:
 
 
 def seed_suppliers(conn) -> int:
+    get_supplier_name = _import_get_supplier_name()
+    used_names: set[str] = set()
     rows = []
     with SUPPLIERS_CSV.open(encoding="utf-8") as f:
         reader = csv.DictReader(f)
-        for r in reader:
+        for i, r in enumerate(reader):
             sid = r["supplier_id"].strip()
-            name = supplier_display_name(sid, r.get("name", "") or "")
+            country = r["country"].strip()
+            industry = (r.get("industry") or "").strip() or "Electronics"
+            name = get_supplier_name(country, industry, used_names, i)
             rows.append(
                 (
                     sid,

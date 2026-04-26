@@ -15,6 +15,8 @@ import random
 from datetime import datetime, timezone
 from typing import Any
 
+from generate_supplier_coords import generate_supplier_name
+
 # ── Shipment share by supplier country (must sum to 1.0) ──────────────────
 # Remainder after listed targets is allocated to US (trans-Pacific / NA corridor).
 COUNTRY_SHIPMENT_WEIGHTS: dict[str, float] = {
@@ -182,6 +184,7 @@ def generate_supplier_seed_rows(n: int = 500, rng_seed: int = 42) -> list[dict[s
     counts = supplier_counts_by_shipment_weights(n)
     rows: list[dict[str, Any]] = []
     idx = 0
+    used_names: set[str] = set()
     for cc in sorted(counts.keys()):
         cnt = counts[cc]
         plat, plng, cname = COUNTRY_ANCHORS[cc]
@@ -192,7 +195,7 @@ def generate_supplier_seed_rows(n: int = 500, rng_seed: int = 42) -> list[dict[s
             sid = f"SUP-{idx:05d}"
             tier = random.choices([1, 2, 3], weights=[0.2, 0.5, 0.3], k=1)[0]
             ind = random.choice(INDUSTRIES)
-            name = f"Supplier {sid} ({cname})"
+            name = generate_supplier_name(cc, ind, idx - 1, used_names)
             rows.append(
                 {
                     "supplier_id": sid,
