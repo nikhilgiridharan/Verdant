@@ -205,14 +205,16 @@ def generate_sql(question: str) -> str:
 
 def generate_insight(question: str, rows: list, sql: str) -> str:
     api_key = get_anthropic_key()
+    logger.info("generate_insight called — key set: %s, rows: %s", bool(api_key), len(rows))
     if not api_key or not rows:
         return f"Found {len(rows)} results for your query."
 
     try:
-        import anthropic as anthropic_sdk
+        import anthropic
 
-        client = anthropic_sdk.Anthropic(api_key=api_key)
+        client = anthropic.Anthropic(api_key=api_key)
         summary = json.dumps(rows[:5], default=str)
+        logger.info("Calling Claude for insight...")
         message = client.messages.create(
             model="claude-sonnet-4-5",
             max_tokens=150,
@@ -221,20 +223,22 @@ def generate_insight(question: str, rows: list, sql: str) -> str:
                     "role": "user",
                     "content": (
                         f"Question: {question}\n"
-                        f"SQL: {sql}\n"
                         f"Data (first 5 rows): {summary}\n"
                         f"Total rows: {len(rows)}\n\n"
                         "Write ONE sentence summarizing the key "
-                        "insight. Be specific with numbers. "
-                        "Be concise."
+                        "insight from this data. Be specific with "
+                        "numbers. Be concise. Start directly with "
+                        "the insight, no preamble."
                     ),
                 }
             ],
         )
-        return message.content[0].text.strip()
+        insight = message.content[0].text.strip()
+        logger.info("Claude insight: %s", insight[:80])
+        return insight
     except Exception as e:
-        logger.error("Insight generation failed: %s", e)
-        return f"Found {len(rows)} results for your query."
+        logger.error("Insight generation failed: %s", e, exc_info=True)
+        return f"Found {len(rows)} results."
 
 
 @router.post("/query", response_model=NLQueryResponse)
