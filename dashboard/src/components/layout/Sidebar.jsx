@@ -97,6 +97,14 @@ export default function Sidebar({ pipelineOk }) {
           <span>Wiki</span>
         </NavLink>
         <a
+          href="https://www.youtube.com/watch?v=-HO3YqeZX00"
+          target="_blank"
+          rel="noopener noreferrer"
+          className="cp-nav-link"
+        >
+          <span>Demo</span>
+        </a>
+        <a
           href="https://github.com/nikhilgiridharan/Verdant"
           target="_blank"
           rel="noopener noreferrer"
