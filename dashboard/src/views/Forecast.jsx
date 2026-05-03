@@ -44,7 +44,7 @@ export default function Forecast() {
     fetch(`${API}/api/v1/suppliers?limit=500`)
       .then((r) => r.json())
       .then((data) => {
-        const list = Array.isArray(data) ? data : data.suppliers || [];
+        const list = Array.isArray(data) ? data : data.items || data.suppliers || [];
         setSupplierList(list);
       })
       .catch(() => {});

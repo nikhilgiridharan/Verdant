@@ -8,7 +8,7 @@ export default function Introduction() {
   const wingBottomRef = useRef(null)
   const animRef = useRef(null)
   const audioRef = useRef(null)
-  const [muted, setMuted] = useState(true)
+  const [muted, setMuted] = useState(false)
 
   const W = typeof window !== 'undefined' ? window.innerWidth : 1440
   const H = typeof window !== 'undefined' ? window.innerHeight : 900

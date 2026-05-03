@@ -29,7 +29,7 @@ export default function ScenarioEngine() {
     fetch(`${API}/api/v1/suppliers?limit=500`)
       .then((r) => r.json())
       .then((data) => {
-        const list = Array.isArray(data) ? data : data.suppliers || [];
+        const list = Array.isArray(data) ? data : data.items || data.suppliers || [];
         list.sort((a, b) =>
           (a.name || a.supplier_id).localeCompare(b.name || b.supplier_id),
         );
