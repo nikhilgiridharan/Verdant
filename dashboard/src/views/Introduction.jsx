@@ -9,6 +9,7 @@ export default function Introduction() {
   const animRef = useRef(null)
   const audioRef = useRef(null)
   const [muted, setMuted] = useState(false)
+  const pendingAutoUnmuteRef = useRef(false)
 
   const W = typeof window !== 'undefined' ? window.innerWidth : 1440
   const H = typeof window !== 'undefined' ? window.innerHeight : 900
@@ -349,7 +350,16 @@ export default function Introduction() {
 
     const tryPlay = () => {
       audio.play().catch(() => {
+        // Browser blocked unmuted autoplay; fall back to muted until first gesture.
+        pendingAutoUnmuteRef.current = true
+        audio.muted = true
+        setMuted(true)
         const unlock = () => {
+          if (pendingAutoUnmuteRef.current) {
+            audio.muted = false
+            setMuted(false)
+            pendingAutoUnmuteRef.current = false
+          }
           audio.play().catch(() => {})
           document.removeEventListener('click', unlock)
           document.removeEventListener('touchstart', unlock)
