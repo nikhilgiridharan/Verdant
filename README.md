@@ -17,6 +17,7 @@ A production-grade Scope 3 carbon emissions intelligence platform processing 10M
 |---|---|
 | **Live Platform** | [verdant.nikhilgiridharan.com](https://verdant.nikhilgiridharan.com) |
 | **Medium** | https://medium.com/@nikhilgiridharan/building-verdant-019e8e44b7b3 |
+| **Demo** | https://www.youtube.com/watch?v=-HO3YqeZX00 |
 | **API Docs** | [verdant.nikhilgiridharan.com/docs](https://carbontrace-b69i.onrender.com/docs) |
 
 ---
