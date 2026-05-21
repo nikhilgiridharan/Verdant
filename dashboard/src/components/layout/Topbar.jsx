@@ -62,6 +62,7 @@ export default function Topbar({ title, summary, pipelineMessage }) {
 
   return (
     <header
+      className="topbar"
       style={{
         height: 52,
         display: "flex",
@@ -84,7 +85,7 @@ export default function Topbar({ title, summary, pipelineMessage }) {
       >
         {title}
       </div>
-      <div style={{ flex: 1, display: "flex", justifyContent: "center", alignItems: "center" }}>
+      <div className="topbar-metrics" style={{ flex: 1, display: "flex", justifyContent: "center", alignItems: "center" }}>
         {ticker.map((t, i) => (
           <div key={t.k} style={{ display: "flex", alignItems: "center" }}>
             {i > 0 ? (

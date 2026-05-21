@@ -10,10 +10,15 @@ export default function SupplierNetwork() {
   const suppliers = data?.items || [];
   const [selected, setSelected] = useState(null);
   const [filter, setFilter] = useState("ALL");
-  const [svgHeight, setSvgHeight] = useState(Math.max(520, window.innerHeight - 220));
+  const computeSvgHeight = () =>
+    window.innerWidth < 768
+      ? Math.min(400, window.innerHeight - 200)
+      : Math.max(520, window.innerHeight - 220);
+
+  const [svgHeight, setSvgHeight] = useState(() => computeSvgHeight());
 
   useEffect(() => {
-    const onResize = () => setSvgHeight(Math.max(520, window.innerHeight - 220));
+    const onResize = () => setSvgHeight(computeSvgHeight());
     window.addEventListener("resize", onResize);
     return () => window.removeEventListener("resize", onResize);
   }, []);
@@ -109,7 +114,7 @@ export default function SupplierNetwork() {
   }, [suppliers, filter, svgHeight]);
 
   return (
-    <div style={{ padding: "32px 40px", width: "100%" }}>
+    <div className="network-wrap" style={{ padding: "32px 40px", width: "100%" }}>
       <div style={{ marginBottom: "24px" }}>
         <h1 style={{ fontSize: "24px", fontWeight: "700", color: "var(--text-primary)", fontFamily: "var(--font-display)", margin: 0 }}>
           Supplier Network

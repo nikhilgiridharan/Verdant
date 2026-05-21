@@ -78,6 +78,7 @@ export default function Forecast() {
 
   return (
     <div
+      className="forecast-wrap"
       style={{
         minHeight: "100%",
         padding: "32px 40px",
@@ -291,7 +292,7 @@ export default function Forecast() {
             </div>
           ) : (
             <>
-              <div style={{ width: "100%", height: "380px" }}>
+              <div className="forecast-chart-container" style={{ width: "100%", height: "380px" }}>
                 <ResponsiveContainer width="100%" height="100%">
                   <ComposedChart
                     data={chartData}

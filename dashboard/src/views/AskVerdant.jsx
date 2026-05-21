@@ -48,7 +48,7 @@ export default function AskVerdant() {
   };
 
   return (
-    <div style={{ padding: "32px 40px", maxWidth: "860px" }}>
+    <div className="ask-verdant-wrap" style={{ padding: "32px 40px", maxWidth: "860px" }}>
       <div style={{ marginBottom: "32px" }}>
         <h1 style={{ fontSize: "24px", fontWeight: "700", color: "var(--text-primary)", fontFamily: "var(--font-display)", margin: 0 }}>
           Ask Verdant
@@ -118,7 +118,7 @@ export default function AskVerdant() {
         >
           Try asking
         </p>
-        <div style={{ display: "flex", flexWrap: "wrap", gap: "8px" }}>
+        <div className="example-chips" style={{ display: "flex", flexWrap: "wrap", gap: "8px" }}>
           {EXAMPLES.map((ex) => (
             <button
               key={ex}

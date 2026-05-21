@@ -18,6 +18,7 @@ export default function Dashboard({ liveAlerts }) {
 
   return (
     <div
+      className="overview-layout"
       style={{
         display: "flex",
         height: "calc(100vh - 48px)",
@@ -29,6 +30,7 @@ export default function Dashboard({ liveAlerts }) {
     >
       {/* ── LEFT PANEL (Supplier Intelligence) ── */}
       <div
+        className="overview-left"
         style={{
           width: leftOpen ? "280px" : "0px",
           minWidth: leftOpen ? "280px" : "0px",
@@ -131,7 +133,7 @@ export default function Dashboard({ liveAlerts }) {
         </div>
         <MetricCards summary={summary} />
         <div
-          className="panel cp-dashboard-map-shell"
+          className="panel cp-dashboard-map-shell overview-map"
           style={{
             flex: 1,
             overflow: "hidden",
@@ -224,6 +226,7 @@ export default function Dashboard({ liveAlerts }) {
 
       {/* ── RIGHT PANEL (Live Anomalies) ── */}
       <div
+        className="overview-right"
         style={{
           width: rightOpen ? "320px" : "0px",
           minWidth: rightOpen ? "320px" : "0px",

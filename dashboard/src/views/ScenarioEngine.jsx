@@ -103,7 +103,7 @@ export default function ScenarioEngine() {
     );
 
   return (
-    <div style={{ padding: "32px 40px", width: "100%" }}>
+    <div className="scenario-wrap" style={{ padding: "32px 40px", width: "100%" }}>
       <div style={{ marginBottom: "32px" }}>
         <h1 style={{ fontSize: "24px", fontWeight: "700", color: "var(--text-primary)", fontFamily: "var(--font-display)", margin: 0 }}>
           Scenario Engine
@@ -134,7 +134,7 @@ export default function ScenarioEngine() {
         const saving = calc.savings_kg > 0;
         return (
           <div key={s.id} className="panel" style={{ padding: "20px", marginBottom: 12, borderLeft: `3px solid ${saving ? "var(--green-500)" : "var(--risk-high)"}` }}>
-            <div style={{ display: "grid", gridTemplateColumns: "2fr 1fr 1fr 1fr 1fr auto", gap: "12px", alignItems: "end" }}>
+            <div className="scenario-card" style={{ display: "grid", gridTemplateColumns: "2fr 1fr 1fr 1fr 1fr auto", gap: "12px", alignItems: "end" }}>
               <div>
                 <label style={label}>Supplier</label>
                 <select

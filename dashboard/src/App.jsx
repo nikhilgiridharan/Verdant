@@ -67,11 +67,11 @@ function Shell() {
   useWebSocket(wsPipelineUrl, { onMessage: handlePipelineMessage });
 
   return (
-    <div style={{ display: "flex", minHeight: "100vh" }}>
+    <div className="main-layout" style={{ display: "flex", minHeight: "100vh" }}>
       <Sidebar pipelineOk={pipelineOk} />
       <div style={{ flex: 1, display: "flex", flexDirection: "column", minWidth: 0 }}>
         <Topbar title={title} summary={summary} pipelineMessage={pipelineMsg} />
-        <div style={{ flex: 1, minHeight: 0 }}>
+        <div className="main-content" style={{ flex: 1, minHeight: 0 }}>
           <Suspense fallback={fullPageLoading}>
             <Routes>
               <Route index element={<Dashboard liveAlerts={liveAlert} />} />

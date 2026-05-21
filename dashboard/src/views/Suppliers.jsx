@@ -112,7 +112,7 @@ export default function Suppliers() {
           </div>
         ) : (
         <>
-        <div style={{ overflow: "auto" }}>
+        <div className="suppliers-table-wrap" style={{ overflow: "auto" }}>
           <table className="cp-suppliers-table" style={{ width: "100%", borderCollapse: "collapse", fontFamily: "var(--font-sans)", fontSize: 13 }}>
             <thead>
               <tr>

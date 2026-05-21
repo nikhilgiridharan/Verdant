@@ -1,3 +1,4 @@
+import { useState } from "react";
 import { NavLink, useNavigate } from "react-router-dom";
 
 const nav = [
@@ -21,19 +22,76 @@ const navLabel = {
 
 export default function Sidebar({ pipelineOk }) {
   const navigate = useNavigate();
+  const [mobileOpen, setMobileOpen] = useState(false);
 
   return (
-    <aside
-      style={{
-        width: 220,
-        minHeight: "100vh",
-        background: "var(--bg-surface)",
-        borderRight: "1px solid var(--border-default)",
-        display: "flex",
-        flexDirection: "column",
-        boxShadow: "none",
-      }}
-    >
+    <>
+      <button
+        type="button"
+        onClick={() => setMobileOpen(true)}
+        style={{
+          display: "none",
+          position: "fixed",
+          top: "12px",
+          left: "12px",
+          zIndex: 300,
+          background: "var(--bg-surface)",
+          border: "1px solid var(--border-default)",
+          borderRadius: "var(--radius-md)",
+          padding: "8px 10px",
+          cursor: "pointer",
+          fontSize: "16px",
+        }}
+        className="mobile-menu-btn"
+        aria-label="Open menu"
+      >
+        ☰
+      </button>
+      {mobileOpen ? (
+        <div
+          role="presentation"
+          onClick={() => setMobileOpen(false)}
+          style={{
+            display: "none",
+            position: "fixed",
+            inset: 0,
+            background: "rgba(0,0,0,0.4)",
+            zIndex: 199,
+          }}
+          className="mobile-overlay"
+        />
+      ) : null}
+      <aside
+        className={`sidebar-desktop${mobileOpen ? " open" : ""}`}
+        style={{
+          width: 220,
+          minHeight: "100vh",
+          background: "var(--bg-surface)",
+          borderRight: "1px solid var(--border-default)",
+          display: "flex",
+          flexDirection: "column",
+          boxShadow: "none",
+        }}
+      >
+        <button
+          type="button"
+          onClick={() => setMobileOpen(false)}
+          className="sidebar-close-btn"
+          style={{
+            display: "none",
+            position: "absolute",
+            top: "12px",
+            right: "12px",
+            background: "none",
+            border: "none",
+            fontSize: "18px",
+            cursor: "pointer",
+            color: "var(--text-tertiary)",
+          }}
+          aria-label="Close menu"
+        >
+          ✕
+        </button>
       <div
         style={{
           padding: 20,
@@ -88,12 +146,17 @@ export default function Sidebar({ pipelineOk }) {
             to={n.to}
             end={n.to === "/dashboard"}
             className={({ isActive }) => `cp-nav-link${isActive ? " cp-nav-link--active" : ""}`}
+            onClick={() => setMobileOpen(false)}
           >
             <span>{n.label}</span>
           </NavLink>
         ))}
         <div style={{ borderTop: "1px solid var(--border-subtle)", margin: "12px 8px" }} />
-        <NavLink to="/wiki" className={({ isActive }) => `cp-nav-link${isActive ? " cp-nav-link--active" : ""}`}>
+        <NavLink
+          to="/wiki"
+          className={({ isActive }) => `cp-nav-link${isActive ? " cp-nav-link--active" : ""}`}
+          onClick={() => setMobileOpen(false)}
+        >
           <span>Wiki</span>
         </NavLink>
         <a
@@ -144,5 +207,6 @@ export default function Sidebar({ pipelineOk }) {
         </div>
       </div>
     </aside>
+    </>
   );
 }
