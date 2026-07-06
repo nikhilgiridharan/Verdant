@@ -390,17 +390,6 @@ verdant/
 | [ADR-002](docs/decisions/ADR-002-streaming-vs-batch.md) | Kafka + Spark Structured Streaming for sub-minute freshness |
 | [ADR-003](docs/decisions/ADR-003-emission-factors-methodology.md) | EPA v1.4.0 cost-to-tonne-km derivation methodology |
 
----
-
-## Team
-
-Built by three collaborators with deliberate ownership separation — mirroring how ESG platforms are built in production:
-
-- **Data Engineer** — pipeline infrastructure, emissions calculations, API, anomaly detection, deployment
-- **Data Scientist** — LightGBM risk scoring, XGBoost forecasting, MLflow experiment tracking
-- **Supply Chain Analyst** — EPA factor validation, KPI framework, domain validation
-
----
 
 ## Deployment
 
