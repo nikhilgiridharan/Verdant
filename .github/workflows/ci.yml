@@ -7,8 +7,8 @@ on:
     branches: [main]
 
 jobs:
-  lint:
-    name: Lint
+  test:
+    name: Tests & coverage
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v4
@@ -16,26 +16,64 @@ jobs:
       - name: Set up Python
         uses: actions/setup-python@v5
         with:
-          python-version: '3.11'
+          python-version: "3.11"
+
+      - name: Install dependencies
+        run: |
+          python -m pip install --upgrade pip
+          pip install -r api/requirements.txt
+          pip install pytest pytest-cov
+
+      - name: Run tests with coverage
+        env:
+          DATABASE_URL: postgresql://test:test@localhost:5432/test
+          CARBONPULSE_SKIP_LIFESPAN_DB: "1"
+        run: |
+          set -o pipefail
+          pytest api/tests tests/ \
+            --cov=api \
+            --cov=ml \
+            --cov=data_quality \
+            --cov-report=term-missing \
+            --cov-report=json:coverage.json \
+            --tb=short \
+            -q | tee pytest.log
+          echo "### Test results" >> "$GITHUB_STEP_SUMMARY"
+          tail -n 3 pytest.log >> "$GITHUB_STEP_SUMMARY"
+          if [ -f coverage.json ]; then
+            PCT=$(python -c "import json; print(f\"{json.load(open('coverage.json'))['totals']['percent_covered']:.1f}\")")
+            echo "**Coverage:** ${PCT}%" >> "$GITHUB_STEP_SUMMARY"
+          fi
+
+  lint:
+    name: Lint & build
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+
+      - name: Set up Python
+        uses: actions/setup-python@v5
+        with:
+          python-version: "3.11"
 
       - name: Install Python dependencies
         run: |
           python -m pip install --upgrade pip
           pip install ruff
-          pip install -r api/requirements.txt || true
+          pip install -r api/requirements.txt
 
       - name: Lint Python with ruff
         run: |
-          ruff check api/ --ignore E501,F401,F811 || true
+          ruff check api/ --ignore E501,F401,F811,I001 || true
+          ruff check tests/ api/tests/ ml/models data_quality/run_checks.py
 
       - name: Set up Node
         uses: actions/setup-node@v4
         with:
-          node-version: '18'
+          node-version: "18"
 
       - name: Install dashboard dependencies
-        run: |
-          cd dashboard && npm ci
+        run: cd dashboard && npm ci
 
       - name: Build dashboard
         run: |
@@ -43,6 +81,29 @@ jobs:
           VITE_API_BASE_URL=https://carbontrace-b69i.onrender.com \
           VITE_MAPBOX_TOKEN=pk.placeholder \
           npm run build
+
+  benchmark-smoke:
+    name: Benchmark smoke (no Docker)
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+
+      - name: Set up Python
+        uses: actions/setup-python@v5
+        with:
+          python-version: "3.11"
+
+      - name: Install dependencies
+        run: |
+          python -m pip install --upgrade pip
+          pip install -r ingestion/producer/requirements.txt
+
+      - name: Run smoke benchmark (generation + processing)
+        run: |
+          PYTHONPATH=. python scripts/benchmark_pipeline.py \
+            --events 1000 --runs 1 \
+            --stages generation processing \
+            --output /dev/null
 
   validate:
     name: Validate
@@ -56,33 +117,10 @@ jobs:
           test -f api/main.py && echo "✓ api/main.py"
           test -f api/requirements.txt && echo "✓ api/requirements.txt"
           test -f dashboard/package.json && echo "✓ dashboard/package.json"
-          test -f dashboard/vite.config.js || \
-            test -f dashboard/vite.config.ts && echo "✓ vite.config"
+          test -f dashboard/vite.config.js || test -f dashboard/vite.config.ts
+          echo "✓ vite.config"
           test -f README.md && echo "✓ README.md"
-          test -f .env.production.example || \
-            test -f .env.example && echo "✓ env example"
+          test -f .env.example && echo "✓ env example"
+          test -f scripts/benchmark_pipeline.py && echo "✓ benchmark script"
+          test -f docs/benchmark_results.json && echo "✓ benchmark results"
           echo "All checks passed."
-
-      - name: Set up Python
-        uses: actions/setup-python@v5
-        with:
-          python-version: '3.11'
-
-      - name: Check API starts without errors
-        run: |
-          pip install -r api/requirements.txt || true
-          cd api
-          python -c "
-import sys
-sys.path.insert(0, '.')
-import os
-os.environ['DATABASE_URL'] = 'postgresql://test:test@localhost/test'
-try:
-    import main
-    print('✓ API imports successfully')
-except SystemExit:
-    print('✓ API imports successfully (sys.exit expected without DB)')
-except Exception as e:
-    print(f'Import check: {e}')
-" || true
-          echo "Validation complete."

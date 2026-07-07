@@ -3,11 +3,14 @@ import Map from "react-map-gl";
 import mapboxgl from "mapbox-gl";
 import "mapbox-gl/dist/mapbox-gl.css";
 import RiskBadge from "../shared/RiskBadge.jsx";
+import { useApiHealth } from "../../hooks/useApiHealth.jsx";
+import { MapSkeleton } from "../Skeleton.jsx";
 
 const MAPBOX_TOKEN = import.meta.env.VITE_MAPBOX_TOKEN;
 const API = import.meta.env.VITE_API_BASE_URL || "";
 
-export default function GlobalEmissionsMap({ suppliers, selectedId, onSelect }) {
+export default function GlobalEmissionsMap({ suppliers, selectedId, onSelect, loading = false }) {
+  const { isReady } = useApiHealth();
   const mapRef = useRef(null);
   const [zoom, setZoom] = useState(2);
   const [viewState, setViewState] = useState({
@@ -25,6 +28,7 @@ export default function GlobalEmissionsMap({ suppliers, selectedId, onSelect }) 
 
   const loadSupplierNodes = useCallback(
     async (map) => {
+      if (!isReady) return;
       try {
         console.log("Loading supplier nodes...");
         ["supplier-nodes", "supplier-critical-ring", "supplier-labels", "heatmap-layer", "heatmap-labels"].forEach((id) => {
@@ -142,19 +146,21 @@ export default function GlobalEmissionsMap({ suppliers, selectedId, onSelect }) 
         console.error("loadSupplierNodes failed:", err);
       }
     },
-    [onSelect],
+    [onSelect, isReady],
   );
 
   const handleMapLoad = useCallback(
     (evt) => {
+      if (!isReady) return;
       const map = evt.target || mapRef.current?.getMap?.();
       if (!map) return;
       loadSupplierNodes(map);
     },
-    [loadSupplierNodes],
+    [loadSupplierNodes, isReady],
   );
 
   useEffect(() => {
+    if (!isReady) return;
     const map = mapRef.current?.getMap?.();
     if (!map) return;
     if (map.isStyleLoaded()) {
@@ -162,7 +168,7 @@ export default function GlobalEmissionsMap({ suppliers, selectedId, onSelect }) 
     } else {
       map.once("style.load", () => loadSupplierNodes(map));
     }
-  }, [loadSupplierNodes]);
+  }, [loadSupplierNodes, isReady]);
 
   const resetView = useCallback(() => {
     setZoom(2);
@@ -192,6 +198,11 @@ export default function GlobalEmissionsMap({ suppliers, selectedId, onSelect }) 
 
   return (
     <div style={{ height: "100%", position: "relative" }}>
+      {loading ? (
+        <div style={{ position: "absolute", inset: 0, zIndex: 15 }}>
+          <MapSkeleton />
+        </div>
+      ) : null}
       <Map
         ref={mapRef}
         mapboxAccessToken={MAPBOX_TOKEN}

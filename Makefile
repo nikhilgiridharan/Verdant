@@ -1,6 +1,6 @@
 DASHBOARD_PORT ?= 3080
 
-.PHONY: up down logs seed kafka-topics quality test clean local ui
+.PHONY: up down logs seed kafka-topics quality test clean local ui benchmark benchmark-quick benchmark-full
 
 up:
 	docker compose up -d
@@ -39,7 +39,18 @@ quality:
 	PYTHONPATH=. python data_quality/run_checks.py
 
 test:
-	pytest tests/ -v --tb=short
+	DATABASE_URL=postgresql://test:test@localhost:5432/test \
+	CARBONPULSE_SKIP_LIFESPAN_DB=1 \
+	pytest api/tests tests/ \
+		--cov=api --cov=ml --cov=data_quality \
+		--cov-report=term-missing --tb=short -q
+
+test-verbose:
+	DATABASE_URL=postgresql://test:test@localhost:5432/test \
+	CARBONPULSE_SKIP_LIFESPAN_DB=1 \
+	pytest api/tests tests/ -v \
+		--cov=api --cov=ml --cov=data_quality \
+		--cov-report=term-missing --cov-report=html --tb=long
 
 clean:
 	docker compose down -v
@@ -47,3 +58,23 @@ clean:
 # Dashboard only (no Docker): needs API on :8000 for data — run `docker compose up -d api postgres` or full stack.
 ui:
 	cd dashboard && npm install && DASHBOARD_PORT=$(DASHBOARD_PORT) npm run dev
+
+BENCHMARK_DEPS = ingestion/producer/requirements.txt api/requirements.txt
+
+benchmark:
+	@echo "Running pipeline benchmark (requires Docker services: make up)..."
+	pip install -q -r $(BENCHMARK_DEPS)
+	PYTHONPATH=. KAFKA_BOOTSTRAP_SERVERS=localhost:29092 \
+		python scripts/benchmark_pipeline.py --events 10000 --runs 3 --output docs/benchmark_results.json
+
+benchmark-quick:
+	@echo "Quick benchmark (1000 events, 1 run)..."
+	pip install -q -r $(BENCHMARK_DEPS)
+	PYTHONPATH=. KAFKA_BOOTSTRAP_SERVERS=localhost:29092 \
+		python scripts/benchmark_pipeline.py --events 1000 --runs 1 --output docs/benchmark_results.json
+
+benchmark-full:
+	@echo "Full benchmark (50000 events, 5 runs)..."
+	pip install -q -r $(BENCHMARK_DEPS)
+	PYTHONPATH=. KAFKA_BOOTSTRAP_SERVERS=localhost:29092 \
+		python scripts/benchmark_pipeline.py --events 50000 --runs 5 --output docs/benchmark_results.json

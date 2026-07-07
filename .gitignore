@@ -14,3 +14,4 @@ dashboard/.env.local
 warehouse/dbt_project/dbt_packages/
 warehouse/dbt_project/logs/
 warehouse/dbt_project/package-lock.yml
+mlruns/

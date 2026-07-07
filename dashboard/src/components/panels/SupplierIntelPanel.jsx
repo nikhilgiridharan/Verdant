@@ -1,6 +1,7 @@
 import { memo, useCallback, useMemo, useState } from "react";
 import RiskBadge from "../shared/RiskBadge.jsx";
 import { formatKg } from "../../utils/formatters.js";
+import { PanelListSkeleton } from "../Skeleton.jsx";
 
 function flagEmoji(country) {
   const c = (country || "").trim();
@@ -20,7 +21,7 @@ function tierBarColor(tier) {
   return "var(--risk-low)";
 }
 
-export default function SupplierIntelPanel({ suppliers, selectedId, onSelect }) {
+export default function SupplierIntelPanel({ suppliers, selectedId, onSelect, loading = false }) {
   const [q, setQ] = useState("");
   const [sortBy, setSortBy] = useState("risk");
 
@@ -148,7 +149,10 @@ export default function SupplierIntelPanel({ suppliers, selectedId, onSelect }) 
             </div>
           </div>
           <div style={{ marginTop: 4, overflow: "auto", flex: 1, paddingBottom: 8 }}>
-            {filtered.slice(0, 200).map((s) => {
+            {loading ? (
+              <PanelListSkeleton rows={6} />
+            ) : (
+            filtered.slice(0, 200).map((s) => {
               const pct = Math.min(100, Math.round(((s.emissions_30d_kg || 0) / maxE) * 100));
               const active = selectedId === s.supplier_id;
               return (
@@ -160,7 +164,8 @@ export default function SupplierIntelPanel({ suppliers, selectedId, onSelect }) 
                   onSelect={handleSelect}
                 />
               );
-            })}
+            })
+            )}
           </div>
     </div>
   );

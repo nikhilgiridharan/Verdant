@@ -1,4 +1,5 @@
 import { memo, useMemo } from "react";
+import { MetricCardsSkeleton } from "../Skeleton.jsx";
 
 function TrendLine({ pct }) {
   if (pct == null || Number.isNaN(pct)) {
@@ -18,7 +19,7 @@ function TrendLine({ pct }) {
   );
 }
 
-function MetricCards({ summary }) {
+function MetricCards({ summary, loading = false }) {
   const yoy = summary?.yoy_change_pct;
   const cards = useMemo(
     () => [
@@ -53,6 +54,8 @@ function MetricCards({ summary }) {
     ],
     [summary, yoy],
   );
+
+  if (loading) return <MetricCardsSkeleton />;
 
   return (
     <div className="metric-cards-row" style={{ display: "grid", gridTemplateColumns: "repeat(4, 1fr)", gap: 16 }}>

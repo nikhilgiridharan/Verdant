@@ -4,10 +4,14 @@ import SupplierIntelPanel from "../components/panels/SupplierIntelPanel.jsx";
 import AlertFeed from "../components/panels/AlertFeed.jsx";
 import MetricCards from "../components/panels/MetricCards.jsx";
 import { useEmissionsSummary, useMapData } from "../hooks/useEmissionsData.js";
+import { useApiHealth } from "../hooks/useApiHealth.jsx";
 
 export default function Dashboard({ liveAlerts }) {
-  const { data: summary } = useEmissionsSummary();
-  const { data: mapData } = useMapData();
+  const { showSkeleton } = useApiHealth();
+  const { data: summary, isLoading: summaryLoading } = useEmissionsSummary();
+  const { data: mapData, isLoading: mapLoading } = useMapData();
+  const metricsLoading = showSkeleton || summaryLoading;
+  const mapSkeleton = showSkeleton || mapLoading;
   const [selected, setSelected] = useState(null);
   const [leftOpen, setLeftOpen] = useState(true);
   const [rightOpen, setRightOpen] = useState(true);
@@ -42,7 +46,12 @@ export default function Dashboard({ liveAlerts }) {
         }}
       >
         <div style={{ width: "280px", height: "100%", overflowY: "auto" }}>
-          <SupplierIntelPanel suppliers={suppliers} selectedId={selected} onSelect={handleSelectSupplier} />
+          <SupplierIntelPanel
+            suppliers={suppliers}
+            selectedId={selected}
+            onSelect={handleSelectSupplier}
+            loading={showSkeleton || mapLoading}
+          />
         </div>
       </div>
 
@@ -131,7 +140,7 @@ export default function Dashboard({ liveAlerts }) {
             Download ESG Report (PDF)
           </a>
         </div>
-        <MetricCards summary={summary} />
+        <MetricCards summary={summary} loading={metricsLoading} />
         <div
           className="panel cp-dashboard-map-shell overview-map"
           style={{
@@ -149,7 +158,12 @@ export default function Dashboard({ liveAlerts }) {
             try {
               return (
                 <div style={{ flex: 1, position: "relative", height: "100%" }}>
-                  <GlobalEmissionsMap suppliers={suppliers} selectedId={selected} onSelect={handleSelectSupplier} />
+                  <GlobalEmissionsMap
+                    suppliers={suppliers}
+                    selectedId={selected}
+                    onSelect={handleSelectSupplier}
+                    loading={mapSkeleton}
+                  />
                 </div>
               );
             } catch {
@@ -238,7 +252,7 @@ export default function Dashboard({ liveAlerts }) {
         }}
       >
         <div style={{ width: "320px", height: "100%", overflowY: "auto" }}>
-          <AlertFeed liveAlerts={liveAlerts} />
+          <AlertFeed liveAlerts={liveAlerts} loading={showSkeleton} />
         </div>
       </div>
     </div>

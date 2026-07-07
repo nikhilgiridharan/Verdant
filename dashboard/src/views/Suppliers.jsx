@@ -1,6 +1,8 @@
 import { useEffect, useMemo, useState } from "react";
 import { useSuppliers } from "../hooks/useSuppliers.js";
+import { useApiHealth } from "../hooks/useApiHealth.jsx";
 import RiskBadge from "../components/shared/RiskBadge.jsx";
+import { TableSkeleton } from "../components/Skeleton.jsx";
 
 function flagEmoji(country) {
   const c = (country || "").trim();
@@ -21,6 +23,7 @@ function tierBarColor(tier) {
 }
 
 export default function Suppliers() {
+  const { isReady, showSkeleton } = useApiHealth();
   const [page, setPage] = useState(0);
   const [inspectedSupplier, setInspectedSupplier] = useState(null);
   const [showBenchmarks, setShowBenchmarks] = useState(false);
@@ -35,12 +38,14 @@ export default function Suppliers() {
   const total = data?.total ?? "—";
 
   useEffect(() => {
-    if (!showBenchmarks) return;
+    if (!showBenchmarks || !isReady) return;
     fetch(`${import.meta.env.VITE_API_BASE_URL || ""}/api/v1/suppliers/benchmarks`)
       .then((r) => r.json())
       .then((d) => setBenchmarks(d?.benchmarks || []))
       .catch(() => setBenchmarks([]));
-  }, [showBenchmarks]);
+  }, [showBenchmarks, isReady]);
+
+  const tableLoading = showSkeleton || isLoading;
 
   return (
     <div
@@ -110,6 +115,8 @@ export default function Suppliers() {
               );
             })}
           </div>
+        ) : tableLoading ? (
+        <TableSkeleton rows={10} cols={6} />
         ) : (
         <>
         <div className="suppliers-table-wrap" style={{ overflow: "auto" }}>

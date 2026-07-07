@@ -1,12 +1,16 @@
 import { useEffect, useRef, useState } from "react";
 import * as d3 from "d3";
 import { useSuppliers } from "../hooks/useSuppliers.js";
+import { useApiHealth } from "../hooks/useApiHealth.jsx";
+import { MapSkeleton } from "../components/Skeleton.jsx";
 
 const RISK_COLORS = { LOW: "#3D8C21", MEDIUM: "#D97706", HIGH: "#C2410C", CRITICAL: "#B91C1C" };
 
 export default function SupplierNetwork() {
+  const { showSkeleton } = useApiHealth();
   const svgRef = useRef(null);
   const { data, isLoading } = useSuppliers({ limit: 500, offset: 0, sort_by: "risk_score", order: "desc" });
+  const graphLoading = showSkeleton || isLoading;
   const suppliers = data?.items || [];
   const [selected, setSelected] = useState(null);
   const [filter, setFilter] = useState("ALL");
@@ -128,8 +132,10 @@ export default function SupplierNetwork() {
           <button key={tier} onClick={() => setFilter(tier)} style={{ padding: "4px 12px", background: filter === tier ? "var(--green-500)" : "var(--bg-subtle)", color: filter === tier ? "white" : "var(--text-secondary)", border: "1px solid var(--border-default)", borderRadius: "var(--radius-full)", fontSize: "11px", cursor: "pointer" }}>{tier}</button>
         ))}
       </div>
-      {isLoading ? (
-        <div style={{ color: "var(--text-tertiary)", fontSize: "13px" }}>Loading network...</div>
+      {graphLoading ? (
+        <div style={{ height: svgHeight }}>
+          <MapSkeleton />
+        </div>
       ) : (
         <div
           className="panel"

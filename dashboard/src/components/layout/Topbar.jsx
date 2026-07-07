@@ -3,8 +3,11 @@ import DataFreshBadge from "../shared/DataFreshBadge.jsx";
 import { formatKg } from "../../utils/formatters.js";
 import { apiBaseUrl } from "../../utils/constants.js";
 import { cachedFetch } from "../../utils/apiCache.js";
+import { useApiHealth } from "../../hooks/useApiHealth.jsx";
+import Skeleton from "../Skeleton.jsx";
 
 export default function Topbar({ title, summary, pipelineMessage }) {
+  const { isReady, showSkeleton } = useApiHealth();
   const [anomalyCount, setAnomalyCount] = useState(0);
   const [syncStatus, setSyncStatus] = useState("syncing");
   const [lastSync, setLastSync] = useState(null);
@@ -21,6 +24,7 @@ export default function Topbar({ title, summary, pipelineMessage }) {
   }, []);
 
   useEffect(() => {
+    if (!isReady) return;
     (async () => {
       try {
         const data = await cachedFetch(`${apiBaseUrl()}/pipeline/alerts?severity=HIGH&limit=100`, 10_000);
@@ -30,7 +34,7 @@ export default function Topbar({ title, summary, pipelineMessage }) {
         setAnomalyCount(0);
       }
     })();
-  }, []);
+  }, [isReady]);
 
   useEffect(() => {
     if (summary) {
@@ -40,13 +44,14 @@ export default function Topbar({ title, summary, pipelineMessage }) {
   }, [summary]);
 
   useEffect(() => {
+    if (!isReady) return;
     fetchSummary();
     const interval = setInterval(() => {
       setSyncStatus("syncing");
       fetchSummary();
     }, 60000);
     return () => clearInterval(interval);
-  }, [fetchSummary]);
+  }, [fetchSummary, isReady]);
 
   const ticker = useMemo(() => {
     const ytd = summary?.total_co2_ytd_kg ?? 0;
@@ -86,7 +91,14 @@ export default function Topbar({ title, summary, pipelineMessage }) {
         {title}
       </div>
       <div className="topbar-metrics" style={{ flex: 1, display: "flex", justifyContent: "center", alignItems: "center" }}>
-        {ticker.map((t, i) => (
+        {showSkeleton ? (
+          <div style={{ display: "flex", gap: 32, alignItems: "center" }}>
+            {[0, 1, 2, 3].map((i) => (
+              <Skeleton key={i} height={32} width={72} />
+            ))}
+          </div>
+        ) : (
+        ticker.map((t, i) => (
           <div key={t.k} style={{ display: "flex", alignItems: "center" }}>
             {i > 0 ? (
               <div
@@ -123,7 +135,8 @@ export default function Topbar({ title, summary, pipelineMessage }) {
               </div>
             </div>
           </div>
-        ))}
+        ))
+        )}
       </div>
       <div style={{ display: "flex", alignItems: "center", flexShrink: 0 }}>
         <DataFreshBadge pipelineMessage={pipelineMessage} syncStatus={syncStatus} lastSync={lastSync} />

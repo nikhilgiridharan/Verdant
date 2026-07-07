@@ -4,9 +4,12 @@ import Sidebar from "./components/layout/Sidebar.jsx";
 import Topbar from "./components/layout/Topbar.jsx";
 import StatusBar from "./components/layout/StatusBar.jsx";
 import { useEmissionsSummary } from "./hooks/useEmissionsData.js";
+import { useApiHealth } from "./hooks/useApiHealth.jsx";
 import { wsAlertsUrl, wsPipelineUrl } from "./utils/constants.js";
 import { ensureGoFundMeAudioPlayer } from "./utils/goFundMeAudio.js";
 import { useWebSocket } from "./hooks/useWebSocket.js";
+import ColdStartBanner, { ApiErrorState } from "./components/ColdStartBanner.jsx";
+import { MetricCardsSkeleton } from "./components/Skeleton.jsx";
 
 const Dashboard = lazy(() => import("./views/Dashboard.jsx"));
 const AskVerdant = lazy(() => import("./views/AskVerdant.jsx"));
@@ -19,17 +22,8 @@ const Wiki = lazy(() => import("./views/Wiki.jsx"));
 const GoFundMe = lazy(() => import("./views/GoFundMe.jsx"));
 
 const fullPageLoading = (
-  <div
-    style={{
-      display: "flex",
-      alignItems: "center",
-      justifyContent: "center",
-      height: "100vh",
-      color: "var(--text-tertiary)",
-      fontSize: "13px",
-    }}
-  >
-    Loading...
+  <div style={{ padding: 24, background: "var(--bg-base)", minHeight: "40vh" }}>
+    <MetricCardsSkeleton />
   </div>
 );
 
@@ -51,6 +45,7 @@ function Shell() {
   const loc = useLocation();
   const title = useMemo(() => titles(loc.pathname), [loc.pathname]);
   const { data: summary } = useEmissionsSummary();
+  const { apiState, retry } = useApiHealth();
   const [liveAlert, setLiveAlert] = useState(null);
   const [pipelineMsg, setPipelineMsg] = useState(null);
   const [pipelineOk] = useState(true);
@@ -71,7 +66,11 @@ function Shell() {
       <Sidebar pipelineOk={pipelineOk} />
       <div style={{ flex: 1, display: "flex", flexDirection: "column", minWidth: 0 }}>
         <Topbar title={title} summary={summary} pipelineMessage={pipelineMsg} />
+        {apiState === "waking" ? <ColdStartBanner /> : null}
         <div className="main-content" style={{ flex: 1, minHeight: 0 }}>
+          {apiState === "error" ? (
+            <ApiErrorState onRetry={retry} />
+          ) : (
           <Suspense fallback={fullPageLoading}>
             <Routes>
               <Route index element={<Dashboard liveAlerts={liveAlert} />} />
@@ -86,6 +85,7 @@ function Shell() {
               <Route path="*" element={<Navigate to="/dashboard" replace />} />
             </Routes>
           </Suspense>
+          )}
         </div>
         <StatusBar text="Verdant · Scope 3 emissions intelligence" />
       </div>

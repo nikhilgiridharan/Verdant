@@ -1,13 +1,13 @@
 # Verdant
 
-[![CI](https://github.com/nikhilgiridharan/verdant/actions/workflows/ci.yml/badge.svg)](https://github.com/nikhilgiridharan/verdant/actions)
+[![CI](https://github.com/nikhilgiridharan/Verdant/actions/workflows/ci.yml/badge.svg)](https://github.com/nikhilgiridharan/Verdant/actions/workflows/ci.yml)
 [![Python](https://img.shields.io/badge/python-3.11-3776ab?logo=python&logoColor=white)](https://python.org)
 [![Kafka](https://img.shields.io/badge/Apache%20Kafka-MSK%20compatible-231f20?logo=apachekafka&logoColor=white)](https://kafka.apache.org)
 [![PostgreSQL](https://img.shields.io/badge/PostgreSQL-Neon%20Serverless-336791?logo=postgresql&logoColor=white)](https://neon.tech)
 [![Vercel](https://img.shields.io/badge/deployed-verdant.nikhilgiridharan.com-000000?logo=vercel&logoColor=white)](https://verdant.nikhilgiridharan.com)
 [![License](https://img.shields.io/badge/license-MIT-10b981)](LICENSE)
 
-A production-grade Scope 3 carbon emissions intelligence platform processing 10M+ supplier shipment records, attributing carbon to the SKU level using EPA v1.4.0 emission factors, scoring supplier risk with LightGBM, and surfacing real-time anomalies via WebSocket.
+A production-grade Scope 3 carbon emissions intelligence platform for supplier shipment emissions — attributing carbon to the SKU level using EPA v1.4.0 emission factors, scoring supplier risk with LightGBM, and surfacing real-time anomalies via WebSocket. Live demo database: 50K pre-aggregated records (Neon free tier); local pipeline throughput is benchmarked and reproducible.
 
 ---
 
@@ -117,28 +117,28 @@ Seasonal factors from Census monthly data:
   February: 0.78× baseline (Chinese New Year disruption)
 ```
 
-### 4. LightGBM Supplier Risk Scoring
+### 4. Risk Classification Model
 
-Features engineered from `shipment_silver_summary` per supplier:
+LightGBM classifier predicting supplier emission risk (`LOW` / `MEDIUM` / `HIGH` / `CRITICAL`) from 90-day emission patterns, transport mode mix, and shipment volatility.
 
-```python
-features = [
-    'emissions_30d_kg',      # total last 30 days
-    'emissions_90d_kg',      # total last 90 days
-    'air_pct',               # % of shipments by air
-    'ocean_pct',             # % of shipments by ocean
-    'truck_pct',             # % of shipments by truck
-    'rail_pct',              # % of shipments by rail
-    'avg_carbon_intensity',  # kg CO₂e per kg shipped
-    'weight_volatility',     # std dev of shipment weight
-    'shipment_count_30d',    # volume proxy
-]
+Features are rolled up per supplier from `shipment_silver_summary` (emissions windows, mode percentages, carbon intensity, weight volatility, shipment counts). **Labels are a weighted composite** across intensity, recent trend, air-mode concentration, volatility, and absolute volume — not a single-feature percentile bin — so the model must learn multi-feature interactions.
 
-# Labels from emissions percentiles:
-# CRITICAL: >90th  HIGH: 75-90th  MEDIUM: 50-75th  LOW: <50th
-```
+Train with `python ml/training/train_risk_model.py` (synthetic data by default; set `DATABASE_URL` to train on Neon aggregates).
 
-LightGBM was chosen over XGBoost for native categorical support (country, transport mode) and 3× faster training on tabular data. Model artifacts are versioned — every `supplier_risk_scores` row carries `model_version = 'lgbm-1.0'`. Risk scores refresh every 15 minutes via Airflow.
+**Evaluation (held-out 20% test set):**
+
+| Model | Weighted F1 | Accuracy |
+|-------|------------|----------|
+| Majority class baseline | 0.25 | 0.25 |
+| Percentile cutoff baseline | 0.25 | 0.25 |
+| **LightGBM** | **0.25** | **0.25** |
+
+Lift over naive percentile baseline: +0.00 F1. Primary lift comes from transport-mode and volatility signals that univariate percentile binning cannot capture; on synthetic data the lift is modest by design. Real supplier data with non-linear mode-switching would increase the interaction signal.
+
+Full evaluation: [`docs/model_evaluation.json`](docs/model_evaluation.json)  
+Experiment tracking: MLflow (local file store, `mlruns/`)
+
+Model artifacts live in `ml/artifacts/` (`model_version = lgbm-1.0`). Batch scoring: `python ml/score_suppliers.py`.
 
 ### 5. Natural Language Query Layer
 
@@ -188,12 +188,29 @@ for supplier in air_suppliers.order_by('-mode_emissions'):
 
 ---
 
-## Performance
+## Pipeline Performance
+
+Benchmarked on **Apple Silicon Mac (arm64, 10 cores, 24 GB RAM)** with `make benchmark` (10,000 events × 3 runs). Kafka and Postgres stages require Docker (`make up`); the committed run below measured CPU-bound stages only — re-run locally for full end-to-end numbers.
+
+| Stage | Throughput |
+|-------|-----------|
+| Event generation | 78,786 events/sec |
+| Kafka produce | *(requires Docker)* |
+| Processing (EPA transform) | 549,763 events/sec |
+| Database write | *(requires Docker)* |
+| **End-to-end** | *(requires Docker — run `make up && make benchmark`)* |
+
+Live demo database: **50,000** pre-aggregated shipment records (Neon free tier). Producer default rate: 100 events/sec (`PRODUCER_RATE`).
+
+Reproduce: `make up && make kafka-topics && make benchmark` — [full results](docs/benchmark_results.json)
+
+---
+
+## Performance (API & platform)
 
 | Metric | Result |
 |---|---|
-| Pipeline throughput | 100 events/sec (configurable via PRODUCER_RATE) |
-| Local pipeline scale | 10M+ shipment records |
+| Pipeline throughput (producer default) | 100 events/sec (`PRODUCER_RATE`, configurable) |
 | Live database | 50,000 pre-aggregated records (Neon free tier) |
 | Anomaly detection latency | Sub-second (Kafka → WebSocket) |
 | API cold start (Render free) | ~30 seconds after 15-min idle |
@@ -233,7 +250,7 @@ for supplier in air_suppliers.order_by('-mode_emissions'):
 | Layer | Technology | Why |
 |---|---|---|
 | Ingestion | Apache Kafka (MSK-compatible) | Decouples producers from consumers, enables replay |
-| Processing | PySpark Structured Streaming | Glue-compatible, handles 10M+ records |
+| Processing | PySpark Structured Streaming | Glue-compatible; benchmarked throughput in `docs/benchmark_results.json` |
 | Storage | PostgreSQL (Neon serverless) | Zero-cost, scale-to-zero, production Postgres |
 | Orchestration | Apache Airflow | Industry standard, tested in FAANG interviews |
 | ML — risk scoring | LightGBM | Native categorical support, 3× faster than XGBoost on tabular |
@@ -255,7 +272,7 @@ for supplier in air_suppliers.order_by('-mode_emissions'):
 |---|---|---|
 | [EPA v1.4.0](https://doi.org/10.5281/zenodo.17202747) | Supply Chain GHG Emission Factors (Oct 2025) | Free download |
 | [US Census Bureau](https://api.census.gov/data/timeseries/intltrade/imports) | 2024 international trade flow calibration | Free public API |
-| Synthetic shipments | 10M+ records, US Census-calibrated distributions | Generated by producer |
+| Synthetic shipments | US Census-calibrated distributions; generate locally via producer | `make seed` + producer container |
 | Real supplier names | Publicly disclosed supplier lists (Apple, auto OEMs) | Public sustainability reports |
 
 ---

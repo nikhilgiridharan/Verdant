@@ -8,4 +8,15 @@ select = ["E", "F", "I", "W"]
 
 [tool.pytest.ini_options]
 testpaths = ["api/tests", "tests"]
-pythonpath = ["api"]
+pythonpath = [".", "api", "ml"]
+
+[tool.coverage.run]
+omit = [
+  "api/bootstrap.py",
+  "api/routers/report.py",
+  "api/routers/nl_query.py",
+  "api/routers/digest.py",
+  "ml/score_suppliers.py",
+  "ml/mlflow_setup.py",
+  "ml/training/*",
+]

@@ -1,17 +1,21 @@
 import { useQuery } from "@tanstack/react-query";
 import { apiBaseUrl } from "../utils/constants.js";
 import { cachedFetch } from "../utils/apiCache.js";
+import { useApiHealth } from "./useApiHealth.jsx";
 
 export function useEmissionsSummary() {
+  const { isReady } = useApiHealth();
   return useQuery({
     queryKey: ["emissions", "summary"],
     queryFn: async () => cachedFetch(`${apiBaseUrl()}/emissions/summary`, 60_000),
     staleTime: 60_000,
     refetchInterval: 120_000,
+    enabled: isReady,
   });
 }
 
 export function useMapData() {
+  const { isReady } = useApiHealth();
   return useQuery({
     queryKey: ["suppliers", "map"],
     queryFn: async () => {
@@ -20,5 +24,6 @@ export function useMapData() {
     },
     staleTime: 180_000,
     refetchInterval: 300_000,
+    enabled: isReady,
   });
 }

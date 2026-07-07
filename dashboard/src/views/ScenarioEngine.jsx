@@ -1,10 +1,13 @@
 import { useEffect, useMemo, useState } from "react";
+import { useApiHealth } from "../hooks/useApiHealth.jsx";
+import { ChartSkeleton, PageHeaderSkeleton } from "../components/Skeleton.jsx";
 
 const API = import.meta.env.VITE_API_BASE_URL || "";
 const TRANSPORT_FACTORS = { AIR: 0.5474, OCEAN: 0.0233, TRUCK: 0.092, RAIL: 0.0077 };
 const TRANSPORT_LABELS = { AIR: "Air freight", OCEAN: "Ocean freight", TRUCK: "Truck", RAIL: "Rail" };
 
 export default function ScenarioEngine() {
+  const { isReady, showSkeleton } = useApiHealth();
   const [suppliers, setSuppliers] = useState([]);
   const [loading, setLoading] = useState(true);
   const [scenarios, setScenarios] = useState([]);
@@ -26,6 +29,7 @@ export default function ScenarioEngine() {
   };
 
   useEffect(() => {
+    if (!isReady) return;
     fetch(`${API}/api/v1/suppliers?limit=500`)
       .then((r) => r.json())
       .then((data) => {
@@ -39,7 +43,9 @@ export default function ScenarioEngine() {
         setLoading(false);
       })
       .catch(() => setLoading(false));
-  }, []);
+  }, [isReady]);
+
+  const pageLoading = showSkeleton || loading;
 
   const addScenario = () =>
     setScenarios((prev) => [
@@ -95,10 +101,14 @@ export default function ScenarioEngine() {
     setPathway(data);
   };
 
-  if (loading)
+  if (pageLoading)
     return (
-      <div style={{ padding: "40px", color: "var(--text-tertiary)", fontSize: "13px" }}>
-        Loading...
+      <div className="scenario-wrap" style={{ padding: "32px 40px", width: "100%" }}>
+        <PageHeaderSkeleton />
+        <ChartSkeleton height={120} />
+        <div style={{ marginTop: 16 }}>
+          <ChartSkeleton height={160} />
+        </div>
       </div>
     );
 

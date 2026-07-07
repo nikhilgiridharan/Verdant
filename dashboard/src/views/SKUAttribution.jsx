@@ -2,6 +2,8 @@ import { useEffect, useMemo, useRef, useState } from "react";
 import axios from "axios";
 import SankeyDiagram from "../components/charts/SankeyDiagram.jsx";
 import { apiBaseUrl } from "../utils/constants.js";
+import { useApiHealth } from "../hooks/useApiHealth.jsx";
+import { ChartSkeleton, PageHeaderSkeleton } from "../components/Skeleton.jsx";
 
 const client = axios.create({ baseURL: apiBaseUrl() });
 
@@ -54,6 +56,7 @@ function sankeyTopSuppliers(raw, topN = 10) {
 }
 
 export default function SKUAttribution() {
+  const { isReady, showSkeleton } = useApiHealth();
   const [sku, setSku] = useState("SKU-00001");
   const [data, setData] = useState(null);
   const [skuList, setSkuList] = useState([]);
@@ -64,6 +67,7 @@ export default function SKUAttribution() {
   const [containerWidth, setContainerWidth] = useState(900);
 
   useEffect(() => {
+    if (!isReady) return;
     fetch(`${apiBaseUrl()}/skus?limit=200`)
       .then((r) => r.json())
       .then((data) => {
@@ -71,7 +75,7 @@ export default function SKUAttribution() {
         setSkuList(list);
       })
       .catch(() => {});
-  }, []);
+  }, [isReady]);
 
   const fetchSkuName = async (skuId) => {
     const API = import.meta.env.VITE_API_BASE_URL || "";
@@ -86,9 +90,9 @@ export default function SKUAttribution() {
   };
 
   useEffect(() => {
-    if (!sku) return;
+    if (!sku || !isReady) return;
     fetchSkuName(sku).then((name) => setSkuDisplayName(name));
-  }, [sku]);
+  }, [sku, isReady]);
 
   useEffect(() => {
     if (containerRef.current) {
@@ -104,6 +108,7 @@ export default function SKUAttribution() {
   }, []);
 
   useEffect(() => {
+    if (!isReady) return undefined;
     const controller = new AbortController();
     client
       .get(`/skus/${encodeURIComponent(sku)}/sankey`, { signal: controller.signal })
@@ -112,7 +117,7 @@ export default function SKUAttribution() {
         /* ignore cancelled/failed request */
       });
     return () => controller.abort();
-  }, [sku]);
+  }, [sku, isReady]);
 
   const { nodes, links } = useMemo(() => {
     const base = sankeyTopSuppliers(data, 10);
@@ -323,7 +328,11 @@ export default function SKUAttribution() {
             >
               Showing top 10 suppliers by emissions for this SKU
             </div>
+            {showSkeleton || !data ? (
+              <ChartSkeleton height={420} />
+            ) : (
             <SankeyDiagram nodes={nodes} links={links} width={containerWidth} />
+            )}
           </div>
         </div>
       </div>

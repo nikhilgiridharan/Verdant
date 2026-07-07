@@ -1,4 +1,6 @@
 import { useEffect, useMemo, useState } from "react";
+import { useApiHealth } from "../hooks/useApiHealth.jsx";
+import { ChartSkeleton, PageHeaderSkeleton } from "../components/Skeleton.jsx";
 import {
   Area,
   CartesianGrid,
@@ -13,6 +15,7 @@ import {
 } from "recharts";
 
 export default function Forecast() {
+  const { isReady, showSkeleton } = useApiHealth();
   const [supplierId, setSupplierId] = useState("SUP-00001");
   const [horizon, setHorizon] = useState(30);
   const [forecastData, setForecastData] = useState(null);
@@ -22,7 +25,7 @@ export default function Forecast() {
   const [supplierDropdownOpen, setSupplierDropdownOpen] = useState(false);
 
   const fetchForecast = async (id, h) => {
-    if (!id) return;
+    if (!id || !isReady) return;
     setLoading(true);
     try {
       const API = import.meta.env.VITE_API_BASE_URL || "";
@@ -40,6 +43,7 @@ export default function Forecast() {
   };
 
   useEffect(() => {
+    if (!isReady) return;
     const API = import.meta.env.VITE_API_BASE_URL || "";
     fetch(`${API}/api/v1/suppliers?limit=500`)
       .then((r) => r.json())
@@ -48,11 +52,12 @@ export default function Forecast() {
         setSupplierList(list);
       })
       .catch(() => {});
-  }, []);
+  }, [isReady]);
 
   useEffect(() => {
+    if (!isReady) return;
     fetchForecast(supplierId, horizon);
-  }, [supplierId, horizon]);
+  }, [supplierId, horizon, isReady]);
 
   const chartData = useMemo(
     () => [
@@ -286,10 +291,8 @@ export default function Forecast() {
             boxShadow: "var(--shadow-md)",
           }}
         >
-          {loading ? (
-            <div style={{ color: "var(--text-tertiary)", fontSize: 13 }}>
-              Loading forecast…
-            </div>
+          {showSkeleton || loading ? (
+            <ChartSkeleton height={380} />
           ) : (
             <>
               <div className="forecast-chart-container" style={{ width: "100%", height: "380px" }}>

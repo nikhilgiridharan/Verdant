@@ -1,8 +1,10 @@
 import { useQuery } from "@tanstack/react-query";
 import { apiBaseUrl } from "../utils/constants.js";
 import { cachedFetch } from "../utils/apiCache.js";
+import { useApiHealth } from "./useApiHealth.jsx";
 
 export function useSuppliers(params = {}) {
+  const { isReady } = useApiHealth();
   return useQuery({
     queryKey: ["suppliers", "list", params],
     queryFn: async () => {
@@ -14,5 +16,6 @@ export function useSuppliers(params = {}) {
       return cachedFetch(`${apiBaseUrl()}/suppliers${suffix}`, 60_000);
     },
     staleTime: 60_000,
+    enabled: isReady,
   });
 }

@@ -1,4 +1,5 @@
 import { useState, useRef } from "react";
+import { useApiHealth } from "../hooks/useApiHealth.jsx";
 
 const API = import.meta.env.VITE_API_BASE_URL || "";
 
@@ -11,6 +12,7 @@ const EXAMPLES = [
 ];
 
 export default function AskVerdant() {
+  const { isReady } = useApiHealth();
   const [question, setQuestion] = useState("");
   const [result, setResult] = useState(null);
   const [loading, setLoading] = useState(false);
@@ -20,6 +22,10 @@ export default function AskVerdant() {
   const ask = async (q) => {
     const query = q || question;
     if (!query.trim()) return;
+    if (!isReady) {
+      setError("API is still warming up. Please wait a moment and try again.");
+      return;
+    }
     setLoading(true);
     setError(null);
     setResult(null);

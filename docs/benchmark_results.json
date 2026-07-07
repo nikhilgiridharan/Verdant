@@ -1,0 +1,48 @@
+{
+  "benchmark_date": "2026-07-07T01:01:29.414209+00:00",
+  "config": {
+    "events_per_stage": 10000,
+    "runs_per_stage": 3
+  },
+  "system": {
+    "python_version": "3.9.6",
+    "os": "Darwin",
+    "os_version": "Darwin Kernel Version 25.5.0: Mon Apr 27 20:39:29 PDT 2026; root:xnu-12377.121.6~2/RELEASE_ARM64_T8142",
+    "architecture": "arm64",
+    "processor": "arm",
+    "cpu_count": 10,
+    "disk_total_gb": 926.3,
+    "memory_total_gb": 24.0
+  },
+  "environment": {
+    "kafka_bootstrap": "localhost:29092",
+    "database_url_host": "localhost:5432",
+    "docker_required_stages": [
+      "kafka",
+      "db",
+      "e2e"
+    ]
+  },
+  "stages": {
+    "event_generation": {
+      "stage": "event_generation",
+      "events": 10000,
+      "runs": 3,
+      "avg_seconds": 0.127,
+      "min_seconds": 0.115,
+      "max_seconds": 0.15,
+      "throughput_eps": 78786.0,
+      "sample_event_size_bytes": 564
+    },
+    "processing_transform": {
+      "stage": "processing_transform",
+      "events": 10000,
+      "runs": 3,
+      "avg_seconds": 0.018,
+      "min_seconds": 0.018,
+      "max_seconds": 0.018,
+      "throughput_eps": 549763.1
+    }
+  },
+  "errors": {}
+}

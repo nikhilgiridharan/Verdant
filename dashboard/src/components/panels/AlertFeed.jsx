@@ -3,6 +3,8 @@ import { relTime } from "../../utils/formatters.js";
 import axios from "axios";
 import { apiBaseUrl } from "../../utils/constants.js";
 import { cachedFetch, invalidateCache } from "../../utils/apiCache.js";
+import { useApiHealth } from "../../hooks/useApiHealth.jsx";
+import { PanelListSkeleton } from "../Skeleton.jsx";
 
 const client = axios.create({ baseURL: apiBaseUrl() });
 
@@ -44,18 +46,22 @@ function severityPillStyle(sev) {
   };
 }
 
-export default function AlertFeed({ liveAlerts }) {
+export default function AlertFeed({ liveAlerts, loading = false }) {
+  const { isReady } = useApiHealth();
   const [acked, setAcked] = useState(() => new Set());
   const [items, setItems] = useState([]);
+  const [fetched, setFetched] = useState(false);
 
   useEffect(() => {
+    if (!isReady) return undefined;
     cachedFetch(`${apiBaseUrl()}/pipeline/alerts?limit=30`, 10_000)
       .then((data) => setItems(data))
       .catch(() => {
         /* ignore failed request */
-      });
+      })
+      .finally(() => setFetched(true));
     return undefined;
-  }, []);
+  }, [isReady]);
 
   useEffect(() => {
     if (liveAlerts?.type === "alert") {
@@ -136,7 +142,9 @@ export default function AlertFeed({ liveAlerts }) {
           {activeCount}
         </span>
       </div>
-      {items.length === 0 ? (
+      {loading || (!fetched && isReady) ? (
+        <PanelListSkeleton rows={4} />
+      ) : items.length === 0 ? (
         <div style={{ textAlign: "center", padding: "32px 20px", color: "var(--text-tertiary)" }}>
           <div style={{ fontSize: 22, marginBottom: 8, color: "var(--green-200)" }} aria-hidden>
             🌿
