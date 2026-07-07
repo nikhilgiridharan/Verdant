@@ -1,6 +1,9 @@
-import { useEffect, useMemo, useState } from "react";
+import { useMemo, useState } from "react";
+import { useQuery } from "@tanstack/react-query";
 import { useSuppliers } from "../hooks/useSuppliers.js";
 import { useApiHealth } from "../hooks/useApiHealth.jsx";
+import { apiBaseUrl } from "../utils/constants.js";
+import { cachedFetch } from "../utils/apiCache.js";
 import RiskBadge from "../components/shared/RiskBadge.jsx";
 import { TableSkeleton } from "../components/Skeleton.jsx";
 
@@ -27,8 +30,18 @@ export default function Suppliers() {
   const [page, setPage] = useState(0);
   const [inspectedSupplier, setInspectedSupplier] = useState(null);
   const [showBenchmarks, setShowBenchmarks] = useState(false);
-  const [benchmarks, setBenchmarks] = useState([]);
   const { data, isLoading } = useSuppliers({ limit: 25, offset: page * 25, sort_by: "risk_score", order: "desc" });
+  const {
+    data: benchmarkData,
+    isLoading: benchmarksLoading,
+    isError: benchmarksError,
+  } = useQuery({
+    queryKey: ["suppliers", "benchmarks"],
+    queryFn: () => cachedFetch(`${apiBaseUrl()}/suppliers/benchmarks`, 120_000),
+    enabled: showBenchmarks && isReady,
+    staleTime: 120_000,
+  });
+  const benchmarks = benchmarkData?.benchmarks || [];
   const maxE = useMemo(() => {
     const rows = data?.items || [];
     return Math.max(1, ...rows.map((s) => s.emissions_30d_kg || 0));
@@ -36,14 +49,6 @@ export default function Suppliers() {
   const items = data?.items || [];
   const suppliers = items;
   const total = data?.total ?? "—";
-
-  useEffect(() => {
-    if (!showBenchmarks || !isReady) return;
-    fetch(`${import.meta.env.VITE_API_BASE_URL || ""}/api/v1/suppliers/benchmarks`)
-      .then((r) => r.json())
-      .then((d) => setBenchmarks(d?.benchmarks || []))
-      .catch(() => setBenchmarks([]));
-  }, [showBenchmarks, isReady]);
 
   const tableLoading = showSkeleton || isLoading;
 
@@ -98,22 +103,35 @@ export default function Suppliers() {
         </div>
         {showBenchmarks ? (
           <div style={{ padding: 16 }}>
-            {(benchmarks || []).slice(0, 30).map((b) => {
+            {benchmarksLoading || showSkeleton ? (
+              <TableSkeleton rows={8} cols={1} />
+            ) : benchmarksError ? (
+              <div style={{ color: "var(--risk-high)", fontSize: 13 }}>Could not load benchmarks. Try again later.</div>
+            ) : benchmarks.length === 0 ? (
+              <div style={{ color: "var(--text-tertiary)", fontSize: 13 }}>
+                No benchmark data yet — suppliers need shipment history with carbon intensity.
+              </div>
+            ) : (
+              benchmarks.slice(0, 30).map((b) => {
               const ratio = Number(b.intensity_ratio || 0);
               const pct = Math.min(100, Math.max(0, ratio * 50));
               const color = ratio >= 1.5 ? "var(--risk-critical)" : ratio > 1.1 ? "var(--risk-medium)" : "var(--green-500)";
               return (
                 <div key={`${b.supplier_id}-${b.product_category}`} style={{ marginBottom: 10 }}>
-                  <div style={{ display: "flex", justifyContent: "space-between", fontSize: 12 }}>
-                    <span>{b.supplier_name}</span>
-                    <span style={{ color }}>{ratio.toFixed(2)}x industry avg</span>
+                  <div style={{ display: "flex", justifyContent: "space-between", fontSize: 12, gap: 12 }}>
+                    <span>
+                      <strong>{b.supplier_name}</strong>
+                      <span style={{ color: "var(--text-tertiary)", marginLeft: 6 }}>{b.product_category}</span>
+                    </span>
+                    <span style={{ color, whiteSpace: "nowrap" }}>{ratio.toFixed(2)}x category avg</span>
                   </div>
                   <div style={{ height: 8, borderRadius: 999, background: "var(--gray-200)", overflow: "hidden", marginTop: 4 }}>
                     <div style={{ width: `${pct}%`, height: "100%", background: color }} />
                   </div>
                 </div>
               );
-            })}
+            })
+            )}
           </div>
         ) : tableLoading ? (
         <TableSkeleton rows={10} cols={6} />
@@ -277,7 +295,8 @@ export default function Suppliers() {
         </div>
         </>
         )}
-        {isLoading ? <div style={{ padding: 16, color: "var(--text-tertiary)", fontSize: 13 }}>Loading…</div> : null}
+        {isLoading && !showBenchmarks ? <div style={{ padding: 16, color: "var(--text-tertiary)", fontSize: 13 }}>Loading…</div> : null}
+        {!showBenchmarks ? (
         <div style={{ display: "flex", gap: 10, padding: "12px 16px", borderTop: "1px solid var(--border-subtle)", background: "var(--bg-surface)" }}>
           <button type="button" onClick={() => setPage((p) => Math.max(0, p - 1))} style={btn}>
             Previous
@@ -286,6 +305,7 @@ export default function Suppliers() {
             Next
           </button>
         </div>
+        ) : null}
       </div>
 
       {inspectedSupplier && (

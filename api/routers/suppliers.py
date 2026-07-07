@@ -86,7 +86,11 @@ async def get_supplier_benchmarks():
     with get_conn() as conn, conn.cursor(cursor_factory=psycopg2.extras.RealDictCursor) as cur:
         cur.execute(
             """
-            WITH category_benchmarks AS (
+            WITH data_anchor AS (
+                SELECT COALESCE(MAX(event_at), NOW()) AS latest_event
+                FROM shipment_silver_summary
+            ),
+            category_benchmarks AS (
                 SELECT
                     k.category AS product_category,
                     AVG(s.carbon_intensity) as category_avg_intensity,
@@ -94,8 +98,9 @@ async def get_supplier_benchmarks():
                     COUNT(DISTINCT s.supplier_id) as supplier_count
                 FROM shipment_silver_summary s
                 JOIN skus k ON k.sku_id = s.sku_id
+                CROSS JOIN data_anchor da
                 WHERE s.carbon_intensity > 0
-                  AND s.event_at > NOW() - INTERVAL '30 days'
+                  AND s.event_at >= da.latest_event - INTERVAL '365 days'
                 GROUP BY k.category
             ),
             supplier_intensity AS (
@@ -109,8 +114,9 @@ async def get_supplier_benchmarks():
                 FROM shipment_silver_summary s
                 JOIN suppliers sup ON sup.supplier_id = s.supplier_id
                 JOIN skus k ON k.sku_id = s.sku_id
+                CROSS JOIN data_anchor da
                 WHERE s.carbon_intensity > 0
-                  AND s.event_at > NOW() - INTERVAL '30 days'
+                  AND s.event_at >= da.latest_event - INTERVAL '365 days'
                 GROUP BY s.supplier_id, sup.name, s.supplier_country, k.category
             )
             SELECT
