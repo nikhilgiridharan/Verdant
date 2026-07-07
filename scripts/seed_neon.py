@@ -704,6 +704,13 @@ def main() -> None:
         n_sum = seed_sku_emissions_summary(conn)
         conn.commit()
         print(f"  upserted {n_sum} sku_emissions_summary rows")
+        print("Running data quality checks …")
+        try:
+            from data_quality.runner import run_checks_after_pipeline
+
+            run_checks_after_pipeline(connection=conn, verbose=True)
+        except Exception as exc:  # noqa: BLE001
+            print(f"  WARNING: data quality checks skipped: {exc}")
         print("Done.")
     finally:
         conn.close()

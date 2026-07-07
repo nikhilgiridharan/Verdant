@@ -126,6 +126,13 @@ def main() -> None:
         conn.close()
     print(f"Scored {len(rows)} suppliers")
 
+    try:
+        from data_quality.runner import run_checks_after_pipeline
+
+        run_checks_after_pipeline()
+    except Exception as exc:  # noqa: BLE001
+        print(f"WARNING: data quality checks skipped: {exc}")
+
 
 if __name__ == "__main__":
     main()

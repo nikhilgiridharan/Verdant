@@ -1,0 +1,9 @@
+{
+  "ran_at": "2026-07-07T03:00:21.397722+00:00",
+  "overall_status": "ERROR",
+  "passed": 0,
+  "failed": 9,
+  "results": [],
+  "checks": [],
+  "report_path": "docs/data_quality_report.json"
+}

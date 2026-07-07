@@ -129,12 +129,16 @@ def acknowledge(alert_id: str) -> dict:
 
 @router.get("/data-quality", response_model=dict)
 def data_quality() -> dict:
-    path = REPO_ROOT / "data_quality" / "last_run.json"
-    if path.exists():
-        with path.open(encoding="utf-8") as f:
-            return json.load(f)
+    for path in (
+        REPO_ROOT / "docs" / "data_quality_report.json",
+        REPO_ROOT / "data_quality" / "last_run.json",
+    ):
+        if path.exists():
+            with path.open(encoding="utf-8") as f:
+                return json.load(f)
     return {
         "last_run": None,
-        "results": [],
-        "note": "Run PYTHONPATH=. python data_quality/run_checks.py to populate",
+        "overall_status": "UNKNOWN",
+        "checks": [],
+        "note": "Run make dq-check to populate",
     }

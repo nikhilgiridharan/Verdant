@@ -1,6 +1,6 @@
 DASHBOARD_PORT ?= 3080
 
-.PHONY: up down logs seed kafka-topics quality test clean local ui benchmark benchmark-quick benchmark-full
+.PHONY: up down logs seed kafka-topics quality dq-check test clean local ui benchmark benchmark-quick benchmark-full
 
 up:
 	docker compose up -d
@@ -37,6 +37,10 @@ kafka-topics:
 
 quality:
 	PYTHONPATH=. python data_quality/run_checks.py
+
+dq-check:
+	@echo "Running data quality checks..."
+	PYTHONPATH=. python -m data_quality.runner
 
 test:
 	DATABASE_URL=postgresql://test:test@localhost:5432/test \

@@ -13,6 +13,24 @@ DEFAULT_ARGS = {
 }
 
 
+def _run_data_quality() -> None:
+    """Run DQ checks after pipeline cycle; warn-only (non-zero exit ignored)."""
+    import os
+    import subprocess
+    import sys
+    from pathlib import Path
+
+    root = Path(__file__).resolve().parents[3]
+    env = os.environ.copy()
+    env["PYTHONPATH"] = str(root)
+    subprocess.run(
+        [sys.executable, "-m", "data_quality.runner"],
+        cwd=root,
+        env=env,
+        check=False,
+    )
+
+
 def _noop() -> None:
     return
 
@@ -53,7 +71,7 @@ with DAG(
     )
     run_data_quality = PythonOperator(
         task_id="run_data_quality",
-        python_callable=_noop,
+        python_callable=_run_data_quality,
     )
     refresh_api_cache = PythonOperator(
         task_id="refresh_api_cache",

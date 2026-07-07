@@ -204,6 +204,12 @@ Live demo database: **50,000** pre-aggregated shipment records (Neon free tier).
 
 Reproduce: `make up && make kafka-topics && make benchmark` — [full results](docs/benchmark_results.json)
 
+## Data Quality
+
+9 automated checks run after each pipeline cycle, covering null validation, referential integrity, business logic bounds, data freshness, supplier coverage, and duplicate detection. Critical failures block downstream consumers.
+
+Run manually: `make dq-check` ([latest report](docs/data_quality_report.json))
+
 ---
 
 ## Performance (API & platform)

@@ -30,7 +30,11 @@ export default function DataQuality() {
     queryFn: async () => (await client.get("/pipeline/status")).data,
   });
 
-  const results = Array.isArray(data?.results) ? data.results : [];
+  const checks = Array.isArray(data?.checks)
+    ? data.checks
+    : Array.isArray(data?.results)
+      ? data.results
+      : [];
 
   return (
     <div style={{ padding: 24, background: "var(--bg-base)", minHeight: "100%" }}>
@@ -73,19 +77,22 @@ export default function DataQuality() {
       <div className="panel" style={{ padding: 0, overflow: "hidden", boxShadow: "var(--shadow-card)" }}>
         <div style={{ padding: "16px 20px", borderBottom: "1px solid var(--border-default)", background: "var(--bg-subtle)" }}>
           <div style={{ fontSize: 11, fontWeight: 600, color: "var(--text-tertiary)", textTransform: "uppercase", letterSpacing: "0.05em" }}>
-            Great Expectations — last run
+            SQL data quality — last run
           </div>
-          {data?.ran_at ? (
-            <div style={{ fontFamily: "var(--font-mono)", fontSize: 11, color: "var(--text-tertiary)", marginTop: 6 }}>{data.ran_at}</div>
+          {data?.ran_at || data?.run_timestamp ? (
+            <div style={{ fontFamily: "var(--font-mono)", fontSize: 11, color: "var(--text-tertiary)", marginTop: 6 }}>
+              {data.ran_at || data.run_timestamp}
+              {data.overall_status ? ` · ${data.overall_status}` : ""}
+            </div>
           ) : null}
         </div>
-        {results.length ? (
+        {checks.length ? (
           <div style={{ overflow: "auto" }}>
             <table style={{ width: "100%", borderCollapse: "collapse", fontFamily: "var(--font-sans)", fontSize: 13 }}>
               <thead>
                 <tr style={{ background: "var(--bg-subtle)", borderBottom: "1px solid var(--border-default)" }}>
                   <th style={{ textAlign: "left", padding: "10px 16px", fontSize: 11, fontWeight: 600, color: "var(--text-tertiary)", textTransform: "uppercase", letterSpacing: "0.05em" }}>
-                    Expectation
+                    Check
                   </th>
                   <th style={{ textAlign: "left", padding: "10px 16px", fontSize: 11, fontWeight: 600, color: "var(--text-tertiary)", textTransform: "uppercase", letterSpacing: "0.05em" }}>
                     Result
@@ -96,8 +103,9 @@ export default function DataQuality() {
                 </tr>
               </thead>
               <tbody>
-                {results.map((row, i) => {
-                  const pass = row.passed !== false;
+                {checks.map((row, i) => {
+                  const pass = row.status ? row.status === "PASS" : row.passed !== false;
+                  const label = row.name || row.expectation || row.id;
                   return (
                     <tr
                       key={i}
@@ -107,12 +115,18 @@ export default function DataQuality() {
                         borderLeft: pass ? "none" : "2px solid var(--risk-high)",
                       }}
                     >
-                      <td style={{ padding: "12px 16px", color: "var(--text-primary)", fontWeight: 500 }}>{row.expectation}</td>
+                      <td style={{ padding: "12px 16px", color: "var(--text-primary)", fontWeight: 500 }}>{label}</td>
                       <td style={{ padding: "12px 16px", color: pass ? "var(--color-success)" : "var(--color-danger)", fontWeight: 600 }}>
-                        {pass ? "Pass" : "Fail"}
+                        {row.status || (pass ? "PASS" : "FAIL")}
                       </td>
                       <td style={{ padding: "12px 16px", textAlign: "right", fontFamily: "var(--font-mono)", fontSize: 12, color: "var(--text-secondary)" }}>
-                        {row.unexpected_rows != null ? `${row.unexpected_rows} rows` : row.mean != null ? row.mean.toFixed(4) : "—"}
+                        {row.actual != null && row.expected != null
+                          ? `${row.actual} (expected ${row.operator || "eq"} ${row.expected})`
+                          : row.unexpected_rows != null
+                            ? `${row.unexpected_rows} rows`
+                            : row.mean != null
+                              ? row.mean.toFixed(4)
+                              : "—"}
                       </td>
                     </tr>
                   );
